@@ -22,9 +22,8 @@ export default function CustomCircle(props:CircleProps) : JSX.Element
         x = Math.round(props.x / snapSize) * snapSize;
         y = Math.round(props.y / snapSize) * snapSize;
         }
-        console.log(x);
         return {x, y};
     }
 
-return <Circle key = "mouseCircle" {...snapToGrid()} radius = {5} fill= {props.fill}/>
+return <Circle key = "mouseCircle" {...snapToGrid()} radius = {params.width/7} fill= {props.fill}/>
 }

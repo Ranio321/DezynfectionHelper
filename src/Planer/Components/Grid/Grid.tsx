@@ -1,5 +1,6 @@
+import { strict } from 'assert';
 import React from 'react'
-import { Layer, Rect } from 'react-konva';
+import { Layer, Line, Rect } from 'react-konva';
 import params from './GridConstants'
 
 interface GridProps{
@@ -7,20 +8,33 @@ interface GridProps{
     height: number
 
 }
-export default function Grid(props:GridProps):JSX.Element
+function Grid(props:GridProps):JSX.Element
 {
     const {width, height} = props;
 
-        const squares  = [];
-        for(var x = 0; x < width; x = x + 50)
+        
+        function generateGrid()
         {
-            for(var y = 0; y < height; y = y + 50)
+            let gridParams = params;
+            const squares  = [];
+            
+            for(let x = 0; x < width; x = x + params.width)
             {
-            squares.push(
-                <Rect x = {x} y = {y} {...params}/>
-            )
-            }
-        }
+                
+                for(var y = 0; y < height; y = y + params.height)
+                {
 
-    return <Layer >{squares}</Layer>
+                squares.push(
+                    <Rect key = {squares.length} x = {x} y = {y} {...gridParams}/>
+                )
+                }
+            }
+            return squares;
+        }
+        
+
+        
+
+    return <Layer>{generateGrid()}</ Layer>
 }
+export default React.memo(Grid);

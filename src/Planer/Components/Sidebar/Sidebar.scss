@@ -1,0 +1,35 @@
+#Sidebar{
+    background-color: #28292d;
+    height: 800px;
+    width: 100%;
+}
+#sidebarButton{
+    background-color: #28292d;
+    border-top-color: rgba(255,255,255,0.66);
+    border-bottom-color : rgba(255,255,255,0.66);
+    border-left-color:  #28292d;
+    border-right-color :  #28292d;
+    border-width: 1px;
+    width: 100%;
+    height: 3%;
+    color: white;
+    font-size: 12px;
+    align-items: center;
+    border-style: solid;
+}
+#sidebarButton:hover{
+    color: #909194;
+    cursor: pointer;
+}
+
+#sidebarItem{
+    width: 50%;
+    color: white;
+    overflow: auto;
+    max-height: 30%;
+    float: left;
+}
+
+#items{
+    display: inline;
+}
