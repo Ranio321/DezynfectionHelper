@@ -17,7 +17,7 @@ interface PlanerProps {
   walls : Walls
 }
 
-function PlanCanvas(props: PlanerProps): JSX.Element {
+export default function PlanCanvas(props: PlanerProps): JSX.Element {
   const { height, width, setWalls, walls } = props;
 
   const defaultStartPoint = {
@@ -156,7 +156,7 @@ function PlanCanvas(props: PlanerProps): JSX.Element {
   );
 }
 
-export default React.memo(PlanCanvas);
+//export default React.memo(PlanCanvas);
 
 function getPosition(e: any, layerRef: any) {
   var transform = layerRef.current.getAbsoluteTransform().copy();
