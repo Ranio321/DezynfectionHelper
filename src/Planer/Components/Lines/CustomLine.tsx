@@ -1,6 +1,6 @@
 import { Layer, Line, Stage, Text } from "react-konva";
 import Konva from 'konva'
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import params from '../Grid/GridConstants'
 import { snapSize } from "../../Constants/SnapConstatns";
 
@@ -8,7 +8,7 @@ interface LineProps extends Konva.LineConfig{
     snapToGrid: Boolean
 
 }
-export default function CustomLine(props: LineProps)
+function CustomLine(props: LineProps)
 {
 
 function snapToGrid(points: number[]) : number[]
@@ -20,5 +20,7 @@ function snapToGrid(points: number[]) : number[]
     return [startX, startY, endX, endY];
 }
 
-return (<Line key = {props.key} points = {props.snapToGrid? snapToGrid(props.points): props.points} stroke = {props.stroke}  />);
+return (<Line key = {props.key} points = {props.snapToGrid? snapToGrid(props.points): props.points} stroke = {props.stroke}  strokeWidth = {params.width/10} />);
 }
+
+export default React.memo(CustomLine);
