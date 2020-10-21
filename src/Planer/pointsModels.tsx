@@ -10,7 +10,11 @@ interface Point{
 }
 
 export interface Walls{
-    walls: ClickPoints[]
+    walls: Item[]
+}
+
+export interface Wall{
+    wall:Item
 }
 
 export interface DrawingLine{
@@ -19,7 +23,8 @@ export interface DrawingLine{
 }
 export interface Item
 {
-    id?: string,
-    position?: ClickPoints,
+    id?: number,
+    position: ClickPoints,
     height?: number
+    type?: string
 }

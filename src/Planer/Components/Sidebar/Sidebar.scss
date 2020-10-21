@@ -4,9 +4,9 @@
     width: 100%;
 }
 #sidebarButton{
-    background-color: #28292d;
-    border-top-color: rgba(255,255,255,0.66);
-    border-bottom-color : rgba(255,255,255,0.66);
+    background-color: #474950;
+    border-top-color:  #474950;
+    border-bottom-color :  #474950;
     border-left-color:  #28292d;
     border-right-color :  #28292d;
     border-width: 1px;
@@ -16,6 +16,7 @@
     font-size: 12px;
     align-items: center;
     border-style: solid;
+    overflow: hidden;
 }
 #sidebarButton:hover{
     color: #909194;
@@ -32,4 +33,18 @@
 
 #items{
     display: inline;
+}
+#propertiesTab{
+    background-color: #28292d;
+    border-top-color: rgba(255,255,255,0.66);
+    border-bottom-color : rgba(255,255,255,0.66);
+    border-left-color:  #28292d;
+    border-right-color :  #28292d;
+    border-width: 1px;
+    width: 100%;
+    max-height: 10%;
+    color: white;
+    font-size: 12px;
+    align-items: center;
+    border-style: solid;
 }

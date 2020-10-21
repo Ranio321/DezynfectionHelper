@@ -1,5 +1,6 @@
 import { KonvaEventObject } from "konva/types/Node";
 import { Stage as StageType } from "konva/types/Stage";
+import { type } from "os";
 import React, { useEffect, useRef, useState } from "react";
 import { Layer, Line, Stage, Text } from "react-konva";
 import CustomCircle from "./Components/Circles/CustomCircle";
@@ -12,10 +13,12 @@ interface PlanerProps {
   height: number;
   itemToAdd: string;
   setCurrentItem: (item: Item) => any;
+  setWalls: (item:Walls) => any
+  walls : Walls
 }
 
-export default function PlanCanvas(props: PlanerProps): JSX.Element {
-  const { height, width } = props;
+function PlanCanvas(props: PlanerProps): JSX.Element {
+  const { height, width, setWalls, walls } = props;
 
   const defaultStartPoint = {
     start: { x: 0, y: 0 },
@@ -30,13 +33,10 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     end: { x: 0, y: 0 },
     start: { x: 0, y: 0 },
   });
-  const [lines, setLines] = useState<Walls>({ walls: [] });
-  const [, setCounter] = useState(0);
 
   const [clickPoints, setClickPoints] = useState<ClickPoints>(
     defaultStartPoint
   );
-  const [lineColor, setLineColor] = useState<string>("black");
 
   const layerRef = useRef<StageType>(null);
 
@@ -50,20 +50,14 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     setClickPoints(points);
   }
   function onMouseUp(e: KonvaEventObject<MouseEvent>) {
-    let points = clickPoints;
-    let mousePosition = getPosition(e, layerRef);
-    let position = { x: mousePosition.x, y: mousePosition.y };
-
-    let newPoints: ClickPoints = {
-      start: { x: points.start.x, y: points.start.y },
-      end: { x: position.x, y: position.y },
-    };
-    if (shouldDrawLine()) {
-      let walls = lines;
-      walls.walls.push(newPoints);
-      setLines(walls);
+  
+    var position = createWall(e);
+    if (isDrawingSelected()) {
+      let newWalls = Object.assign(walls);
+      newWalls.walls.push(position);
+      setWalls(newWalls);
     }
-    setCounter(1);
+
     setIsDrawing(false);
   }
 
@@ -78,9 +72,37 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     setDrawingLine(newPoints);
   }
 
-  function shouldDrawLine(): boolean {
-    return props.itemToAdd == itemList.wall;
+  function isDrawingSelected(): boolean {
+    return props.itemToAdd === itemList.wall;
   }
+
+  function createWall(e:KonvaEventObject<MouseEvent>)
+  {
+    let points:ClickPoints = clickPoints;
+    let mousePosition = getPosition(e, layerRef);
+
+    let newPoints: ClickPoints = {
+      start: { x: points.start.x, y: points.start.y },
+      end: { x: mousePosition.x, y: mousePosition.y },
+    };
+    let id: number = 0;
+
+      if( walls.walls  && walls.walls.length > 0 )
+      {
+        
+        id = walls.walls[walls.walls.length - 1].id!;
+        id = id + 1;
+      }
+
+    let position: Item = {
+      position: newPoints,
+      id: id,
+      type: "Wall"
+    }
+
+    return position;
+  }
+
 
   return (
     <div id="planer">
@@ -94,7 +116,7 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
       >
         <Grid width={width} height={height} />
         <Layer>
-          {shouldDrawLine() && (
+          {isDrawingSelected() && (
             <CustomCircle
               x={currentMousePosition.x}
               y={currentMousePosition.y}
@@ -102,21 +124,23 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
               fill="black"
             />
           )}
-          {lines?.walls.map((item, index) => {
+          {walls?.walls.map((item, index) => {
             return (
               <CustomLine
-                key={index}
-                points={[item.start.x, item.start.y, item.end.x, item.end.y]}
-                stroke={lineColor}
+                uniqueId={item.id}
+                type = {item.type}
+                points={[item.position?.start.x , item.position?.start.y, item.position?.end.x, item.position?.end.y]}
+                stroke="black"
                 snapToGrid
-                onMouseOverColor = "green"
+                onMouseOverColor = {isDrawingSelected()? "black" : "green"}
+                setCurrentItem = {!isDrawingSelected()? props.setCurrentItem: undefined}
               />
             );
           })}
-          {isDrawing && shouldDrawLine() && (
+          {isDrawing && isDrawingSelected() && (
             <CustomLine
               snapToGrid
-              key="drawingLine"
+              uniqueId={-1}
               points={[
                 drawingLine.start.x,
                 drawingLine.start.y,
@@ -132,11 +156,11 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
   );
 }
 
+export default React.memo(PlanCanvas);
+
 function getPosition(e: any, layerRef: any) {
   var transform = layerRef.current.getAbsoluteTransform().copy();
-  // to detect relative position we need to invert transform
   transform.invert();
-  // now we find relative point
 
   const pos = e.target.getStage().getPointerPosition();
 
