@@ -5,5 +5,6 @@ export const items = {
 
 export const itemList = {
     wall: "Wall",
-    lamp: "Lamp"
+    lamp: "Lamp",
+    pointer: "Pointer"
 }

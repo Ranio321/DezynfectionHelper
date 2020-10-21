@@ -1,12 +1,12 @@
 import React from 'react'
-import '../Sidebar/SidebarItem.scss'
+import './SidebarAddItem.scss'
 interface SidebarItemProps
 {
 items : {}
 setItem: (x:string) => any
 }
 
-export default function SidebarItem(props: SidebarItemProps): JSX.Element
+export default function SidebarAddItem(props: SidebarItemProps): JSX.Element
 {
 
     function generateItems(items:any)
@@ -17,7 +17,7 @@ export default function SidebarItem(props: SidebarItemProps): JSX.Element
             cards.push(<div id="sidebarItem" key={key}>
             <div className="card"  onClick={()=> props.setItem(key)}>
             <img className="card-img-top" src={items[key]} alt="Card image cap"/>
-            <div className="card-body" style = {{height: "5px;" }}>
+            <div className="card-body" >
               <h5 className="card-title" style = {{color: "black"}}>{key}</h5>
             </div>
            </div>
