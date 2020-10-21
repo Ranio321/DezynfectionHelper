@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { items } from "./Items";
+import { items } from "./SidebarItems/Items";
 import "./Sidebar.scss";
-import SidebarItem from "./SidebarItem";
+import SidebarAddItem from "./SidebarItems/SidebarAddItem";
 interface SidebarProps {
     setItem: (x: string)=> any
 }
@@ -17,7 +17,7 @@ export default function Sidebar(props: SidebarProps): JSX.Element {
         onClick={()=>setCollapseItems(!collapseItems)}
       > Items</div>
         <div id="items">
-            {collapseItems && <SidebarItem items = {items} setItem ={props.setItem}/>}
+            {collapseItems && <SidebarAddItem items = {items} setItem ={props.setItem}/>}
         </div>
     </div>
   );
