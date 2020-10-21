@@ -1,112 +1,35 @@
-import * as Konva from "konva";
-import { KonvaEventObject } from "konva/types/Node";
-import { Stage as StageType } from "konva/types/Stage";
-import React, { useEffect, useRef, useState } from "react";
-import { Layer, Line, Stage, Text } from "react-konva";
-import CustomCircle from "./Components/Circles/CustomCircle";
-import Grid from "./Components/Grid/Grid";
-import CustomLine from "./Components/Lines/CustomLine";
-import { ClickPoints, DrawingLine, Walls } from "./pointsModels";
-interface PlanerProps {
-  width: number;
-  height: number;
-}
+import React, { useEffect, useState } from "react";
+import { Col, Container, Row } from "react-bootstrap";
+import Sidebar from "./Components/Sidebar/Sidebar";
+import { itemList } from "./Components/Sidebar/SidebarItems/Items";
+import PlanCanvas from "./PlanCanvas";
+import { Item } from "./pointsModels";
+interface PlanerProps {}
 
 export default function Planer(props: PlanerProps): JSX.Element {
-  const { height, width } = props;
 
-  const defaultStartPoint = {
-    start: { x: 0, y: 0 },
-    end: { x: 0, y: 0 },
-  };
-  const [isDrawing, setIsDrawing] = useState<Boolean>(false);
-  const [currentMousePosition, setCurrentMousePosition] = useState({x:0, y:0});
-  const [drawingLine, setDrawingLine] = useState<DrawingLine>({
-    end: { x: 0, y: 0 },
-    start: { x: 0, y: 0 },
-  });
-  const [lines, setLines] = useState<Walls>({ walls: [] });
-  const [counter, setCounter] = useState(0);
+    const [itemToAdd, setItemToAdd] = useState<string>("");
+    const [currentItem, setCurrentItem] = useState<Item>()
 
-
-  const [clickPoints, setClickPoints] = useState<ClickPoints>(
-    defaultStartPoint
-  );
-
-  const layerRef = useRef<StageType>(null);
-
-  function onMouseDown(e: KonvaEventObject<MouseEvent>) {
-    setIsDrawing(true);
-    let points = clickPoints;
-    let mousePosition = getPosition(e, layerRef);
-    let position = { x: mousePosition.x, y: mousePosition.y };
-    setDrawingLine({start: position, end : position});
-    points.start = position
-    setClickPoints(points);
-  }
-  function onMouseUp(e: KonvaEventObject<MouseEvent>) {
-    let points = clickPoints;
-    let mousePosition = getPosition(e, layerRef);
-    let position = { x: mousePosition.x, y: mousePosition.y };
-
-    let newPoints: ClickPoints = {start:{x: points.start.x, y: points.start.y}, end:{x: position.x, y: position.y}};
-    let walls = lines;
-    walls.walls.push(newPoints);
-    setLines(walls);
-    setCounter(1);
-    setIsDrawing(false);
-    
-  }
-
-  function onMouseMove(e:KonvaEventObject<MouseEvent>)
-  {
-    let mousePosition = getPosition(e, layerRef);
-    let position = { x: mousePosition.x, y: mousePosition.y };
-    let newPoints: ClickPoints = {start:{x: drawingLine.start.x, y: drawingLine.start.y}, end:{x: position.x, y: position.y}};
-    setCurrentMousePosition({x: mousePosition.x, y: mousePosition.y});
-    setDrawingLine(newPoints);
-  }
-
+    function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>)
+    {
+      if(e.key === "Escape")
+      {
+        setItemToAdd(itemList.pointer);
+      }
+    }
   return (
-    <div id="planer">
-      <Stage
-        width={width}
-        height={height}
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-        onMouseMove = {onMouseMove}
-        ref={layerRef}
-      >
-        <Grid width={width} height={height} />
-        <Layer>
-        <CustomCircle x = {currentMousePosition.x} y = {currentMousePosition.y} radius = {10} fill = "black"/>
-          {lines?.walls.map((item, index) => {
-            return (
-              <CustomLine
-                key={index}
-                points={[item.start.x, item.start.y, item.end.x, item.end.y]}
-                stroke="black"
-                snapToGrid
-              />
-            );
-          })}
-          {isDrawing && <CustomLine snapToGrid key = "drawinLine" points = {[drawingLine.start.x, drawingLine.start.y, drawingLine.end.x, drawingLine.end.y]} stroke = "blue" />}
-          
-        </Layer>
-      </Stage>
-    </div>
+    <Container fluid>
+      <Row noGutters>
+        <Col> 
+        <Sidebar setItem = {setItemToAdd}/>
+        </Col>
+        <Col>
+        <div tabIndex={0} onKeyDown= {(e) => onKeyDown(e)}>
+          <PlanCanvas width={1000} height={800} itemToAdd = {itemToAdd} setCurrentItem = {setCurrentItem}/>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
-}
-
-function getPosition(e: any, layerRef: any) {
-  var transform = layerRef.current.getAbsoluteTransform().copy();
-  // to detect relative position we need to invert transform
-  transform.invert();
-  // now we find relative point
-
-  const pos = e.target.getStage().getPointerPosition();
-
-  var circlePos = transform.point(pos);
-  var points = {x: circlePos.x, y: circlePos.y}
-  return points;
 }

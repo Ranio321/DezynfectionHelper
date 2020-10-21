@@ -17,3 +17,9 @@ export interface DrawingLine{
     start: Point,
     end: Point
 }
+export interface Item
+{
+    id?: string,
+    position?: ClickPoints,
+    height?: number
+}
