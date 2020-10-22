@@ -33,8 +33,36 @@ function Grid(props:GridProps):JSX.Element
         }
         
 
+        function generateGrid2()
+        {
+            let gridParams = params;
+            const lines = []
+            let position = 0;
+            for(let x = 0; x < width/params.height; x++ )
+            {
+                let strokeWidth = params.strokeWidth
+                if(x % 5 === 0)
+                {
+                    strokeWidth = strokeWidth * 4;
+                }
+                lines.push(<Line points = {[position, 0, position, height]} stroke = "black" strokeWidth = {strokeWidth}/>)
+                position = position + params.height;
+            }
+            position = 0;
+            for(let x = 0; x < width/params.height; x++ )
+            {
+                let strokeWidth = params.strokeWidth
+                if(x % 5 === 0)
+                {
+                    strokeWidth = strokeWidth * 4;
+                }
+                lines.push(<Line points = {[0, position, width, position]} stroke = "black" strokeWidth = {strokeWidth} />)
+                position = position + params.height;
+            }
+            return lines;
+        }
         
 
-    return <Layer>{generateGrid()}</ Layer>
+    return <Layer>{generateGrid2()}</ Layer>
 }
 export default React.memo(Grid);

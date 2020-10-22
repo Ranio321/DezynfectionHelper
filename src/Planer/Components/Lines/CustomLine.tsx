@@ -29,7 +29,6 @@ export default function CustomLine(props: LineProps) {
   function onClick() {
     let currentItem = mapToItem(lineRef.current?.attrs.points);
     if(props.setCurrentItem){
-      console.log(currentItem);
     props.setCurrentItem(currentItem);
     }
   }
@@ -54,7 +53,7 @@ export default function CustomLine(props: LineProps) {
     <Line
       key={props.uniqueId}
       points={props.snapToGrid ? snapToGrid(props.points) : props.points}
-      stroke={isMouseOver? props.onMouseOverColor : props.stroke}
+      stroke={isMouseOver? props.onMouseOverColor? props.onMouseOverColor : props.stroke : props.stroke }
       strokeWidth={params.width / 8}
       ref={lineRef}
       onClick={() => onClick()}
