@@ -1,51 +1,78 @@
-import React, { useEffect, useState } from "react";
+import React, { Ref, useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import OptionsSidebar from "./Components/OptionsSidebar/OptionsSidebar";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import { itemList } from "./Components/Sidebar/SidebarItems/Items";
 import PlanCanvas from "./PlanCanvas";
 import { Item, Walls } from "./pointsModels";
-interface PlanerProps {}
+interface PlanerProps {
+  divRef?: any
+}
 
 export default function Planer(props: PlanerProps): JSX.Element {
+  const [itemToAdd, setItemToAdd] = useState<string>("");
+  const [currentItem, setCurrentItem] = useState<Item | undefined>();
+  const [walls, setWalls] = useState<Walls>({ walls: [] });
+  const [canvasSize, setCanvasSize] = useState({width: 0, height: 0});
+  const canvasRef = useRef<HTMLDivElement>(null);
 
-    const [itemToAdd, setItemToAdd] = useState<string>("");
-    const [currentItem, setCurrentItem] = useState<Item | undefined>()
-    const [walls, setWalls] = useState<Walls>({walls:[]});    
-
-
-    function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>)
-    {
-      if(e.key === "Escape")
-      {
-        setItemToAdd(itemList.pointer);
-      }
+  function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+    if (e.key === "Escape") {
+      setItemToAdd(itemList.pointer);
     }
+  }
 
-    function onWallDelete(id: number)
-    {
-      if(walls){
-      let newWalls:Walls = Object.assign(walls)
+  function onWallDelete(id: number) {
+    if (walls) {
+      let newWalls: Walls = Object.assign(walls);
       newWalls.walls = newWalls.walls.filter((item) => {
         return item.id !== id;
-      })
+      });
       setCurrentItem(undefined);
       setWalls(newWalls);
     }
+  }
+  useEffect(() => {
+    if (itemToAdd !== itemList.pointer) {
+      setCurrentItem(undefined);
     }
-useEffect(()=>{
-console.log("render")
-},[itemToAdd]);
+  }, [itemToAdd]);
+
+  useEffect(() => {
+    let size;
+    if(canvasRef.current && canvasRef)
+    {
+    size = {width: canvasRef.current.offsetWidth, height: canvasRef.current.offsetHeight};
+    setCanvasSize(size);
+    }
+  },[window.innerWidth])
+
 
   return (
     <Container fluid>
       <Row noGutters>
-        <Col> 
-        <Sidebar setItem = {setItemToAdd} selectedItem = {currentItem} onWallDelete = {onWallDelete}/>
+        <Col lg="2">
+          <Sidebar
+            setItem={setItemToAdd}
+            selectedItem={currentItem}
+            onWallDelete={onWallDelete}
+          />
         </Col>
-        <Col>
-        <div tabIndex={0} onKeyDown= {(e) => onKeyDown(e)}>
-          <PlanCanvas width={1000} height={800} itemToAdd = {itemToAdd} setCurrentItem = {setCurrentItem} setWalls = {setWalls} walls = {walls!}/>
+        <Col lg="9" ref = {canvasRef}>
+          <div tabIndex={0} onKeyDown={(e) => onKeyDown(e)}>
+            <PlanCanvas
+              width={canvasSize.width}
+              height={canvasSize.height}
+              itemToAdd={itemToAdd}
+              setCurrentItem={setCurrentItem}
+              setWalls={setWalls}
+              walls={walls!}
+              currentItemId={currentItem?.id}
+            />
           </div>
+        </Col>
+        <Col md="1">
+          <OptionsSidebar />
         </Col>
       </Row>
     </Container>
