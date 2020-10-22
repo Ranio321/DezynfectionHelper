@@ -7,14 +7,15 @@ import Grid from "./Components/Grid/Grid";
 import CustomLine from "./Components/Lines/CustomLine";
 import { itemList } from "./Components/Sidebar/SidebarItems/Items";
 import { ClickPoints, DrawingLine, Item, Walls } from "./pointsModels";
-import './PlanCanvas.scss'
+import "./PlanCanvas.scss";
 interface PlanerProps {
   width: number;
   height: number;
   itemToAdd: string;
   setCurrentItem: (item: Item) => any;
-  setWalls: (item:Walls) => any
-  walls : Walls
+  setWalls: (item: Walls) => any;
+  walls: Walls;
+  currentItemId?: number;
 }
 
 export default function PlanCanvas(props: PlanerProps): JSX.Element {
@@ -25,14 +26,12 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     end: { x: 0, y: 0 },
   };
   const [isDrawing, setIsDrawing] = useState<Boolean>(false);
-  const [currentMousePosition, setCurrentMousePosition] = useState({
-    x: 0,
-    y: 0,
-  });
-  const [drawingLine, setDrawingLine] = useState<DrawingLine>({
-    end: { x: 0, y: 0 },
-    start: { x: 0, y: 0 },
-  });
+  const [currentMousePosition, setCurrentMousePosition] = useState(
+    defaultStartPoint.start
+  );
+  const [drawingLine, setDrawingLine] = useState<DrawingLine>(
+    defaultStartPoint
+  );
 
   const [clickPoints, setClickPoints] = useState<ClickPoints>(
     defaultStartPoint
@@ -49,8 +48,8 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     points.start = position;
     setClickPoints(points);
   }
+
   function onMouseUp(e: KonvaEventObject<MouseEvent>) {
-  
     var position = createWall(e);
     if (isDrawingSelected()) {
       let newWalls = Object.assign(walls);
@@ -76,9 +75,8 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     return props.itemToAdd === itemList.wall;
   }
 
-  function createWall(e:KonvaEventObject<MouseEvent>)
-  {
-    let points:ClickPoints = clickPoints;
+  function createWall(e: KonvaEventObject<MouseEvent>) {
+    let points: ClickPoints = clickPoints;
     let mousePosition = getPosition(e, layerRef);
 
     let newPoints: ClickPoints = {
@@ -87,22 +85,19 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     };
     let id: number = 0;
 
-      if( walls.walls  && walls.walls.length > 0 )
-      {
-        
-        id = walls.walls[walls.walls.length - 1].id!;
-        id = id + 1;
-      }
+    if (walls.walls && walls.walls.length > 0) {
+      id = walls.walls[walls.walls.length - 1].id!;
+      id = id + 1;
+    }
 
     let position: Item = {
       position: newPoints,
       id: id,
-      type: "Wall"
-    }
+      type: "Wall",
+    };
 
     return position;
   }
-
 
   return (
     <div id="planer">
@@ -113,7 +108,6 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
         onMouseUp={onMouseUp}
         onMouseMove={onMouseMove}
         ref={layerRef}
-        
       >
         <Grid width={width} height={height} />
         <Layer>
@@ -129,12 +123,19 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
             return (
               <CustomLine
                 uniqueId={item.id}
-                type = {item.type}
-                points={[item.position?.start.x , item.position?.start.y, item.position?.end.x, item.position?.end.y]}
-                stroke="black"
+                type={item.type}
+                points={[
+                  item.position?.start.x,
+                  item.position?.start.y,
+                  item.position?.end.x,
+                  item.position?.end.y,
+                ]}
+                stroke={props.currentItemId === item.id ? "green" : "black"}
                 snapToGrid
-                onMouseOverColor = {isDrawingSelected()? "black" : "green"}
-                setCurrentItem = {!isDrawingSelected()? props.setCurrentItem: undefined}
+                onMouseOverColor={isDrawingSelected() ? "black" : "green"}
+                setCurrentItem={
+                  !isDrawingSelected() ? props.setCurrentItem : undefined
+                }
               />
             );
           })}
