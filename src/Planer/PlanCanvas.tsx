@@ -1,13 +1,13 @@
 import { KonvaEventObject } from "konva/types/Node";
 import { Stage as StageType } from "konva/types/Stage";
-import { type } from "os";
-import React, { useEffect, useRef, useState } from "react";
-import { Layer, Line, Stage, Text } from "react-konva";
+import React, { useRef, useState } from "react";
+import { Layer, Stage } from "react-konva";
 import CustomCircle from "./Components/Circles/CustomCircle";
 import Grid from "./Components/Grid/Grid";
 import CustomLine from "./Components/Lines/CustomLine";
 import { itemList } from "./Components/Sidebar/SidebarItems/Items";
 import { ClickPoints, DrawingLine, Item, Walls } from "./pointsModels";
+import './PlanCanvas.scss'
 interface PlanerProps {
   width: number;
   height: number;
@@ -113,6 +113,7 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
         onMouseUp={onMouseUp}
         onMouseMove={onMouseMove}
         ref={layerRef}
+        
       >
         <Grid width={width} height={height} />
         <Layer>
