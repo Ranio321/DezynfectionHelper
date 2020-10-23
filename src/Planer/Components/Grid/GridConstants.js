@@ -1,4 +1,4 @@
-const strokeWidth  = 0.1;
+const strokeWidth  = 0.2;
 const stroke = "black";
 const fill  = "azure";
 const width = 20;
