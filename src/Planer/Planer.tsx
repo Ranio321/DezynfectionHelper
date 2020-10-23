@@ -6,7 +6,6 @@ import { itemList } from "./Components/Sidebar/SidebarItems/Items";
 import PlanCanvas from "./PlanCanvas";
 import { Item, Walls } from "./pointsModels";
 interface PlanerProps {
-  divRef?: any
 }
 
 export default function Planer(props: PlanerProps): JSX.Element {
@@ -32,6 +31,17 @@ export default function Planer(props: PlanerProps): JSX.Element {
       setWalls(newWalls);
     }
   }
+
+  function deleteAllWalls() {
+    setWalls({walls:[]});
+  }
+
+  function undo(){
+    let newWalls : Walls  = Object.assign(walls);
+    newWalls.walls.pop();
+    setWalls(newWalls);
+  }
+
   useEffect(() => {
     if (itemToAdd !== itemList.pointer) {
       setCurrentItem(undefined);
@@ -45,7 +55,7 @@ export default function Planer(props: PlanerProps): JSX.Element {
     size = {width: canvasRef.current.offsetWidth, height: canvasRef.current.offsetHeight};
     setCanvasSize(size);
     }
-  },[window.innerWidth])
+  },[window.innerWidth, window.innerHeight])
 
 
   return (
@@ -72,7 +82,7 @@ export default function Planer(props: PlanerProps): JSX.Element {
           </div>
         </Col>
         <Col md="1">
-          <OptionsSidebar />
+          <OptionsSidebar undo = {undo} delete = {deleteAllWalls}/>
         </Col>
       </Row>
     </Container>
