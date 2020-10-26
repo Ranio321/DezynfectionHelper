@@ -2,11 +2,12 @@ import { KonvaEventObject } from "konva/types/Node";
 import { Stage as StageType } from "konva/types/Stage";
 import React, { useRef, useState } from "react";
 import { Layer, Stage } from "react-konva";
-import CustomCircle from "./Components/Circles/CustomCircle";
-import Grid from "./Components/Grid/Grid";
-import CustomLine from "./Components/Lines/CustomLine";
-import { itemList } from "./Components/Sidebar/SidebarItems/Items";
-import { ClickPoints, DrawingLine, Item, Walls } from "./pointsModels";
+import { getMousePosition } from "../../Helpers/mousePosition";
+import { ClickPoints, DrawingLine, Item, Walls } from "../../pointsModels";
+import CustomCircle from "../Circles/CustomCircle";
+import Grid from "../Grid/Grid";
+import CustomLine from "../Lines/CustomLine";
+import { itemList } from "../Sidebar/SidebarItems/Items";
 import "./PlanCanvas.scss";
 interface PlanerProps {
   width: number;
@@ -42,32 +43,34 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
   function onMouseDown(e: KonvaEventObject<MouseEvent>) {
     setIsDrawing(true);
     let points = clickPoints;
-    let mousePosition = getPosition(e, layerRef);
+    let mousePosition = currentMousePosition;
     let position = { x: mousePosition.x, y: mousePosition.y };
-    setDrawingLine({ start: position, end: position });
     points.start = position;
+
     setClickPoints(points);
+    setDrawingLine({ start: position, end: position });
   }
 
   function onMouseUp(e: KonvaEventObject<MouseEvent>) {
-    var position = createWall(e);
+    var position = createWall();
+
     if (isDrawingSelected()) {
-      let newWalls = Object.assign(walls);
+      let newWalls = {...walls};
       newWalls.walls.push(position);
-      setWalls(newWalls);
+      setWalls({...newWalls});
     }
 
     setIsDrawing(false);
   }
 
   function onMouseMove(e: KonvaEventObject<MouseEvent>) {
-    let mousePosition = getPosition(e, layerRef);
+    let mousePosition = getMousePosition(e, layerRef);
     let position = { x: mousePosition.x, y: mousePosition.y };
     let newPoints: ClickPoints = {
       start: { x: drawingLine.start.x, y: drawingLine.start.y },
       end: { x: position.x, y: position.y },
     };
-    setCurrentMousePosition({ x: mousePosition.x, y: mousePosition.y });
+    setCurrentMousePosition(mousePosition);
     setDrawingLine(newPoints);
   }
 
@@ -75,9 +78,9 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     return props.itemToAdd === itemList.wall;
   }
 
-  function createWall(e: KonvaEventObject<MouseEvent>) {
+  function createWall() {
     let points: ClickPoints = clickPoints;
-    let mousePosition = getPosition(e, layerRef);
+    let mousePosition = currentMousePosition;
 
     let newPoints: ClickPoints = {
       start: { x: points.start.x, y: points.start.y },
@@ -90,13 +93,13 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
       id = id + 1;
     }
 
-    let position: Item = {
+    let item: Item = {
       position: newPoints,
       id: id,
       type: "Wall",
     };
 
-    return position;
+    return item;
   }
 
   return (
@@ -119,7 +122,7 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
               fill="black"
             />
           )}
-          {walls?.walls.map((item, index) => {
+          {walls?.walls.map((item) => {
             return (
               <CustomLine
                 uniqueId={item.id}
@@ -158,15 +161,5 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
   );
 }
 
-//export default React.memo(PlanCanvas);
 
-function getPosition(e: any, layerRef: any) {
-  var transform = layerRef.current.getAbsoluteTransform().copy();
-  transform.invert();
 
-  const pos = e.target.getStage().getPointerPosition();
-
-  var circlePos = transform.point(pos);
-  var points = { x: circlePos.x, y: circlePos.y };
-  return points;
-}
