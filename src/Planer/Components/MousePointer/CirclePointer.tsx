@@ -1,5 +1,5 @@
 import React from 'react'
-import { ClickPoints, MousePosition } from '../../pointsModels'
+import { ClickPoints, MousePosition } from '../../PlanerTypes'
 import CustomCircle from '../Circles/CustomCircle';
 interface CirclePointerProps{
 mousePosition : MousePosition

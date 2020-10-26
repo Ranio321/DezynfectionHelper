@@ -3,7 +3,7 @@ import { Stage as StageType } from "konva/types/Stage";
 import React, { useRef, useState } from "react";
 import { Layer, Stage } from "react-konva";
 import { getMousePosition } from "../../Helpers/mousePosition";
-import { ClickPoints, DrawingLine, Item, Walls } from "../../pointsModels";
+import { ClickPoints, DrawingLine, Item, Walls } from "../../PlanerTypes";
 import Grid from "../Grid/Grid";
 import CustomLine from "../Lines/CustomLine";
 import MousePointerItem from "../MousePointer/MousePointerItem";
@@ -122,10 +122,10 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
                 uniqueId={item.id}
                 type={item.type}
                 points={[
-                  item.position?.start.x,
-                  item.position?.start.y,
-                  item.position?.end.x,
-                  item.position?.end.y,
+                  item.position?.start!.x,
+                  item.position?.start!.y,
+                  item.position?.end!.x,
+                  item.position?.end!.y,
                 ]}
                 stroke={props.currentItemId === item.id ? "green" : "black"}
                 snapToGrid
