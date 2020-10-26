@@ -23,7 +23,7 @@ export default function Planer(props: PlanerProps): JSX.Element {
 
   function onWallDelete(id: number) {
     if (walls) {
-      let newWalls: Walls = {...walls};
+      let newWalls: Walls = {...walls}
       newWalls.walls = newWalls.walls.filter((item) => {
         return item.id !== id;
       });
@@ -37,7 +37,7 @@ export default function Planer(props: PlanerProps): JSX.Element {
   }
 
   function undo(){
-    const newWalls : Walls  = {...walls};
+    let newWalls : Walls  = {...walls};
     newWalls.walls.pop();
     setWalls({...newWalls});
     console.log(walls);
