@@ -4,9 +4,10 @@ import React, { useRef, useState } from "react";
 import { Layer, Stage } from "react-konva";
 import { getMousePosition } from "../../Helpers/mousePosition";
 import { ClickPoints, DrawingLine, Item, Walls } from "../../pointsModels";
-import CustomCircle from "../Circles/CustomCircle";
 import Grid from "../Grid/Grid";
 import CustomLine from "../Lines/CustomLine";
+import MousePointerItem from "../MousePointer/MousePointerItem";
+import { PointerType } from "../MousePointer/PointerType";
 import { itemList } from "../Sidebar/SidebarItems/Items";
 import "./PlanCanvas.scss";
 interface PlanerProps {
@@ -114,14 +115,7 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
       >
         <Grid width={width} height={height} />
         <Layer>
-          {isDrawingSelected() && (
-            <CustomCircle
-              x={currentMousePosition.x}
-              y={currentMousePosition.y}
-              radius={10}
-              fill="black"
-            />
-          )}
+          <MousePointerItem mousePosition = {currentMousePosition} mouseItem = {props.itemToAdd}/>
           {walls?.walls.map((item) => {
             return (
               <CustomLine

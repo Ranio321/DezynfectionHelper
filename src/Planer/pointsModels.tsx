@@ -9,6 +9,11 @@ interface Point{
     y: number
 }
 
+export interface MousePosition{
+    x: number,
+    y: number
+}
+
 export interface Walls{
     walls: Item[]
 }
