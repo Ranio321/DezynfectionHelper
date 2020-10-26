@@ -1,9 +1,9 @@
 import React, { Ref, useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import PlanCanvas from "./Components/Canvas/PlanCanvas";
 import OptionsSidebar from "./Components/OptionsSidebar/OptionsSidebar";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import { itemList } from "./Components/Sidebar/SidebarItems/Items";
-import PlanCanvas from "./PlanCanvas";
 import { Item, Walls } from "./pointsModels";
 interface PlanerProps {
 }
@@ -23,12 +23,12 @@ export default function Planer(props: PlanerProps): JSX.Element {
 
   function onWallDelete(id: number) {
     if (walls) {
-      let newWalls: Walls = Object.assign(walls);
+      let newWalls: Walls = {...walls};
       newWalls.walls = newWalls.walls.filter((item) => {
         return item.id !== id;
       });
       setCurrentItem(undefined);
-      setWalls(newWalls);
+      setWalls({...newWalls});
     }
   }
 
@@ -37,9 +37,10 @@ export default function Planer(props: PlanerProps): JSX.Element {
   }
 
   function undo(){
-    let newWalls : Walls  = Object.assign(walls);
+    const newWalls : Walls  = {...walls};
     newWalls.walls.pop();
-    setWalls(newWalls);
+    setWalls({...newWalls});
+    console.log(walls);
   }
 
   useEffect(() => {
