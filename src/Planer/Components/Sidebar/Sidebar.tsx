@@ -3,7 +3,7 @@ import { items } from "./SidebarItems/Items";
 import "./Sidebar.scss";
 import SidebarAddItem from "./SidebarItems/SidebarAddItem";
 import ItemProperties from "./SidebarItems/ItemProperties";
-import { Item } from "../../pointsModels";
+import { Item } from "../../PlanerTypes";
 interface SidebarProps {
   setItem: (x: string) => any;
   selectedItem?: Item;

@@ -3,7 +3,7 @@ import Konva from "konva";
 import React, { useEffect, useRef, useState } from "react";
 import params from "../Grid/GridConstants";
 import { snapSize } from "../../Constants/SnapConstatns";
-import { Item } from "../../pointsModels";
+import { Item } from "../../PlanerTypes";
 import { Line as LineType } from "konva/types/shapes/Line";
 
 interface LineProps extends Konva.LineConfig {
@@ -48,7 +48,7 @@ export default function CustomLine(props: LineProps) {
   function onMouseLeave() {
    setIsMouseOver(false);
   }
-
+console.log(props.uniqueId);
   return (
     <Line
       key={props.uniqueId}

@@ -4,7 +4,8 @@ import PlanCanvas from "./Components/Canvas/PlanCanvas";
 import OptionsSidebar from "./Components/OptionsSidebar/OptionsSidebar";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import { itemList } from "./Components/Sidebar/SidebarItems/Items";
-import { Item, Walls } from "./pointsModels";
+import { usePlaner } from "./Hooks/usePlaner";
+import { Item, Walls } from "./PlanerTypes";
 interface PlanerProps {
 }
 
@@ -14,6 +15,7 @@ export default function Planer(props: PlanerProps): JSX.Element {
   const [walls, setWalls] = useState<Walls>({ walls: [] });
   const [canvasSize, setCanvasSize] = useState({width: 0, height: 0});
   const canvasRef = useRef<HTMLDivElement>(null);
+  usePlaner();
 
   function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     if (e.key === "Escape") {
@@ -40,7 +42,6 @@ export default function Planer(props: PlanerProps): JSX.Element {
     let newWalls : Walls  = {...walls};
     newWalls.walls.pop();
     setWalls({...newWalls});
-    console.log(walls);
   }
 
   useEffect(() => {
@@ -57,6 +58,8 @@ export default function Planer(props: PlanerProps): JSX.Element {
     setCanvasSize(size);
     }
   },[window.innerWidth, window.innerHeight])
+
+  useEffect(()=>{},[]);
 
 
   return (

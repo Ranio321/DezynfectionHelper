@@ -35,7 +35,6 @@ function Grid(props:GridProps):JSX.Element
 
         function generateGrid2()
         {
-            let gridParams = params;
             const lines = []
             let position = 0;
             for(let x = 0; x < width/params.height; x++ )
