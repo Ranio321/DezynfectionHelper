@@ -29,7 +29,7 @@ export default function CustomLine(props: LineProps) {
   }
 
   function onMouseOver() {   
-   if(!props.isSelected)
+   if(!props.isSelected && onMouseOverColor)
    {
     setColor(onMouseOverColor);
    }
