@@ -17,13 +17,13 @@ return (<><div
       Item properties</div>
 <div id = "itemProperties">
     <div id = "text"> X1</div>
-    <input id = "input" value = {item?.position.start?.x}></input>
+    <input id = "input" value = {item?.position.start?.x} readOnly></input>
     <div id = "text" > Y1</div>
-    <input id = "input" value = {item?.position.start?.y}></input>
+    <input id = "input" value = {item?.position.start?.y} readOnly></input>
     <div id = "text"> X2</div>
-    <input id = "input" value = {item?.position.end?.x}></input>
+    <input id = "input" value = {item?.position.end?.x}readOnly></input>
     <div id = "text"> Y2</div>
-    <input id = "input" value = {item?.position.end?.y}></input>
+    <input id = "input" value = {item?.position.end?.y}readOnly></input>
     <br/>
     <FontAwesomeIcon className = "trash" icon={faTrashAlt} size="lg" onClick = {() => {props.onWallDelete(props.item?.id!)}}/>
 </div>

@@ -3,25 +3,28 @@ import { Stage as StageType } from "konva/types/Stage";
 import React, { useRef, useState } from "react";
 import { Layer, Stage } from "react-konva";
 import { getMousePosition } from "../../Helpers/mousePosition";
-import { ClickPoints, DrawingLine, Item, Walls } from "../../PlanerTypes";
+import { ClickPoints, DrawingLine, Item, Items, Point } from "../../PlanerTypes";
 import Grid from "../Grid/Grid";
 import CustomLine from "../Lines/CustomLine";
+import Walls from "../Items/Wall";
 import MousePointerItem from "../MousePointer/MousePointerItem";
-import { PointerType } from "../MousePointer/PointerType";
 import { itemList } from "../Sidebar/SidebarItems/Items";
 import "./PlanCanvas.scss";
+import PlanerItems from "../Items/PlanerItems";
+import { itemFactory } from "../../Helpers/planerItemsServices";
+import { lampParams } from "../Items/Constants/LampConstants";
 interface PlanerProps {
   width: number;
   height: number;
   itemToAdd: string;
-  setCurrentItem: (item: Item) => any;
-  setWalls: (item: Walls) => any;
-  walls: Walls;
+  setCurrentItemId: (id: number) => any;
+  allItems: Items[];
   currentItemId?: number;
+  addItem: (id: Items) => any;
 }
 
 export default function PlanCanvas(props: PlanerProps): JSX.Element {
-  const { height, width, setWalls, walls } = props;
+  const { height, width, allItems } = props;
 
   const defaultStartPoint = {
     start: { x: 0, y: 0 },
@@ -35,32 +38,29 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     defaultStartPoint
   );
 
-  const [clickPoints, setClickPoints] = useState<ClickPoints>(
-    defaultStartPoint
+  const [mouseDownPoints, setMouseDownPoints] = useState<Point>(
+    {x:0,y:0}
   );
 
   const layerRef = useRef<StageType>(null);
 
   function onMouseDown(e: KonvaEventObject<MouseEvent>) {
     setIsDrawing(true);
-    let points = clickPoints;
+    let points = mouseDownPoints;
     let mousePosition = currentMousePosition;
     let position = { x: mousePosition.x, y: mousePosition.y };
-    points.start = position;
+    points = position;
 
-    setClickPoints(points);
+    setMouseDownPoints({...points});
     setDrawingLine({ start: position, end: position });
   }
 
   function onMouseUp(e: KonvaEventObject<MouseEvent>) {
-    var position = createWall();
-
-    if (isDrawingSelected()) {
-      let newWalls = {...walls};
-      newWalls.walls.push(position);
-      setWalls({...newWalls});
+    
+    let item = createItem();
+    if (shouldAddItem() && item) {
+      props.addItem({item});
     }
-
     setIsDrawing(false);
   }
 
@@ -78,28 +78,23 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
   function isDrawingSelected(): boolean {
     return props.itemToAdd === itemList.wall;
   }
+  function shouldAddItem():boolean{
+    return props.itemToAdd !== itemList.pointer
+  }
 
-  function createWall() {
-    let points: ClickPoints = clickPoints;
-    let mousePosition = currentMousePosition;
+  function createItem(){
+    let item;
+    
+    switch(props.itemToAdd){
+      case itemList.wall:
+        item = itemFactory.createWall(mouseDownPoints, currentMousePosition);
+      break;
 
-    let newPoints: ClickPoints = {
-      start: { x: points.start.x, y: points.start.y },
-      end: { x: mousePosition.x, y: mousePosition.y },
-    };
-    let id: number = 0;
-
-    if (walls.walls && walls.walls.length > 0) {
-      id = walls.walls[walls.walls.length - 1].id!;
-      id = id + 1;
+      case itemList.lamp:
+        item = itemFactory.createLamp(currentMousePosition, lampParams.width, lampParams.height);
+        
+      break;
     }
-
-    let item: Item = {
-      position: newPoints,
-      id: id,
-      type: "Wall",
-    };
-
     return item;
   }
 
@@ -115,27 +110,11 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
       >
         <Grid width={width} height={height} />
         <Layer>
-          <MousePointerItem mousePosition = {currentMousePosition} mouseItem = {props.itemToAdd}/>
-          {walls?.walls.map((item) => {
-            return (
-              <CustomLine
-                uniqueId={item.id}
-                type={item.type}
-                points={[
-                  item.position?.start!.x,
-                  item.position?.start!.y,
-                  item.position?.end!.x,
-                  item.position?.end!.y,
-                ]}
-                stroke={props.currentItemId === item.id ? "green" : "black"}
-                snapToGrid
-                onMouseOverColor={isDrawingSelected() ? "black" : "green"}
-                setCurrentItem={
-                  !isDrawingSelected() ? props.setCurrentItem : undefined
-                }
-              />
-            );
-          })}
+          <MousePointerItem
+            mousePosition={currentMousePosition}
+            mouseItem={props.itemToAdd}
+          />
+          <PlanerItems items = {allItems} snapToGrid setCurrentItemId = {props.setCurrentItemId} itemToAdd = {props.itemToAdd} currentItemId = {props.currentItemId}/>
           {isDrawing && isDrawingSelected() && (
             <CustomLine
               snapToGrid
@@ -154,6 +133,3 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     </div>
   );
 }
-
-
-
