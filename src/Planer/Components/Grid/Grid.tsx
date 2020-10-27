@@ -37,6 +37,7 @@ function Grid(props:GridProps):JSX.Element
         {
             const lines = []
             let position = 0;
+            let id = 0 ;
             for(let x = 0; x < width/params.height; x++ )
             {
                 let strokeWidth = params.strokeWidth
@@ -44,8 +45,9 @@ function Grid(props:GridProps):JSX.Element
                 {
                     strokeWidth = strokeWidth * 4;
                 }
-                lines.push(<Line points = {[position, 0, position, height]} stroke = "black" strokeWidth = {strokeWidth}/>)
+                lines.push(<Line key = {id} points = {[position, 0, position, height]} stroke = "black" strokeWidth = {strokeWidth}/>)
                 position = position + params.height;
+                id++;
             }
             position = 0;
             for(let x = 0; x < width/params.height; x++ )
@@ -55,8 +57,9 @@ function Grid(props:GridProps):JSX.Element
                 {
                     strokeWidth = strokeWidth * 4;
                 }
-                lines.push(<Line points = {[0, position, width, position]} stroke = "black" strokeWidth = {strokeWidth} />)
+                lines.push(<Line key = {id} points = {[0, position, width, position]} stroke = "black" strokeWidth = {strokeWidth} />)
                 position = position + params.height;
+                id++
             }
             return lines;
         }

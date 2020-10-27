@@ -5,49 +5,25 @@ import OptionsSidebar from "./Components/OptionsSidebar/OptionsSidebar";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import { itemList } from "./Components/Sidebar/SidebarItems/Items";
 import { usePlaner } from "./Hooks/usePlaner";
-import { Item, Walls } from "./PlanerTypes";
+import { Item} from "./PlanerTypes";
 interface PlanerProps {
 }
 
 export default function Planer(props: PlanerProps): JSX.Element {
   const [itemToAdd, setItemToAdd] = useState<string>("");
-  const [currentItem, setCurrentItem] = useState<Item | undefined>();
-  const [walls, setWalls] = useState<Walls>({ walls: [] });
+  const [currentItemId, setCurrentItemId] = useState<number | undefined>();
   const [canvasSize, setCanvasSize] = useState({width: 0, height: 0});
   const canvasRef = useRef<HTMLDivElement>(null);
-  usePlaner();
+  const [planerItems, services] = usePlaner();
 
   function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     if (e.key === "Escape") {
       setItemToAdd(itemList.pointer);
+      setCurrentItemId(undefined);
     }
   }
-
-  function onWallDelete(id: number) {
-    if (walls) {
-      let newWalls: Walls = {...walls}
-      newWalls.walls = newWalls.walls.filter((item) => {
-        return item.id !== id;
-      });
-      setCurrentItem(undefined);
-      setWalls({...newWalls});
-    }
-  }
-
-  function deleteAllWalls() {
-    setWalls({walls:[]});
-  }
-
-  function undo(){
-    let newWalls : Walls  = {...walls};
-    newWalls.walls.pop();
-    setWalls({...newWalls});
-  }
-
   useEffect(() => {
-    if (itemToAdd !== itemList.pointer) {
-      setCurrentItem(undefined);
-    }
+    setCurrentItemId(undefined);
   }, [itemToAdd]);
 
   useEffect(() => {
@@ -55,12 +31,13 @@ export default function Planer(props: PlanerProps): JSX.Element {
     if(canvasRef.current && canvasRef)
     {
     size = {width: canvasRef.current.offsetWidth, height: canvasRef.current.offsetHeight};
-    setCanvasSize(size);
+    setCanvasSize({...size});
     }
   },[window.innerWidth, window.innerHeight])
 
-  useEffect(()=>{},[]);
-
+  useEffect(()=>{
+    setCurrentItemId(undefined);
+  },[planerItems])
 
   return (
     <Container fluid>
@@ -68,8 +45,8 @@ export default function Planer(props: PlanerProps): JSX.Element {
         <Col lg="2">
           <Sidebar
             setItem={setItemToAdd}
-            selectedItem={currentItem}
-            onWallDelete={onWallDelete}
+            selectedItem={services.getItem(currentItemId)}
+            onWallDelete={services.deleteItem}
           />
         </Col>
         <Col lg="9" ref = {canvasRef}>
@@ -78,15 +55,15 @@ export default function Planer(props: PlanerProps): JSX.Element {
               width={canvasSize.width}
               height={canvasSize.height}
               itemToAdd={itemToAdd}
-              setCurrentItem={setCurrentItem}
-              setWalls={setWalls}
-              walls={walls!}
-              currentItemId={currentItem?.id}
+              setCurrentItemId={setCurrentItemId}
+              allItems={planerItems.items}
+              currentItemId={currentItemId}
+              addItem = {services.addItem}
             />
           </div>
         </Col>
         <Col md="1">
-          <OptionsSidebar undo = {undo} delete = {deleteAllWalls}/>
+          <OptionsSidebar undo = {services.deleteLast} delete = {services.deleteAll}/>
         </Col>
       </Row>
     </Container>

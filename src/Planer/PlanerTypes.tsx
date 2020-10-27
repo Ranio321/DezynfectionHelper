@@ -4,7 +4,7 @@ export interface ClickPoints {
     end: Point
 }
 
-export interface Point{
+export interface Point extends MousePosition{
     x: number,
     y: number
 }
@@ -28,10 +28,10 @@ export interface DrawingLine{
 }
 export interface Item
 {
-    id?: number,
+    id: number,
     position: LampPosition,
     height?: number
-    type?: string
+    type: string
 }
 
 export interface PlanerItems
@@ -46,15 +46,15 @@ export interface Items
 
 export interface PlanerObject
 {
-    id?: number,
+    id: number,
     position:{}
     height?: number
-    type?: string
+    type: string
 }
 
 export interface Lamp extends PlanerObject
 {
-    id?: number,
+    id: number,
     position: LampPosition,
     height?: number;
     
