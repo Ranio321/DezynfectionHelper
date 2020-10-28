@@ -21,6 +21,7 @@ export default function CustomLine(props: LineProps) {
   const {onMouseOverColor, stroke} = props;
   const lineRef = useRef<LineType>(null);
   const [color, setColor] = useState(stroke);
+  const [strokeWidth, setStrokeWidth] = useState(params.width / 8)
 
   function onClick() {
     if(props.setCurrentItemId && props.shouldSetItem){ 
@@ -29,8 +30,9 @@ export default function CustomLine(props: LineProps) {
   }
 
   function onMouseOver() {   
-   if(!props.isSelected && onMouseOverColor)
+   if(!props.isSelected && onMouseOverColor && props.shouldSetItem)
    {
+     setStrokeWidth(params.width/6)
     setColor(onMouseOverColor);
    }
   }
@@ -39,12 +41,14 @@ export default function CustomLine(props: LineProps) {
 
    if(!props.isSelected)
    {
+    setStrokeWidth(params.width/8)
       setColor(stroke);
    }
   }
 useEffect(()=>{
   if(!props.isSelected)
   {
+    setStrokeWidth(params.width/8);
     setColor(stroke);
   }
 
@@ -55,7 +59,7 @@ useEffect(()=>{
       key={props.uniqueId}
       points={props.snapToGrid ? snapToGrid(props.points) : props.points}
       stroke={color}
-      strokeWidth={params.width / 8}
+      strokeWidth={strokeWidth}
       ref={lineRef}
       onClick={() => onClick()}
       onMouseOver = {() => onMouseOver()}

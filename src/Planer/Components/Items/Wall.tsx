@@ -16,7 +16,6 @@ export default function Wall(props: WallsProps) {
 
     const { position, id, type, snapToGrid, stroke, setCurrentItemId, onMouseOverColor, currentItemId, shouldSetItem } = props;
 
-    console.log(shouldSetItem);
     return (<CustomLine
     uniqueId={id}
     type={type}
