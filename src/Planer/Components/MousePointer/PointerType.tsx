@@ -1,3 +1,3 @@
-export interface PointerType{
-    type: "wall" | "lamp" | "pointer" | string
+export interface PointerType {
+  type: "wall" | "lamp" | "pointer" | string;
 }

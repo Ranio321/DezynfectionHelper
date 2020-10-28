@@ -6,15 +6,24 @@ interface LampProps {
   height: number;
   width: number;
   showBlur?: boolean;
-  id: number
+  id: number;
   setCurrentItemId?: (id: number) => any;
-  onClickBlur? : boolean
-  currentItemId?: number
-  shouldSetItem?:boolean
+  onClickBlur?: boolean;
+  currentItemId?: number;
+  shouldSetItem?: boolean;
 }
 
 export default function Lamp(props: LampProps): JSX.Element {
-  const { mousePosition, height, width, showBlur, setCurrentItemId, onClickBlur, currentItemId, shouldSetItem } = props;
+  const {
+    mousePosition,
+    height,
+    width,
+    showBlur,
+    setCurrentItemId,
+    onClickBlur,
+    currentItemId,
+    shouldSetItem,
+  } = props;
   const [lampPosition, setLampPosition] = useState<Point>({ x: 0, y: 0 });
   const [shadowBlur, setShadowBlur] = useState(0);
 
@@ -24,28 +33,24 @@ export default function Lamp(props: LampProps): JSX.Element {
     setLampPosition({ x: x, y: y });
   }, [mousePosition]);
 
-  function onClick(){
-
-    if(onClickBlur)
-    {console.log(onClickBlur);
-        setShadowBlur(20);
+  function onClick() {
+    if (onClickBlur) {
+      console.log(onClickBlur);
+      setShadowBlur(20);
     }
-    if(setCurrentItemId && shouldSetItem)
-    {
-      setCurrentItemId(props.id)
+    if (setCurrentItemId && shouldSetItem) {
+      setCurrentItemId(props.id);
     }
   }
-  useEffect(()=>{
-    
-    if(currentItemId !== props.id)
-    {
+  useEffect(() => {
+    if (currentItemId !== props.id) {
       setShadowBlur(0);
     }
-  },[currentItemId])  
+  }, [currentItemId]);
 
   return (
     <Rect
-      key = {props.id}
+      key={props.id}
       fill="#03cffc"
       height={height}
       width={width}
@@ -53,10 +58,13 @@ export default function Lamp(props: LampProps): JSX.Element {
       y={lampPosition.y}
       stroke="black"
       shadowBlur={shadowBlur}
-      onMouseEnter={() => {showBlur  && setShadowBlur(20)}}
-      onMouseLeave = {() => {showBlur && setShadowBlur(0)}}
-      onClick = {() => onClick()}
-
+      onMouseEnter={() => {
+        showBlur && setShadowBlur(20);
+      }}
+      onMouseLeave={() => {
+        showBlur && setShadowBlur(0);
+      }}
+      onClick={() => onClick()}
     />
   );
 }

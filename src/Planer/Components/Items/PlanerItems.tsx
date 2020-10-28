@@ -10,17 +10,22 @@ interface ItemsProps {
   currentItemId?: number;
   itemToAdd: string;
 }
- function PlanerItems(props: ItemsProps): JSX.Element {
-  const { items, snapToGrid, setCurrentItemId, currentItemId, itemToAdd } = props;
+function PlanerItems(props: ItemsProps): JSX.Element {
+  const {
+    items,
+    snapToGrid,
+    setCurrentItemId,
+    currentItemId,
+    itemToAdd,
+  } = props;
   const [rectItems, setRectItmes] = useState<Items[]>();
   const [walls, setWalls] = useState<Items[]>();
 
   useEffect(() => {
-    let walls: Items[] =[];
-    let rectItems:Items[] = [];
-    items.forEach(item => {
-      if( item.item  && item.item.type === itemList.wall)
-      {
+    let walls: Items[] = [];
+    let rectItems: Items[] = [];
+    items.forEach((item) => {
+      if (item.item && item.item.type === itemList.wall) {
         walls.push(item);
       }
       if (
@@ -34,80 +39,59 @@ interface ItemsProps {
       }
       setRectItmes(rectItems);
       setWalls(walls);
-
-  
-    })
-    
-    
-  },[items.length]);
+    });
+  }, [items.length]);
 
   function shouldHighlight() {
     return itemToAdd === itemList.pointer;
   }
 
-  function Walls() {
-    const walls: any = []; 
-    items.forEach((item) => {
-      if (item.item  && item.item.type === itemList.wall) {
-        let position: ClickPoints = {
-          end: { ...item.item.position.end! },
-          start: { ...item.item.position.start! },
-        };
-
-        walls.push(
+  return (
+    <>
+      {walls?.map((item) => {
+        return (
           <Wall
-            key={item.item.id}
+            position={{
+              start: item.item.position.start!,
+              end: item.item.position.end!,
+            }}
             id={item.item.id}
             type={item.item.type}
             onMouseOverColor={shouldHighlight() ? "red" : "black"}
-            position={position}
-            stroke= "black"
-            currentItemId = {currentItemId}
-            setCurrentItemId = {setCurrentItemId}
-            shouldSetItem = {shouldHighlight()}
+            stroke="black"
+            currentItemId={currentItemId}
+            setCurrentItemId={setCurrentItemId}
+            shouldSetItem={shouldHighlight()}
           />
         );
-      }
-    });
-    return walls;
-  }
-
-  function Lamps() {
-    const lamps: any = [];
-    items.forEach((item) => {
-      if (
-        item.item &&
-        item.item.id &&
-        item.item.type === itemList.lamp &&
-        item.item.position.width &&
-        item.item.position.height
-      ) {
-        let position: MousePosition = { ...item.item.position.start! };
-        lamps.push(
+      })}
+      {rectItems?.map((item) => {
+        return (
           <Lamp
-            key ={item.item.id}
+            key={item.item.id}
             id={item.item.id}
-            mousePosition={position}
-            width={item.item.position.width}
-            height={item.item.position.height}
-            showBlur = {itemToAdd === itemList.pointer && currentItemId !== item.item.id}
-            currentItemId= {currentItemId}
-            onClickBlur = { itemToAdd === itemList.pointer}
-            setCurrentItemId = {setCurrentItemId}
-            shouldSetItem = {shouldHighlight()}
-            
+            mousePosition={item.item.position.start!}
+            width={item.item.position.width!}
+            height={item.item.position.height!}
+            showBlur={
+              itemToAdd === itemList.pointer && currentItemId !== item.item.id
+            }
+            currentItemId={currentItemId}
+            onClickBlur={itemToAdd === itemList.pointer}
+            setCurrentItemId={setCurrentItemId}
+            shouldSetItem={shouldHighlight()}
           />
         );
-      }
-    });
-    return lamps;
-  }
-
-
-  return <>{Walls()}{Lamps()}</>;
+      })}
+    </>
+  );
 }
 
 //export default PlanerItems;
-export default React.memo(PlanerItems,(prevProps,nextProps)=>{
-    return prevProps.items.length === nextProps.items.length && prevProps.itemToAdd === nextProps.itemToAdd && prevProps.currentItemId === nextProps.currentItemId;
- });
+export default React.memo(PlanerItems, (prevProps, nextProps) => {
+  return (
+    prevProps.items.length === nextProps.items.length &&
+    prevProps.itemToAdd === nextProps.itemToAdd &&
+    prevProps.currentItemId === nextProps.currentItemId
+  );
+});

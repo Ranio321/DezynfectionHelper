@@ -37,7 +37,7 @@ export function usePlaner() {
     items.items.pop();
     setPlanerItems({ ...items });
   }
-  function getItem(id: number | undefined) : Item | undefined {
+  function getItem(id: number | undefined): Item | undefined {
     let item;
     if (id) {
       item = planerItems.items.find((item) => {
