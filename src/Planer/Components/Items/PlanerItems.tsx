@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { cloneObject } from "../../Helpers/cloneObject";
+import { itemsCatalogueItems } from "../../ItemsCatalogue/ItemsCatalogueList";
 import { Items } from "../../PlanerTypes";
 import { itemList } from "../Sidebar/SidebarItems/Items";
 import Lamp from "./Lamp";
@@ -26,7 +27,8 @@ function PlanerItems(props: ItemsProps): JSX.Element {
       if (
         item.item &&
         item.item.id &&
-        item.item.type === itemList.lamp &&
+        item.item.type !== itemList.wall &&
+        item.item.type !== itemList.pointer &&
         item.item.position.width &&
         item.item.position.height
       ) {
@@ -62,13 +64,16 @@ function PlanerItems(props: ItemsProps): JSX.Element {
         );
       })}
       {rectItems?.map((item) => {
+        let itemParams = itemsCatalogueItems.find(
+          (obj) => obj.name === item.item.type
+        );
         return (
           <Lamp
             key={item.item.id}
             id={item.item.id}
             mousePosition={item.item.position.start!}
-            width={item.item.position.width!}
-            height={item.item.position.height!}
+            width={itemParams?.width!}
+            height={itemParams?.height!}
             showBlur={
               itemToAdd === itemList.pointer && currentItemId !== item.item.id
             }
@@ -76,6 +81,8 @@ function PlanerItems(props: ItemsProps): JSX.Element {
             onClickBlur={itemToAdd === itemList.pointer}
             setCurrentItemId={setCurrentItemId}
             shouldSetItem={shouldHighlight()}
+            fill={itemParams?.fill}
+            stroke={itemParams?.stroke}
           />
         );
       })}

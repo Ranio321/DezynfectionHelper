@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { items } from "./SidebarItems/Items";
 import "./Sidebar.scss";
 import SidebarAddItem from "./SidebarItems/SidebarAddItem";
 import ItemProperties from "./SidebarItems/ItemProperties";
 import { Item } from "../../PlanerTypes";
+import { itemsCatalogueItems } from "../../ItemsCatalogue/ItemsCatalogueList";
 interface SidebarProps {
   setItem: (x: string) => any;
   selectedItem?: Item;
@@ -20,14 +20,16 @@ export default function Sidebar(props: SidebarProps): JSX.Element {
       </div>
       <div id="items">
         {collapseItems && (
-          <SidebarAddItem items={items} setItem={props.setItem} />
+          <SidebarAddItem items={itemsCatalogueItems} setItem={props.setItem} />
         )}
       </div>
       {props.selectedItem && (
-        <ItemProperties
-          item={props.selectedItem}
-          onWallDelete={props.onWallDelete}
-        />
+        <div className="itemProperties">
+          <ItemProperties
+            item={props.selectedItem}
+            onWallDelete={props.onWallDelete}
+          />
+        </div>
       )}
     </div>
   );

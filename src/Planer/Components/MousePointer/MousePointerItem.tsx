@@ -1,6 +1,6 @@
 import React from "react";
+import { itemsCatalogueItems } from "../../ItemsCatalogue/ItemsCatalogueList";
 import { MousePosition } from "../../PlanerTypes";
-import { lampParams } from "../Items/Constants/LampConstants";
 import Lamp from "../Items/Lamp";
 import { itemList } from "../Sidebar/SidebarItems/Items";
 import CirclePointer from "./CirclePointer";
@@ -18,18 +18,27 @@ export default function MousePointerItem(
     case itemList.wall:
       pointer = <CirclePointer mousePosition={mousePosition} />;
       break;
-    case itemList.lamp:
+
+    case itemList.pointer:
+      pointer = <></>;
+      break;
+
+    default:
+      let item = itemsCatalogueItems.find((item) => {
+        return item.name === mouseItem;
+      });
+
       pointer = (
         <Lamp
           id={Date.now()}
-          width={lampParams.width}
-          height={lampParams.height}
+          width={item?.width!}
+          height={item?.height!}
           mousePosition={mousePosition}
+          stroke={item?.stroke}
+          fill={item?.fill}
         />
       );
       break;
-    case itemList.pointer:
-      pointer = <></>;
   }
 
   return pointer;

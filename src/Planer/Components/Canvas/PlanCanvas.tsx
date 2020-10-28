@@ -23,7 +23,15 @@ interface PlanerProps {
 }
 
 export default function PlanCanvas(props: PlanerProps): JSX.Element {
-  const { height, width, allItems } = props;
+  const {
+    height,
+    width,
+    allItems,
+    itemToAdd,
+    setCurrentItemId,
+    currentItemId,
+    addItem,
+  } = props;
 
   const defaultStartPoint = {
     start: { x: 0, y: 0 },
@@ -41,7 +49,7 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
 
   const layerRef = useRef<StageType>(null);
 
-  function onMouseDown(e: KonvaEventObject<MouseEvent>) {
+  function onMouseDown() {
     setIsDrawing(true);
     let points = mouseDownPoints;
     let mousePosition = currentMousePosition;
@@ -52,10 +60,10 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     setDrawingLine({ start: position, end: position });
   }
 
-  function onMouseUp(e: KonvaEventObject<MouseEvent>) {
+  function onMouseUp() {
     let item = createItem();
     if (shouldAddItem() && item) {
-      props.addItem({ item });
+      addItem({ item });
     }
     setIsDrawing(false);
   }
@@ -72,27 +80,30 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
   }
 
   function isDrawingSelected(): boolean {
-    return props.itemToAdd === itemList.wall;
+    return itemToAdd === itemList.wall;
   }
   function shouldAddItem(): boolean {
-    return props.itemToAdd !== itemList.pointer;
+    return itemToAdd !== itemList.pointer;
   }
 
   function createItem() {
     let item;
 
-    switch (props.itemToAdd) {
+    switch (itemToAdd) {
       case itemList.wall:
         item = itemFactory.createWall(mouseDownPoints, currentMousePosition);
         break;
 
-      case itemList.lamp:
+      case itemList.pointer:
+        break;
+
+      default:
         item = itemFactory.createLamp(
           currentMousePosition,
           lampParams.width,
-          lampParams.height
+          lampParams.height,
+          itemToAdd
         );
-
         break;
     }
     return item;
@@ -112,14 +123,14 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
         <Layer>
           <MousePointerItem
             mousePosition={currentMousePosition}
-            mouseItem={props.itemToAdd}
+            mouseItem={itemToAdd}
           />
           <PlanerItems
             items={allItems}
             snapToGrid
-            setCurrentItemId={props.setCurrentItemId}
-            itemToAdd={props.itemToAdd}
-            currentItemId={props.currentItemId}
+            setCurrentItemId={setCurrentItemId}
+            itemToAdd={itemToAdd}
+            currentItemId={currentItemId}
           />
           {isDrawing && isDrawingSelected() && (
             <CustomLine

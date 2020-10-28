@@ -27,8 +27,14 @@
 }
 
 #items{
-    display: inline;
     outline: none;
+    overflow: auto;
+    scrollbar-width:thin;
+    max-height: 50%;
+    display:inline-block;
+    border-bottom: 1px solid rgb(72, 73, 78);
+    box-shadow: rgba(0, 0, 0, 0.5) 0px -3px 19px 0px inset;
+    
 }
 #propertiesTab{
     background-color: #28292d;

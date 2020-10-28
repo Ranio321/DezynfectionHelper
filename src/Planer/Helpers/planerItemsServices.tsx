@@ -26,11 +26,16 @@ function createWall(startPosition: Point, endPosition: Point): Item {
   return item;
 }
 
-function createLamp(position: Point, width: number, height: number): Item {
+function createLamp(
+  position: Point,
+  width: number,
+  height: number,
+  type: string
+): Item {
   let item: Item = {
     position: { start: position, width, height },
     id: getUniqueId(),
-    type: itemList.lamp,
+    type: type,
   };
 
   return item;

@@ -9,7 +9,7 @@ import "./Planer.scss";
 interface PlanerProps {}
 
 export default function Planer(props: PlanerProps): JSX.Element {
-  const [itemToAdd, setItemToAdd] = useState<string>("");
+  const [itemToAdd, setItemToAdd] = useState<string>("Pointer");
   const [currentItemId, setCurrentItemId] = useState<number | undefined>();
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -63,7 +63,7 @@ export default function Planer(props: PlanerProps): JSX.Element {
 
   return (
     <Container fluid style={cStyle}>
-      <Row noGutters>
+      <Row noGutters className="h-100">
         <Col style={sideBarStyle}>
           <Sidebar
             setItem={setItemToAdd}

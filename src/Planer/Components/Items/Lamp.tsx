@@ -11,6 +11,8 @@ interface LampProps {
   onClickBlur?: boolean;
   currentItemId?: number;
   shouldSetItem?: boolean;
+  fill?: string;
+  stroke?: string;
 }
 
 export default function Lamp(props: LampProps): JSX.Element {
@@ -23,6 +25,8 @@ export default function Lamp(props: LampProps): JSX.Element {
     onClickBlur,
     currentItemId,
     shouldSetItem,
+    fill,
+    stroke,
   } = props;
   const [lampPosition, setLampPosition] = useState<Point>({ x: 0, y: 0 });
   const [shadowBlur, setShadowBlur] = useState(0);
@@ -50,12 +54,12 @@ export default function Lamp(props: LampProps): JSX.Element {
   return (
     <Rect
       key={props.id}
-      fill="#03cffc"
+      fill={fill}
       height={height}
       width={width}
       x={lampPosition.x}
       y={lampPosition.y}
-      stroke="black"
+      stroke={stroke}
       shadowBlur={shadowBlur}
       onMouseEnter={() => {
         showBlur && setShadowBlur(20);
