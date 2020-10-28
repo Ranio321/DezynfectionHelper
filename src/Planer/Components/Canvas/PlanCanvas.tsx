@@ -3,16 +3,9 @@ import { Stage as StageType } from "konva/types/Stage";
 import React, { useRef, useState } from "react";
 import { Layer, Stage } from "react-konva";
 import { getMousePosition } from "../../Helpers/mousePosition";
-import {
-  ClickPoints,
-  DrawingLine,
-  Item,
-  Items,
-  Point,
-} from "../../PlanerTypes";
+import { ClickPoints, DrawingLine, Items, Point } from "../../PlanerTypes";
 import Grid from "../Grid/Grid";
 import CustomLine from "../Lines/CustomLine";
-import Walls from "../Items/Wall";
 import MousePointerItem from "../MousePointer/MousePointerItem";
 import { itemList } from "../Sidebar/SidebarItems/Items";
 import "./PlanCanvas.scss";

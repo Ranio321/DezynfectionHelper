@@ -38,7 +38,7 @@ export default function Planer(props: PlanerProps): JSX.Element {
     }
     handleResize();
     window.addEventListener("resize", handleResize);
-  }, [window.innerWidth, window.innerHeight]);
+  }, []);
 
   useEffect(() => {
     setCurrentItemId(undefined);

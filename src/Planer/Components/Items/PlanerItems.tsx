@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { ClickPoints, Item, Items, MousePosition } from "../../PlanerTypes";
+import { cloneObject } from "../../Helpers/cloneObject";
+import { Items } from "../../PlanerTypes";
 import { itemList } from "../Sidebar/SidebarItems/Items";
 import Lamp from "./Lamp";
 import Wall from "./Wall";
@@ -11,22 +12,16 @@ interface ItemsProps {
   itemToAdd: string;
 }
 function PlanerItems(props: ItemsProps): JSX.Element {
-  const {
-    items,
-    snapToGrid,
-    setCurrentItemId,
-    currentItemId,
-    itemToAdd,
-  } = props;
+  const { items, setCurrentItemId, currentItemId, itemToAdd } = props;
   const [rectItems, setRectItmes] = useState<Items[]>();
   const [walls, setWalls] = useState<Items[]>();
 
   useEffect(() => {
-    let walls: Items[] = [];
+    let newWalls: Items[] = [];
     let rectItems: Items[] = [];
     items.forEach((item) => {
       if (item.item && item.item.type === itemList.wall) {
-        walls.push(item);
+        newWalls.push(item);
       }
       if (
         item.item &&
@@ -37,10 +32,10 @@ function PlanerItems(props: ItemsProps): JSX.Element {
       ) {
         rectItems.push(item);
       }
-      setRectItmes(rectItems);
-      setWalls(walls);
     });
-  }, [items.length]);
+    setRectItmes(rectItems);
+    setWalls([...newWalls]);
+  }, [items.length, items]);
 
   function shouldHighlight() {
     return itemToAdd === itemList.pointer;
@@ -51,6 +46,7 @@ function PlanerItems(props: ItemsProps): JSX.Element {
       {walls?.map((item) => {
         return (
           <Wall
+            key={item.item.id}
             position={{
               start: item.item.position.start!,
               end: item.item.position.end!,

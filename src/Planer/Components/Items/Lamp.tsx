@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Rect } from "react-konva";
-import { Item, MousePosition, Point } from "../../PlanerTypes";
+import { MousePosition, Point } from "../../PlanerTypes";
 interface LampProps {
   mousePosition: MousePosition;
   height: number;
@@ -35,7 +35,6 @@ export default function Lamp(props: LampProps): JSX.Element {
 
   function onClick() {
     if (onClickBlur) {
-      console.log(onClickBlur);
       setShadowBlur(20);
     }
     if (setCurrentItemId && shouldSetItem) {

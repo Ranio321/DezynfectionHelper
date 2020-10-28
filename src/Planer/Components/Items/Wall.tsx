@@ -1,5 +1,5 @@
 import React from "react";
-import { ClickPoints, Item, Items } from "../../PlanerTypes";
+import { ClickPoints } from "../../PlanerTypes";
 import CustomLine from "../Lines/CustomLine";
 interface WallsProps {
   position: ClickPoints;

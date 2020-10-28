@@ -1,5 +1,5 @@
 import { itemList } from "../Components/Sidebar/SidebarItems/Items";
-import { ClickPoints, Item, Items, Point } from "../PlanerTypes";
+import { ClickPoints, Item, Point } from "../PlanerTypes";
 import { snapToGrid } from "./snapToGrid";
 
 function getUniqueId() {

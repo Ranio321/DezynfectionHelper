@@ -46,7 +46,7 @@ export default function CustomLine(props: LineProps) {
       setStrokeWidth(params.width / 8);
       setColor(stroke);
     }
-  }, [props.isSelected]);
+  }, [props.isSelected, stroke]);
 
   return (
     <Line

@@ -4,15 +4,7 @@ import { Item, Items, PlanerItems } from "../PlanerTypes";
 
 export function usePlaner() {
   const [planerItems, setPlanerItems] = useState<PlanerItems>({
-    items: [
-      {
-        item: {
-          id: 5,
-          type: "Wall",
-          position: { start: { x: 250, y: 400 }, end: { x: 543, y: 234 } },
-        },
-      },
-    ],
+    items: [],
   });
 
   function addItem(item: Items) {

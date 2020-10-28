@@ -1,7 +1,6 @@
 import { CircleConfig } from "konva/types/shapes/Circle";
-import React, { useEffect } from "react";
+import React from "react";
 import { Circle } from "react-konva";
-import { createPropertySignature, JsxAttribute } from "typescript";
 import { snapSize } from "../../Constants/SnapConstatns";
 import params from "../Grid/GridConstants";
 

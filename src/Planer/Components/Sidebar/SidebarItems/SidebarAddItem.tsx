@@ -12,11 +12,7 @@ export default function SidebarAddItem(props: SidebarItemProps): JSX.Element {
       cards.push(
         <div id="sidebarItem" key={key}>
           <div className="card" onClick={() => props.setItem(key)}>
-            <img
-              className="card-img-top"
-              src={items[key]}
-              alt="Card image cap"
-            />
+            <img className="card-img-top" src={items[key]} alt="" />
             <div className="card-body">
               <h5 className="card-title" style={{ color: "black" }}>
                 {key}

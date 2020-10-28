@@ -10,9 +10,13 @@ interface OptionsSidebarProps {
 export default function OptionsSidebar(props: OptionsSidebarProps) {
   return (
     <div id="optionsBar">
-      <Icon icon={icons.newFile} onClick={props.delete} />
-      <Icon icon={icons.delete} />
-      <Icon icon={icons.undo} onClick={props.undo} />
+      <Icon icon={icons.newFile} onClick={props.delete} tooltip="New file" />
+      <Icon icon={icons.delete} tooltip="Delet all" />
+      <Icon
+        icon={icons.undo}
+        onClick={props.undo}
+        tooltip="Delete latests item"
+      />
     </div>
   );
 }
