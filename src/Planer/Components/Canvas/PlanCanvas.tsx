@@ -3,7 +3,7 @@ import { Stage as StageType } from "konva/types/Stage";
 import React, { useRef, useState } from "react";
 import { Layer, Stage } from "react-konva";
 import { getMousePosition } from "../../Helpers/mousePosition";
-import { ClickPoints, DrawingLine, Items, Point } from "../../PlanerTypes";
+import { ClickPoints, DrawingLine, Item, Point } from "../../PlanerTypes";
 import Grid from "../Grid/Grid";
 import CustomLine from "../Lines/CustomLine";
 import MousePointerItem from "../MousePointer/MousePointerItem";
@@ -17,9 +17,9 @@ interface PlanerProps {
   height: number;
   itemToAdd: string;
   setCurrentItemId: (id: number) => any;
-  allItems: Items[];
+  allItems: Item[];
   currentItemId?: number;
-  addItem: (id: Items) => any;
+  addItem: (item: Item) => any;
 }
 
 export default function PlanCanvas(props: PlanerProps): JSX.Element {
@@ -38,6 +38,7 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     end: { x: 0, y: 0 },
   };
   const [isDrawing, setIsDrawing] = useState<Boolean>(false);
+  const [showPointer, setShowPointer] = useState<Boolean>(true);
   const [currentMousePosition, setCurrentMousePosition] = useState(
     defaultStartPoint.start
   );
@@ -63,7 +64,7 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
   function onMouseUp() {
     let item = createItem();
     if (shouldAddItem() && item) {
-      addItem({ item });
+      addItem(item);
     }
     setIsDrawing(false);
   }
@@ -117,14 +118,18 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onMouseMove={onMouseMove}
+        onMouseLeave={() => setShowPointer(false)}
+        onMouseEnter={() => setShowPointer(true)}
         ref={layerRef}
       >
         <Grid width={width} height={height} />
         <Layer>
-          <MousePointerItem
-            mousePosition={currentMousePosition}
-            mouseItem={itemToAdd}
-          />
+          {showPointer && (
+            <MousePointerItem
+              mousePosition={currentMousePosition}
+              mouseItem={itemToAdd}
+            />
+          )}
           <PlanerItems
             items={allItems}
             snapToGrid

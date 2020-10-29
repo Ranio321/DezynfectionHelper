@@ -1,43 +1,71 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cloneObject } from "../Helpers/cloneObject";
-import { Item, Items, PlanerItems } from "../PlanerTypes";
+import { Item, PlanerItems } from "../PlanerTypes";
 
 export function usePlaner() {
-  const [planerItems, setPlanerItems] = useState<PlanerItems>({
-    items: [],
-  });
+  const [currentStep, setCurrentStep] = useState(0);
+  const [planerItems, setPlanerItems] = useState<PlanerItems[]>([
+    {
+      items: [],
+    },
+  ]);
 
-  function addItem(item: Items) {
-    let items: PlanerItems = cloneObject(planerItems);
-    item.item.height = 200;
+  function addItem(item: Item) {
+    let items: PlanerItems = cloneObject(planerItems[currentStep]);
+    item.height = 200;
     items.items.push({ ...item });
-    setPlanerItems({ ...items });
+    setPlanerItems([...planerItems, items]);
+    addToHistory();
   }
 
   function deleteItem(id: number) {
-    let items: PlanerItems = cloneObject(planerItems);
+    let items: PlanerItems = cloneObject(planerItems[currentStep]);
     let index = items.items.findIndex((item) => {
-      return item.item.id === id;
+      return item.id === id;
     });
     items.items.splice(index, 1);
-    setPlanerItems({ ...items });
+    setPlanerItems([...planerItems, items]);
+    addToHistory();
   }
   function deleteAll() {
-    setPlanerItems({ items: [] });
+    setPlanerItems([...planerItems, { items: [] }]);
+    addToHistory();
+  }
+
+  function newCanvas() {
+    setPlanerItems([{ items: [] }]);
+    setCurrentStep(0);
   }
   function deleteLast() {
-    let items: PlanerItems = cloneObject(planerItems);
+    let items: PlanerItems = cloneObject(planerItems[currentStep]);
     items.items.pop();
-    setPlanerItems({ ...items });
+    setPlanerItems([...planerItems, items]);
+    addToHistory();
+  }
+
+  function undo() {
+    let items: PlanerItems[] = cloneObject(planerItems);
+    items.pop();
+
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+      setPlanerItems([...items]);
+    }
   }
   function getItem(id: number | undefined): Item | undefined {
     let item;
-    if (id) {
-      item = planerItems.items.find((item) => {
-        return item.item.id === id;
+    if (id && planerItems[currentStep]) {
+      item = planerItems[currentStep].items.find((item) => {
+        return item.id === id;
       });
     }
-    return item?.item;
+    return item;
+  }
+
+  function addToHistory() {
+    if (currentStep >= 0) {
+      setCurrentStep(currentStep + 1);
+    }
   }
 
   const services = {
@@ -46,7 +74,9 @@ export function usePlaner() {
     deleteAll,
     deleteLast,
     getItem,
+    undo,
+    newCanvas,
   };
 
-  return [planerItems, services] as const;
+  return [planerItems[currentStep], services] as const;
 }

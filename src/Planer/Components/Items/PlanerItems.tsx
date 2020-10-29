@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { cloneObject } from "../../Helpers/cloneObject";
 import { itemsCatalogueItems } from "../../ItemsCatalogue/ItemsCatalogueList";
-import { Items } from "../../PlanerTypes";
+import { Item } from "../../PlanerTypes";
 import { itemList } from "../Sidebar/SidebarItems/Items";
 import Lamp from "./Lamp";
 import Wall from "./Wall";
 interface ItemsProps {
-  items: Items[];
+  items: Item[];
   snapToGrid: boolean;
   setCurrentItemId: (id: number) => any;
   currentItemId?: number;
@@ -14,29 +13,28 @@ interface ItemsProps {
 }
 function PlanerItems(props: ItemsProps): JSX.Element {
   const { items, setCurrentItemId, currentItemId, itemToAdd } = props;
-  const [rectItems, setRectItmes] = useState<Items[]>();
-  const [walls, setWalls] = useState<Items[]>();
+  const [rectItems, setRectItmes] = useState<Item[]>();
+  const [walls, setWalls] = useState<Item[]>();
 
   useEffect(() => {
-    let newWalls: Items[] = [];
-    let rectItems: Items[] = [];
+    let newWalls: Item[] = [];
+    let rectItems: Item[] = [];
     items.forEach((item) => {
-      if (item.item && item.item.type === itemList.wall) {
+      if (item && item.type === itemList.wall) {
         newWalls.push(item);
       }
       if (
-        item.item &&
-        item.item.type !== itemList.wall &&
-        item.item.type !== itemList.pointer &&
-        item.item.position.width &&
-        item.item.position.height
+        item &&
+        item.type !== itemList.wall &&
+        item.type !== itemList.pointer &&
+        item.position.width &&
+        item.position.height
       ) {
         rectItems.push(item);
       }
     });
     setRectItmes([...rectItems]);
     setWalls([...newWalls]);
-    console.log(rectItems);
   }, [items.length, items]);
 
   function shouldHighlight() {
@@ -48,13 +46,13 @@ function PlanerItems(props: ItemsProps): JSX.Element {
       {walls?.map((item) => {
         return (
           <Wall
-            key={item.item.id}
+            key={item.id}
             position={{
-              start: item.item.position.start!,
-              end: item.item.position.end!,
+              start: item.position.start!,
+              end: item.position.end!,
             }}
-            id={item.item.id}
-            type={item.item.type}
+            id={item.id}
+            type={item.type}
             onMouseOverColor={shouldHighlight() ? "red" : "black"}
             stroke="black"
             currentItemId={currentItemId}
@@ -65,17 +63,17 @@ function PlanerItems(props: ItemsProps): JSX.Element {
       })}
       {rectItems?.map((item) => {
         let itemParams = itemsCatalogueItems.find(
-          (obj) => obj.name === item.item.type
+          (obj) => obj.name === item.type
         );
         return (
           <Lamp
-            key={item.item.id}
-            id={item.item.id}
-            mousePosition={item.item.position.start!}
+            key={item.id}
+            id={item.id}
+            mousePosition={item.position.start!}
             width={itemParams?.width!}
             height={itemParams?.height!}
             showBlur={
-              itemToAdd === itemList.pointer && currentItemId !== item.item.id
+              itemToAdd === itemList.pointer && currentItemId !== item.id
             }
             currentItemId={currentItemId}
             onClickBlur={itemToAdd === itemList.pointer}

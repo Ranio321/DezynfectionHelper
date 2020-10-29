@@ -33,7 +33,7 @@ export interface Item {
 }
 
 export interface PlanerItems {
-  items: Items[];
+  items: Item[];
 }
 
 export interface Items {

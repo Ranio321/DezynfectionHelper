@@ -60,37 +60,39 @@ export default function Planer(props: PlanerProps): JSX.Element {
   const sideBarStyle = {
     maxWidth: "14%",
   };
-
   return (
-    <Container fluid style={cStyle}>
-      <Row noGutters className="h-100">
-        <Col style={sideBarStyle}>
-          <Sidebar
-            setItem={setItemToAdd}
-            selectedItem={services.getItem(currentItemId)}
-            onWallDelete={services.deleteItem}
-          />
-        </Col>
-        <Col ref={canvasRef} style={colStyle}>
-          <div tabIndex={0} onKeyDown={(e) => onKeyDown(e)}>
-            <PlanCanvas
-              width={canvasSize.width}
-              height={canvasSize.height}
-              itemToAdd={itemToAdd}
-              setCurrentItemId={setCurrentItemId}
-              allItems={planerItems.items}
-              currentItemId={currentItemId}
-              addItem={services.addItem}
+    <div onKeyDown={(e) => onKeyDown(e)}>
+      <Container fluid style={cStyle}>
+        <Row noGutters className="h-100">
+          <Col style={sideBarStyle}>
+            <Sidebar
+              setItem={setItemToAdd}
+              selectedItem={services.getItem(currentItemId)}
+              onWallDelete={services.deleteItem}
             />
-          </div>
-        </Col>
-        <Col style={optionsStyle}>
-          <OptionsSidebar
-            undo={services.deleteLast}
-            delete={services.deleteAll}
-          />
-        </Col>
-      </Row>
-    </Container>
+          </Col>
+          <Col ref={canvasRef} style={colStyle}>
+            <div tabIndex={0}>
+              <PlanCanvas
+                width={canvasSize.width}
+                height={canvasSize.height}
+                itemToAdd={itemToAdd}
+                setCurrentItemId={setCurrentItemId}
+                allItems={planerItems.items}
+                currentItemId={currentItemId}
+                addItem={services.addItem}
+              />
+            </div>
+          </Col>
+          <Col style={optionsStyle}>
+            <OptionsSidebar
+              undo={services.undo}
+              delete={services.deleteAll}
+              newCanvas={services.newCanvas}
+            />
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 }

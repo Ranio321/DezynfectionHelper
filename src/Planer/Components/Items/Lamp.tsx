@@ -27,6 +27,7 @@ export default function Lamp(props: LampProps): JSX.Element {
     shouldSetItem,
     fill,
     stroke,
+    id,
   } = props;
   const [lampPosition, setLampPosition] = useState<Point>({ x: 0, y: 0 });
   const [shadowBlur, setShadowBlur] = useState(0);
@@ -35,21 +36,21 @@ export default function Lamp(props: LampProps): JSX.Element {
     let x = mousePosition.x - width / 2;
     let y = mousePosition.y - height / 2;
     setLampPosition({ x: x, y: y });
-  }, [mousePosition]);
+  }, [mousePosition, width, height]);
 
   function onClick() {
     if (onClickBlur) {
       setShadowBlur(20);
     }
     if (setCurrentItemId && shouldSetItem) {
-      setCurrentItemId(props.id);
+      setCurrentItemId(id);
     }
   }
   useEffect(() => {
-    if (currentItemId !== props.id) {
+    if (currentItemId !== id) {
       setShadowBlur(0);
     }
-  }, [currentItemId]);
+  }, [currentItemId, id]);
 
   return (
     <Rect
