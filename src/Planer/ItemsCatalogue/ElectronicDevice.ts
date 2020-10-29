@@ -6,5 +6,6 @@ image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Desktop_comput
 fill: "yellow",
 stroke: "black",
 width: 10,
-height: 10
+height: 10,
+strokeWidth: 1
 }

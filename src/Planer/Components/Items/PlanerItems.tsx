@@ -81,6 +81,8 @@ function PlanerItems(props: ItemsProps): JSX.Element {
             shouldSetItem={shouldHighlight()}
             fill={itemParams?.fill}
             stroke={itemParams?.stroke}
+            strokeWidth={itemParams?.strokeWidth}
+            text={itemParams?.name}
           />
         );
       })}

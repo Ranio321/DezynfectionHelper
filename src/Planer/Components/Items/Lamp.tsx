@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Rect } from "react-konva";
+import { Group, Rect, Text } from "react-konva";
+import { lamp } from "../../ItemsCatalogue/Lamp";
 import { MousePosition, Point } from "../../PlanerTypes";
 interface LampProps {
   mousePosition: MousePosition;
@@ -13,6 +14,8 @@ interface LampProps {
   shouldSetItem?: boolean;
   fill?: string;
   stroke?: string;
+  strokeWidth?: number;
+  text?: string;
 }
 
 export default function Lamp(props: LampProps): JSX.Element {
@@ -28,9 +31,12 @@ export default function Lamp(props: LampProps): JSX.Element {
     fill,
     stroke,
     id,
+    strokeWidth,
+    text,
   } = props;
   const [lampPosition, setLampPosition] = useState<Point>({ x: 0, y: 0 });
   const [shadowBlur, setShadowBlur] = useState(0);
+  const [textWidth, setTextWidth] = useState(0);
 
   useEffect(() => {
     let x = mousePosition.x - width / 2;
@@ -52,23 +58,50 @@ export default function Lamp(props: LampProps): JSX.Element {
     }
   }, [currentItemId, id]);
 
+  useEffect(() => {
+    var canvas: any = document.createElement("canvas");
+    var context = canvas.getContext("2d");
+    context.font = "12px TimesNewRoman";
+    var metrics = context.measureText(text);
+    setTextWidth(metrics.width);
+  }, [text]);
   return (
-    <Rect
-      key={props.id}
-      fill={fill}
-      height={height}
-      width={width}
-      x={lampPosition.x}
-      y={lampPosition.y}
-      stroke={stroke}
-      shadowBlur={shadowBlur}
-      onMouseEnter={() => {
-        showBlur && setShadowBlur(20);
-      }}
-      onMouseLeave={() => {
-        showBlur && setShadowBlur(0);
-      }}
-      onClick={() => onClick()}
-    />
+    <>
+      <Group
+        key={props.id}
+        height={height}
+        width={width}
+        x={lampPosition.x}
+        y={lampPosition.y}
+      >
+        <Rect
+          key={props.id}
+          fill={fill}
+          height={height}
+          width={width}
+          stroke={stroke}
+          strokeWidth={strokeWidth}
+          shadowBlur={shadowBlur}
+          onMouseEnter={() => {
+            showBlur && setShadowBlur(20);
+          }}
+          onMouseLeave={() => {
+            showBlur && setShadowBlur(0);
+          }}
+          onClick={() => onClick()}
+        />
+        <Text
+          text={text}
+          fontSize={12}
+          x={textWidth <= width + 4 ? 0 : -textWidth / 2}
+          y={-15}
+          width={textWidth}
+          fill="black"
+          align="center"
+          verticalAlign="middle"
+          fontFamily="TimesNewRoman"
+        />
+      </Group>
+    </>
   );
 }

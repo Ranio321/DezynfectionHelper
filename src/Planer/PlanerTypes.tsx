@@ -67,4 +67,5 @@ export interface CatalogueItem {
   height: number;
   fill?: string;
   image?: string;
+  strokeWidth?: number;
 }

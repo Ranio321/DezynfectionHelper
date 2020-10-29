@@ -6,5 +6,6 @@ export const lamp : CatalogueItem = {
     height: 15,
     fill: "#03cffc",
     stroke: "black",
-    image: "https://www.meden.com.pl/oferta/16952-large_default/system-dezynfekcji-z-promieniowaniem-uv-c-bezposrednim.jpg"
+    image: "https://www.meden.com.pl/oferta/16952-large_default/system-dezynfekcji-z-promieniowaniem-uv-c-bezposrednim.jpg",
+    strokeWidth: 1
 }

@@ -35,6 +35,8 @@ export default function MousePointerItem(
           mousePosition={mousePosition}
           stroke={item?.stroke}
           fill={item?.fill}
+          strokeWidth={item?.strokeWidth}
+          text={item?.name}
         />
       );
       break;
