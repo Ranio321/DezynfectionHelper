@@ -27,7 +27,6 @@ export default function MousePointerItem(
       let item = itemsCatalogueItems.find((item) => {
         return item.name === mouseItem;
       });
-
       pointer = (
         <Lamp
           id={Date.now()}

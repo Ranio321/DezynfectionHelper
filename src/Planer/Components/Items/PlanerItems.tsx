@@ -26,7 +26,6 @@ function PlanerItems(props: ItemsProps): JSX.Element {
       }
       if (
         item.item &&
-        item.item.id &&
         item.item.type !== itemList.wall &&
         item.item.type !== itemList.pointer &&
         item.item.position.width &&
@@ -35,8 +34,9 @@ function PlanerItems(props: ItemsProps): JSX.Element {
         rectItems.push(item);
       }
     });
-    setRectItmes(rectItems);
+    setRectItmes([...rectItems]);
     setWalls([...newWalls]);
+    console.log(rectItems);
   }, [items.length, items]);
 
   function shouldHighlight() {

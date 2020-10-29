@@ -18,11 +18,13 @@ export default function Sidebar(props: SidebarProps): JSX.Element {
       <div id="sidebarButton" onClick={() => setCollapseItems(!collapseItems)}>
         Items
       </div>
-      <div id="items">
-        {collapseItems && (
+
+      {collapseItems && (
+        <div id="items">
           <SidebarAddItem items={itemsCatalogueItems} setItem={props.setItem} />
-        )}
-      </div>
+        </div>
+      )}
+
       {props.selectedItem && (
         <div className="itemProperties">
           <ItemProperties

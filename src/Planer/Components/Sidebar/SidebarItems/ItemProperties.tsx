@@ -25,7 +25,8 @@ export default function ItemProperties(
         <input id="input" value={item?.position.end?.x} readOnly></input>
         <div id="text"> Y2</div>
         <input id="input" value={item?.position.end?.y} readOnly></input>
-        <br />
+        <div id="text"> Height</div>
+        <input id="input" value={item?.height} readOnly></input>
         <FontAwesomeIcon
           className="trash"
           icon={faTrashAlt}

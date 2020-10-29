@@ -9,6 +9,7 @@ export function usePlaner() {
 
   function addItem(item: Items) {
     let items: PlanerItems = cloneObject(planerItems);
+    item.item.height = 200;
     items.items.push({ ...item });
     setPlanerItems({ ...items });
   }
