@@ -12,6 +12,10 @@ import "./PlanCanvas.scss";
 import PlanerItems from "../Items/PlanerItems";
 import { itemFactory } from "../../Helpers/planerItemsServices";
 import { lampParams } from "../Items/Constants/LampConstants";
+import GridScale from "../Grid/TopGridScale";
+import { Col, Container, Row } from "react-bootstrap";
+import LeftGridScale from "../Grid/LeftGridScale";
+import TopGridScale from "../Grid/TopGridScale";
 interface PlanerProps {
   width: number;
   height: number;
@@ -109,49 +113,78 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     }
     return item;
   }
+  const rowStyle = {
+    height: "20px",
+  };
+
+  const colStyle = {
+    maxWidth: "20px",
+    margin: "0px",
+    paddingRight: "0px",
+  };
+
+  const cStyle = {
+    padding: "0px",
+    margin: "0px",
+    maxWidth: width,
+  };
 
   return (
-    <div id="planer">
-      <Stage
-        width={width}
-        height={height}
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-        onMouseMove={onMouseMove}
-        onMouseLeave={() => setShowPointer(false)}
-        onMouseEnter={() => setShowPointer(true)}
-        ref={layerRef}
-      >
-        <Grid width={width} height={height} />
-        <Layer>
-          {showPointer && (
-            <MousePointerItem
-              mousePosition={currentMousePosition}
-              mouseItem={itemToAdd}
-            />
-          )}
-          <PlanerItems
-            items={allItems}
-            snapToGrid
-            setCurrentItemId={setCurrentItemId}
-            itemToAdd={itemToAdd}
-            currentItemId={currentItemId}
-          />
-          {isDrawing && isDrawingSelected() && (
-            <CustomLine
-              snapToGrid
-              uniqueId={-1}
-              points={[
-                drawingLine.start.x,
-                drawingLine.start.y,
-                drawingLine.end.x,
-                drawingLine.end.y,
-              ]}
-              stroke="blue"
-            />
-          )}
-        </Layer>
-      </Stage>
-    </div>
+    <Container style={cStyle}>
+      <Row style={rowStyle} noGutters>
+        <Col>
+          <TopGridScale />
+        </Col>
+      </Row>
+      <Row noGutters>
+        <Col style={colStyle}>
+          <LeftGridScale />
+        </Col>
+        <Col className="planer">
+          <div id="planer">
+            <Stage
+              width={width - 20}
+              height={height - 20}
+              onMouseDown={onMouseDown}
+              onMouseUp={onMouseUp}
+              onMouseMove={onMouseMove}
+              onMouseLeave={() => setShowPointer(false)}
+              onMouseEnter={() => setShowPointer(true)}
+              ref={layerRef}
+            >
+              <Grid width={width} height={height} />
+              <Layer>
+                {showPointer && (
+                  <MousePointerItem
+                    mousePosition={currentMousePosition}
+                    mouseItem={itemToAdd}
+                  />
+                )}
+                <PlanerItems
+                  items={allItems}
+                  snapToGrid
+                  setCurrentItemId={setCurrentItemId}
+                  itemToAdd={itemToAdd}
+                  currentItemId={currentItemId}
+                />
+                {isDrawing && isDrawingSelected() && (
+                  <CustomLine
+                    snapToGrid
+                    uniqueId={-1}
+                    points={[
+                      drawingLine.start.x,
+                      drawingLine.start.y,
+                      drawingLine.end.x,
+                      drawingLine.end.y,
+                    ]}
+                    stroke="blue"
+                  />
+                )}
+              </Layer>
+            </Stage>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }

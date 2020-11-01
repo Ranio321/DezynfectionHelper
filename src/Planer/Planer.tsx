@@ -42,7 +42,7 @@ export default function Planer(props: PlanerProps): JSX.Element {
 
   useEffect(() => {
     setCurrentItemId(undefined);
-  }, [planerItems]);
+  }, [planerItems.items.length]);
 
   const cStyle = {
     height: window.innerHeight,
@@ -69,6 +69,7 @@ export default function Planer(props: PlanerProps): JSX.Element {
               setItem={setItemToAdd}
               selectedItem={services.getItem(currentItemId)}
               onWallDelete={services.deleteItem}
+              changeItem={services.changeItem}
             />
           </Col>
           <Col ref={canvasRef} style={colStyle}>

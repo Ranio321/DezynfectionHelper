@@ -8,6 +8,7 @@ interface SidebarProps {
   setItem: (x: string) => any;
   selectedItem?: Item;
   onWallDelete: (id: number) => any;
+  changeItem: (id: number, item: Item) => any;
 }
 
 export default function Sidebar(props: SidebarProps): JSX.Element {
@@ -30,6 +31,7 @@ export default function Sidebar(props: SidebarProps): JSX.Element {
           <ItemProperties
             item={props.selectedItem}
             onWallDelete={props.onWallDelete}
+            changeItem={props.changeItem}
           />
         </div>
       )}

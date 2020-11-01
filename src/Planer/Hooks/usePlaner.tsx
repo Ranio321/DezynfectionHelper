@@ -62,6 +62,17 @@ export function usePlaner() {
     return item;
   }
 
+  function changeItem(id: number, item: Item) {
+    let items: PlanerItems = cloneObject(planerItems[currentStep]);
+    let index = items.items.findIndex((item) => {
+      return item.id === id;
+    });
+
+    items.items[index] = item;
+    setPlanerItems([...planerItems, items]);
+    addToHistory();
+  }
+
   function addToHistory() {
     if (currentStep >= 0) {
       setCurrentStep(currentStep + 1);
@@ -76,6 +87,7 @@ export function usePlaner() {
     getItem,
     undo,
     newCanvas,
+    changeItem,
   };
 
   return [planerItems[currentStep], services] as const;

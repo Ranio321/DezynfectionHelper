@@ -1,4 +1,4 @@
-import { Line } from "react-konva";
+import { Circle, Line } from "react-konva";
 import Konva from "konva";
 import React, { useEffect, useRef, useState } from "react";
 import params from "../Grid/GridConstants";
@@ -21,6 +21,7 @@ export default function CustomLine(props: LineProps) {
   const lineRef = useRef<LineType>(null);
   const [color, setColor] = useState(stroke);
   const [strokeWidth, setStrokeWidth] = useState(params.width / 8);
+  const [shapePoints, setShapePoints] = useState<number[]>([]);
 
   function onClick() {
     if (props.setCurrentItemId && props.shouldSetItem) {
@@ -48,16 +49,37 @@ export default function CustomLine(props: LineProps) {
     }
   }, [props.isSelected, stroke]);
 
+  // useEffect(() => {
+  //   if (props.snapToGrid &&  props.points.length > 3) {
+  //     setShapePoints(snapToGrid(props.points));
+  //   }
+  // }, [props.points]);
+
+  console.log(shapePoints);
   return (
-    <Line
-      key={props.uniqueId}
-      points={props.snapToGrid ? snapToGrid(props.points) : props.points}
-      stroke={color}
-      strokeWidth={strokeWidth}
-      ref={lineRef}
-      onClick={() => onClick()}
-      onMouseOver={() => onMouseOver()}
-      onMouseLeave={() => onMouseLeave()}
-    />
+    <>
+      <Line
+        key={props.uniqueId}
+        points={snapToGrid(props.points)}
+        stroke={color}
+        strokeWidth={strokeWidth}
+        ref={lineRef}
+        onClick={() => onClick()}
+        onMouseOver={() => onMouseOver()}
+        onMouseLeave={() => onMouseLeave()}
+      />
+      <Circle
+        radius={5}
+        x={snapToGrid(props.points)[0]}
+        y={snapToGrid(props.points)[1]}
+        stroke="gray"
+      />
+      <Circle
+        radius={5}
+        x={snapToGrid(props.points)[2]}
+        y={snapToGrid(props.points)[3]}
+        stroke="gray"
+      />
+    </>
   );
 }
