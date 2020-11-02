@@ -21,7 +21,6 @@ export default function CustomLine(props: LineProps) {
   const lineRef = useRef<LineType>(null);
   const [color, setColor] = useState(stroke);
   const [strokeWidth, setStrokeWidth] = useState(params.width / 8);
-  const [shapePoints, setShapePoints] = useState<number[]>([]);
 
   function onClick() {
     if (props.setCurrentItemId && props.shouldSetItem) {
@@ -55,7 +54,6 @@ export default function CustomLine(props: LineProps) {
   //   }
   // }, [props.points]);
 
-  console.log(shapePoints);
   return (
     <>
       <Line

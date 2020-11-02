@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Group, Rect, Text } from "react-konva";
-import { lamp } from "../../ItemsCatalogue/Lamp";
 import { MousePosition, Point } from "../../PlanerTypes";
 interface LampProps {
   mousePosition: MousePosition;

@@ -12,7 +12,6 @@ import "./PlanCanvas.scss";
 import PlanerItems from "../Items/PlanerItems";
 import { itemFactory } from "../../Helpers/planerItemsServices";
 import { lampParams } from "../Items/Constants/LampConstants";
-import GridScale from "../Grid/TopGridScale";
 import { Col, Container, Row } from "react-bootstrap";
 import LeftGridScale from "../Grid/LeftGridScale";
 import TopGridScale from "../Grid/TopGridScale";

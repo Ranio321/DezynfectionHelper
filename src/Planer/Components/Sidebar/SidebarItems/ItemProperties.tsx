@@ -4,7 +4,6 @@ import "./ItemProperties.scss";
 import "../Sidebar.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { parse } from "path";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { cloneObject } from "../../../Helpers/cloneObject";
 interface ItemPropertiesProps {

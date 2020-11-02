@@ -34,6 +34,13 @@ export interface Item {
 
 export interface PlanerItems {
   items: Item[];
+  rooms?: Room[];
+}
+
+export interface Room {
+  name: string;
+  vertices: Point[];
+  area: number;
 }
 
 export interface Items {

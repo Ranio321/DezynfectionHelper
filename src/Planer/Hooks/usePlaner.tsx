@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { calcPolygonArea } from "../Helpers/calcPolygonArea";
+import checkForPolygon from "../Helpers/checkForPolygon";
 import { cloneObject } from "../Helpers/cloneObject";
 import { Item, PlanerItems } from "../PlanerTypes";
 
@@ -7,6 +9,7 @@ export function usePlaner() {
   const [planerItems, setPlanerItems] = useState<PlanerItems[]>([
     {
       items: [],
+      rooms: [],
     },
   ]);
 
@@ -28,7 +31,7 @@ export function usePlaner() {
     addToHistory();
   }
   function deleteAll() {
-    setPlanerItems([...planerItems, { items: [] }]);
+    setPlanerItems([...planerItems, { items: [], rooms: [] }]);
     addToHistory();
   }
 
@@ -78,6 +81,12 @@ export function usePlaner() {
       setCurrentStep(currentStep + 1);
     }
   }
+  useEffect(() => {
+    let vertices = checkForPolygon(planerItems[currentStep].items);
+    if (vertices) {
+      var area = calcPolygonArea(vertices);
+    }
+  }, [currentStep, planerItems]);
 
   const services = {
     addItem,
