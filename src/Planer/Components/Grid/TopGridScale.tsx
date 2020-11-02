@@ -1,7 +1,28 @@
 import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
 import "./GridScale.scss";
-interface GridScaleProps {}
+import params from "./GridConstants";
+
+interface GridScaleProps {
+  width: number;
+}
 export default function TopGridScale(props: GridScaleProps): JSX.Element {
-  return <div className="topGridScale"></div>;
+  const { width } = props;
+
+  var scale = [];
+  let scaleNumber = 0;
+  let strokeWidth = 5 * params.width;
+  for (let i = 0; i < width - strokeWidth; i = i + strokeWidth) {
+    scale.push(
+      <div key={"topScale" + scaleNumber} className="topGridItem">
+        {scaleNumber}
+      </div>
+    );
+    scaleNumber += 100;
+  }
+  return (
+    <div className="topGridScale">
+      <div className="blankItem"></div>
+      {scale}
+    </div>
+  );
 }

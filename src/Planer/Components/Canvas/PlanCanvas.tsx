@@ -133,12 +133,12 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     <Container style={cStyle}>
       <Row style={rowStyle} noGutters>
         <Col>
-          <TopGridScale />
+          <TopGridScale width={width - 20} />
         </Col>
       </Row>
       <Row noGutters>
         <Col style={colStyle}>
-          <LeftGridScale />
+          <LeftGridScale height={height - 20} />
         </Col>
         <Col className="planer">
           <div id="planer">

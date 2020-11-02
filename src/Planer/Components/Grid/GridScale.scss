@@ -2,9 +2,43 @@
     background-color: #28292D;
     height: 100%;
     box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 1px 0px inset;
+    overflow: hidden;
 }
 
 .topGridScale{
+    display: flex;
     background-color:#28292D;
     height: 100%;
+    overflow: hidden;
+}
+.topGridItem{
+    border-left-width: 1px;
+    border-left-color: white;
+    border-left-style: solid;
+    height: 15px;
+    width: 100px;
+    margin-top: 5px;
+    font-size: 11px;
+    color: white;
+    text-align: left;
+    padding-left: 3px;
+}
+.blankItem{
+    width: 20px;
+    height: 20px
+}
+.leftGridItem{
+    border-top-width: 1px;
+    border-top-color: white;
+    border-top-style: solid;
+    width: 75%;
+    height: 100px;
+    margin-left: 5px;
+    color: white;
+    font-size: 11px;
+
+}
+.br { 
+    display: block; 
+    margin-bottom: -.6em;
 }
