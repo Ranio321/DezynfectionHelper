@@ -3,15 +3,13 @@ import { cloneObject } from "./cloneObject";
 
 interface WallsIntersectPoint{
 id:number,
-intersectPoints: IntersectPoint
+intersectPoints: IntersectPoint[]
     
 }
 interface IntersectPoint{
     id:number,
-    intersectPoint:{
         x:number,
         y:number
-    }
 }
 
 export default function checkForPolygon(items:Item[]){
@@ -19,17 +17,8 @@ export default function checkForPolygon(items:Item[]){
 
     let allIntersectPoints = getAllIntersectPoints(planerItems);
 
-    let vertices = []
-    if(pointsCreateShape(allIntersectPoints)){
-        for(let x = 0; x< allIntersectPoints.length; x++)
-        {
-            vertices.push(allIntersectPoints[x].intersectPoints[0]);
-        }
-        vertices = getDistinctIntersectPoints(allIntersectPoints);
-    }
-
-    return vertices.length > 2 ? vertices: false;
-
+    let vertices = checkIfpointsCreatePolygon(allIntersectPoints);
+    return vertices.length > 0? vertices: false;
 }
 
 
@@ -70,7 +59,6 @@ function mapToCordinates(item:ClickPoints)
 
 
 function getAllIntersectPoints(planerItems:Item[]){
-    //let y = 1;
     let wallsIntersectPoints = [];
     let walls = planerItems.filter(item => item.type==="Wall");
     for(let x = 0; x <walls.length; x++)
@@ -87,7 +75,7 @@ function getAllIntersectPoints(planerItems:Item[]){
                 if(intersectPoint)
                 {
                    intersectPoints.push({
-                       intersectPoint,
+                       ...intersectPoint,
                        id: walls[y].id,
                    })
                 }
@@ -99,45 +87,59 @@ function getAllIntersectPoints(planerItems:Item[]){
                 intersectPoints,
             });
         }
-       // y = x+2;
     }
     return wallsIntersectPoints;
 }
 
-function pointsCreateShape(wallsIntersectPoints:any){
 
-    let createdShape = true
-    if(3 > wallsIntersectPoints.length)
+function checkIfpointsCreatePolygon(intersectPoints:WallsIntersectPoint[]){
+    let prevId = 0;
+    let end:any = [];
+    for(let x = 0; x<intersectPoints.length; x++)
     {
-        createdShape = false;
-    }
-    for(let x = 0; x<wallsIntersectPoints.length; x++)
-    {
-        if(wallsIntersectPoints[x].intersectPoints < 2)
+        
+       if(intersectPoints[x].intersectPoints.length > 1)
+       {
+        prevId = intersectPoints[x].id;
+        end = [];
+        let roomFound = p1(prevId,prevId,intersectPoints[x],intersectPoints,end);
+        if(roomFound)
         {
-            createdShape = false
+            break;
         }
+       }
     }
+    let vertices:any = []
+    end.forEach((item: any) =>{
+        vertices.push({x:item["x"], y:item["y"]});
+    });
+    return vertices;
 
-    return createdShape;
 }
 
+function p1(mainId:number, prevId:number, item:WallsIntersectPoint, allPoints: WallsIntersectPoint[], end:any):any{
+    if(item.intersectPoints.length >1){
+        // console.log("currentId "+ item.id)
+        // console.log("prevId "+ prevId);
+        // console.log("mainId "+ mainId);
 
-function getDistinctIntersectPoints(wallsIntersectPoints:any)
-{
-    let intersectPoints:any[] = []
-    for(let x = 0; x< wallsIntersectPoints.length; x++)
-    {
-        for(let y = 0; y < wallsIntersectPoints[x].intersectPoints.length; y++)
+        for(let y = 0; y<item.intersectPoints.length; y++)
         {
-        if(intersectPoints.filter(item => {
-            return item.x===wallsIntersectPoints[x].intersectPoints[y].intersectPoint.x && item.y===wallsIntersectPoints[x].intersectPoints[y].intersectPoint.y}
-            ).length === 0)
-        {
-            intersectPoints.push(wallsIntersectPoints[x].intersectPoints[y].intersectPoint)
-        }
         
+            let newItem = allPoints.find(p => p.id === item.intersectPoints[y].id && item.intersectPoints[y].id !== prevId);
+                if(newItem?.id === mainId){
+                    end.push(item.intersectPoints[y]);
+                    return true;
+                } 
+                if(newItem?.intersectPoints.length! > 1 && newItem && newItem.intersectPoints && newItem.intersectPoints.length && newItem?.id !== mainId)
+                {
+                    end.push(item.intersectPoints[y]);
+                    return p1(mainId,item.id,newItem,allPoints,end);
+                }
         }
     }
- return intersectPoints;
+    else{
+
+        return;
+    }
 }

@@ -82,6 +82,7 @@ export default function Planer(props: PlanerProps): JSX.Element {
                 allItems={planerItems.items}
                 currentItemId={currentItemId}
                 addItem={services.addItem}
+                rooms={planerItems.rooms}
               />
             </div>
           </Col>

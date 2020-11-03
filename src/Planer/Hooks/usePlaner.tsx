@@ -85,8 +85,17 @@ export function usePlaner() {
     let vertices = checkForPolygon(planerItems[currentStep].items);
     if (vertices) {
       var area = calcPolygonArea(vertices);
+      let items: PlanerItems[] = cloneObject(planerItems);
+      items[items.length - 1].rooms = [
+        {
+          area: area,
+          name: "Main Room",
+          vertices: vertices,
+        },
+      ];
+      setPlanerItems(items);
     }
-  }, [currentStep, planerItems]);
+  }, [currentStep]);
 
   const services = {
     addItem,

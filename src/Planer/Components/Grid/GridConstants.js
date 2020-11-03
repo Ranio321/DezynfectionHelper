@@ -3,6 +3,7 @@ const stroke = "black";
 const fill  = "azure";
 const width = 20;
 const height = 20;
+const scale = 100;
 
 
 const params = {
@@ -10,6 +11,7 @@ const params = {
     stroke,
     fill,
     width,
-    height
+    height,
+    scale
     }
 export default params;

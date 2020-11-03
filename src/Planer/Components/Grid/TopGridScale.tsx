@@ -10,7 +10,7 @@ export default function TopGridScale(props: GridScaleProps): JSX.Element {
 
   var scale = [];
   let scaleNumber = 0;
-  let strokeWidth = 5 * params.width;
+  let strokeWidth = params.scale;
   for (let i = 0; i < width - strokeWidth; i = i + strokeWidth) {
     scale.push(
       <div key={"topScale" + scaleNumber} className="topGridItem">

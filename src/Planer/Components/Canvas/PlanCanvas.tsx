@@ -3,7 +3,13 @@ import { Stage as StageType } from "konva/types/Stage";
 import React, { useRef, useState } from "react";
 import { Layer, Stage } from "react-konva";
 import { getMousePosition } from "../../Helpers/mousePosition";
-import { ClickPoints, DrawingLine, Item, Point } from "../../PlanerTypes";
+import {
+  ClickPoints,
+  DrawingLine,
+  Item,
+  Point,
+  Room as RoomType,
+} from "../../PlanerTypes";
 import Grid from "../Grid/Grid";
 import CustomLine from "../Lines/CustomLine";
 import MousePointerItem from "../MousePointer/MousePointerItem";
@@ -15,12 +21,14 @@ import { lampParams } from "../Items/Constants/LampConstants";
 import { Col, Container, Row } from "react-bootstrap";
 import LeftGridScale from "../Grid/LeftGridScale";
 import TopGridScale from "../Grid/TopGridScale";
+import Room from "../Items/Room";
 interface PlanerProps {
   width: number;
   height: number;
   itemToAdd: string;
   setCurrentItemId: (id: number) => any;
   allItems: Item[];
+  rooms?: RoomType[];
   currentItemId?: number;
   addItem: (item: Item) => any;
 }
@@ -34,6 +42,7 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     setCurrentItemId,
     currentItemId,
     addItem,
+    rooms,
   } = props;
 
   const defaultStartPoint = {
@@ -166,6 +175,9 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
                   itemToAdd={itemToAdd}
                   currentItemId={currentItemId}
                 />
+                {rooms?.map((room) => (
+                  <Room room={room} />
+                ))}
                 {isDrawing && isDrawingSelected() && (
                   <CustomLine
                     snapToGrid
