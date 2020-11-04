@@ -1,4 +1,4 @@
- export function calcPolygonArea(vertices:any  ) {
+ export function calcPolygonArea(vertices:any  ):number {
     var total = 0;
 
     for (var i = 0, l = vertices.length; i < l; i++) {

@@ -1,4 +1,4 @@
-import { ClickPoints, Item } from "../PlanerTypes"
+import { ClickPoints, Item, Point } from "../PlanerTypes"
 import { cloneObject } from "./cloneObject";
 
 interface WallsIntersectPoint{
@@ -109,7 +109,7 @@ function checkIfpointsCreatePolygon(intersectPoints:WallsIntersectPoint[]){
         }
        }
     }
-    let vertices:any = []
+    let vertices:Point[] = []
     end.forEach((item: any) =>{
         vertices.push({x:item["x"], y:item["y"]});
     });
