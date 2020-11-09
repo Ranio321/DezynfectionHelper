@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { calcPolygonArea } from "../Helpers/calcPolygonArea";
 import checkForPolygon from "../Helpers/checkForPolygon";
 import { cloneObject } from "../Helpers/cloneObject";
-import { Item, PlanerItems } from "../PlanerTypes";
+import { Item, PlanerItems, Room } from "../PlanerTypes";
 
 export function usePlaner() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -23,10 +23,10 @@ export function usePlaner() {
 
   function deleteItem(id: number) {
     let items: PlanerItems = cloneObject(planerItems[currentStep]);
-    let index = items.items.findIndex((item) => {
-      return item.id === id;
-    });
+
+    let index = items.items.findIndex((item) => item.id === id);
     items.items.splice(index, 1);
+
     setPlanerItems([...planerItems, items]);
     addToHistory();
   }
@@ -55,21 +55,19 @@ export function usePlaner() {
       setPlanerItems([...items]);
     }
   }
+
   function getItem(id: number | undefined): Item | undefined {
     let item;
     if (id && planerItems[currentStep]) {
-      item = planerItems[currentStep].items.find((item) => {
-        return item.id === id;
-      });
+      item = planerItems[currentStep].items.find((item) => item.id === id);
     }
     return item;
   }
 
   function changeItem(id: number, item: Item) {
     let items: PlanerItems = cloneObject(planerItems[currentStep]);
-    let index = items.items.findIndex((item) => {
-      return item.id === id;
-    });
+
+    let index = items.items.findIndex((item) => item.id === id);
 
     items.items[index] = item;
     setPlanerItems([...planerItems, items]);
@@ -81,20 +79,22 @@ export function usePlaner() {
       setCurrentStep(currentStep + 1);
     }
   }
+
   useEffect(() => {
     let vertices = checkForPolygon(planerItems[currentStep].items);
+    let room: Room[] = [];
+
+    let items: PlanerItems[] = cloneObject(planerItems);
     if (vertices) {
       var area = calcPolygonArea(vertices);
-      let items: PlanerItems[] = cloneObject(planerItems);
-      items[items.length - 1].rooms = [
-        {
-          area: area,
-          name: "Main Room",
-          vertices: vertices,
-        },
-      ];
-      setPlanerItems(items);
+      room.push({
+        area: area,
+        name: "Main Room",
+        vertices: vertices,
+      });
     }
+    items[items.length - 1].rooms = room;
+    setPlanerItems(items);
   }, [currentStep]);
 
   const services = {

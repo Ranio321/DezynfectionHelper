@@ -24,7 +24,13 @@ function Room(props: RoomProps) {
 
   return (
     <>
-      <Line points={points} closed fill="pink" opacity={0.2} />
+      <Line
+        points={points}
+        closed
+        fill="pink"
+        opacity={0.2}
+        listening={false}
+      />
       <Text
         x={textPosition?.x}
         y={textPosition?.y}
