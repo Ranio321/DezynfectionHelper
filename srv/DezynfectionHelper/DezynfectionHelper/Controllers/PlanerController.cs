@@ -3,21 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DezynfectionHelper.Planer.Models;
+using DezynfectionHelper.Planer.Params;
+using DezynfectionHelper.Planer.Repositories;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using NHibernate;
 
 namespace DezynfectionHelper.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class PlanerController : ControllerBase
     {
+        private IPlanerRepository repo;
+
+        public PlanerController(IPlanerRepository repo)
+        {
+            this.repo = repo;
+        }
 
         [HttpPost]
-        public string Save([FromBody] PlanerItems items)
+        public async Task Save([FromBody] PlanerItemsParams param)
         {
-            return "value";
+           await repo.AddAsync(param);
         }
 
         [HttpGet]
