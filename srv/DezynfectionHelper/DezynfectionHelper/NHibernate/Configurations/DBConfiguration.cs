@@ -10,7 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace DezynfectionHelper.NHibernate
+namespace DezynfectionHelper.NHibernate.Configurations
 {
     public class DBConfiguration : IDBConfiguration
     {
