@@ -19,11 +19,9 @@ namespace DezynfectionHelper.Planer.Models
         public PlanerObjectMap()
         {
             Id(x => x.Id);
-            HasOne(x => x.Position)
-                .Cascade.All();
-            Map(x => x.Height);
             Map(x => x.Type);
-
+            References(x => x.Position)
+                .Cascade.All();
         }
     }
 }

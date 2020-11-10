@@ -1,6 +1,7 @@
 ﻿using DezynfectionHelper.Planer.Models;
 using DezynfectionHelper.Planer.Params;
 using NHibernate;
+using NHibernate.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,12 @@ namespace DezynfectionHelper.Planer.Repositories
                     session.SaveOrUpdate(planerItems);
                     transaction.Commit();
                 }
+            }
+
+            using (var session = sessionFactory.OpenSession())
+            {
+                var result = session.Query<PlanerItems>()
+                    .Fetch(x => x.Room).ToList();
             }
         }
     }

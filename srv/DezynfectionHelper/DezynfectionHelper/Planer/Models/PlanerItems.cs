@@ -8,7 +8,7 @@ namespace DezynfectionHelper.Planer.Models
 {
     public class PlanerItems
     {
-        public virtual int Id { get; set; }
+        public virtual int Id { get; protected set; }
         public virtual string Name { get; set; }
         public virtual IList<PlanerObject> Objects { get; set; }
         public virtual Room Room { get; set; }
@@ -20,7 +20,7 @@ namespace DezynfectionHelper.Planer.Models
         {
             Id(x => x.Id);
             Map(x => x.Name);
-            HasOne(x => x.Room)
+            References(x => x.Room)
                 .Cascade.All();
             HasMany(x => x.Objects)
                 .Cascade.All();

@@ -23,6 +23,5 @@ namespace DezynfectionHelper.Extenstions
         {
             services.AddSingleton<IPlanerRepository, PlanerRepository>();
         }
-
     }
 }

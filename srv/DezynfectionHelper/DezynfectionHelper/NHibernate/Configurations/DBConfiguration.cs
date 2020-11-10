@@ -26,10 +26,9 @@ namespace DezynfectionHelper.NHibernate.Configurations
             var connectionString = configuration.GetSection("Database").GetSection("ConnectionString").Value;
             return Fluently.Configure()
                 .Database(PostgreSQLConfiguration.Standard.ConnectionString(connectionString))
-                .Mappings(m => m.FluentMappings.AddFromAssembly(Assembly.GetExecutingAssembly()))
+                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Program>())
                 .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(false, true))
                 .BuildSessionFactory();
-
         }
     }
 }

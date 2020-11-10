@@ -15,8 +15,7 @@ namespace DezynfectionHelper.NHibernate.Models
     {
         public EntityMap()
         {
-            Id(x => x.Id)
-                .GeneratedBy.Identity();
+            Id(x => x.Id);
         }
     }
 }

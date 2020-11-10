@@ -10,6 +10,5 @@ namespace DezynfectionHelper.Planer.Params
     {
         public List<PlanerObject> Objects { get; set; }
         public Room Room { get; set; }
-
     }
 }

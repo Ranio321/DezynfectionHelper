@@ -24,7 +24,7 @@ namespace DezynfectionHelper.Controllers
         [HttpPost]
         public async Task Save([FromBody] PlanerItemsParams param)
         {
-           await repo.AddAsync(param);
+            await repo.AddAsync(param);
         }
 
         [HttpGet]
