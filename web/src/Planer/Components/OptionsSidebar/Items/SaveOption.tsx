@@ -2,9 +2,10 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import "./Icon.scss";
-import SaveModal from "./SaveModal";
-import { modalText } from "./SaveModalUtils";
+import "./Option.scss";
+import SaveModal from "../Modal/SaveModal";
+import { modalText } from "../Modal/SaveModalUtils";
+import SaveModalForm from "../Modal/SaveModalForm";
 interface IconProps {
   icon: IconProp;
   onClick?: () => any;
@@ -12,12 +13,14 @@ interface IconProps {
   modal?: boolean;
 }
 
-export default function (props: IconProps): JSX.Element {
+export default function SaveOption(props: IconProps): JSX.Element {
   const { icon, tooltip, modal, onClick } = props;
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalTextIndex, setModalTextIndex] = useState<number>(0);
+  const [showModalForm, setShowModalForm] = useState<boolean>(false);
+  const [name, setName] = useState<string>("");
 
-  function onIconClick() {
+  function onSaveClick() {
     setShowModal(true);
     let response = onClick?.call(null);
     response.then(() => setModalTextIndex(1)).catch(() => setModalTextIndex(2));
@@ -36,12 +39,28 @@ export default function (props: IconProps): JSX.Element {
           text={modalText[modalTextIndex]}
         />
       )}
+      {showModalForm && (
+        <SaveModalForm
+          onHide={() => setShowModalForm(false)}
+          show={showModalForm}
+          name={name}
+          onSave={() => {
+            onSaveClick();
+            setShowModalForm(false);
+          }}
+          setName={setName}
+        />
+      )}
       <OverlayTrigger
         placement="left"
         delay={{ show: 100, hide: 100 }}
-        overlay={<Tooltip id="button-tooltip">{tooltip}</Tooltip>}
+        overlay={
+          <Tooltip style={{ margin: 0 }} id="button-tooltip">
+            {tooltip}
+          </Tooltip>
+        }
       >
-        <div className="OptionsIconDiv" onClick={() => onIconClick()}>
+        <div className="OptionsIconDiv" onClick={() => setShowModalForm(true)}>
           <FontAwesomeIcon className="OptionsIcon" icon={icon} size="2x" />
         </div>
       </OverlayTrigger>

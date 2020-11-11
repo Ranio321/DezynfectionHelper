@@ -10,12 +10,14 @@ export default function SaveModal(props: SaveModalProps): JSX.Element {
   const { text, show, onHide } = props;
   return (
     <Modal
+      animation={false}
       show={show}
+      onHide={onHide}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton></Modal.Header>
+      <Modal.Header style={{ backgroundColor: "#0069d9" }}></Modal.Header>
       <Modal.Body>
         <h4 style={{ textAlign: "center", color: "forestgreen" }}>{text}</h4>
       </Modal.Body>
