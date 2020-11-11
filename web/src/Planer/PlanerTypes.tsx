@@ -33,6 +33,7 @@ export interface Item {
 }
 
 export interface PlanerItems {
+  name?: string;
   items: Item[];
   rooms?: Room[];
 }

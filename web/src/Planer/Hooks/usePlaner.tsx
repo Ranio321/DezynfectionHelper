@@ -7,10 +7,7 @@ import { Item, PlanerItems, Room } from "../PlanerTypes";
 export function usePlaner() {
   const [currentStep, setCurrentStep] = useState(0);
   const [planerItems, setPlanerItems] = useState<PlanerItems[]>([
-    {
-      items: [],
-      rooms: [],
-    },
+    newPlanerItems,
   ]);
 
   function addItem(item: Item) {
@@ -31,7 +28,7 @@ export function usePlaner() {
     addToHistory();
   }
   function deleteAll() {
-    setPlanerItems([...planerItems, { items: [], rooms: [] }]);
+    setPlanerItems([...planerItems, newPlanerItems]);
     addToHistory();
   }
 
@@ -110,3 +107,9 @@ export function usePlaner() {
 
   return [planerItems[currentStep], services] as const;
 }
+
+const newPlanerItems = {
+  name: "undefined",
+  items: [],
+  rooms: [],
+};

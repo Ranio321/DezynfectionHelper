@@ -11,11 +11,11 @@ namespace DezynfectionHelper.Planer.Repositories
 {
     public class PlanerRepository : IPlanerRepository
     {
-        private ISessionFactory sessionFactory;
+        private readonly ISession session;
 
-        public PlanerRepository(ISessionFactory sessionFactory)
+        public PlanerRepository(ISession sessionFactory)
         {
-            this.sessionFactory = sessionFactory;
+            this.session = sessionFactory;
         }
 
         public async Task AddAsync(PlanerItemsParams param)
@@ -26,21 +26,18 @@ namespace DezynfectionHelper.Planer.Repositories
                 Objects = param.Objects,
                 Room = param.Room,
             };
+            await session.SaveOrUpdateAsync(planerItems);
+        }
 
-            using (var session = sessionFactory.OpenSession())
-            {
-                using (var transaction = session.BeginTransaction())
-                {
-                    session.SaveOrUpdate(planerItems);
-                    transaction.Commit();
-                }
-            }
+        public async Task<List<PlanerItems>> GetAllAsync()
+        {
+            return new List<PlanerItems>();
+        }
 
-            using (var session = sessionFactory.OpenSession())
-            {
-                var result = session.Query<PlanerItems>()
-                    .Fetch(x => x.Room).ToList();
-            }
+        public async Task<PlanerItems> GetByIdAsync(int id)
+        {
+            return new PlanerItems();
         }
     }
+
 }

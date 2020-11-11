@@ -21,14 +21,15 @@ namespace DezynfectionHelper.NHibernate.Configurations
             this.configuration = configuration;
         }
 
-        public ISessionFactory CreateSessionFactory()
+        public ISession CreateSession()
         {
             var connectionString = configuration.GetSection("Database").GetSection("ConnectionString").Value;
             return Fluently.Configure()
                 .Database(PostgreSQLConfiguration.Standard.ConnectionString(connectionString))
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Program>())
                 .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(false, true))
-                .BuildSessionFactory();
+                .BuildSessionFactory()
+                .OpenSession();
         }
     }
 }

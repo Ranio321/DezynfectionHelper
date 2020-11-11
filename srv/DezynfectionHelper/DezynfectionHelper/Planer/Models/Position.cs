@@ -10,7 +10,7 @@ namespace DezynfectionHelper.Planer.Models
 {
     public class Position
     {
-        public virtual int PositionId { get; set; }
+        public virtual int Id { get; set; }
         public virtual Coordinates Start { get; set; }
         public virtual Coordinates End { get; set; }
         public virtual int? Width { get; set; }
@@ -21,7 +21,7 @@ namespace DezynfectionHelper.Planer.Models
     {
         public PositionMap()
         {
-            Id(x => x.PositionId);
+            Id(x => x.Id);
             References(x => x.Start)
                 .Cascade.All();
             References(x => x.End)

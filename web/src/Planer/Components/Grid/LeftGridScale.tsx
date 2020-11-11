@@ -16,10 +16,10 @@ function LeftGridScale(props: LeftGridScaleProps): JSX.Element {
     let txt = scaleNumber.toString();
     for (let x = 0; x < txt.length; x++) {
       scaleText.push(
-        <>
+        <div key={"div" + x}>
           {txt[x]}
-          <span key={txt[x] + "ls"} className="br" />
-        </>
+          <span key={scaleNumber + "ls"} className="br" />
+        </div>
       );
     }
     scale.push(

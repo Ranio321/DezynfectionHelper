@@ -8,6 +8,6 @@ namespace DezynfectionHelper.NHibernate.Configurations
 {
     public interface IDBConfiguration
     {
-        ISessionFactory CreateSessionFactory();
+        ISession CreateSession();
     }
 }

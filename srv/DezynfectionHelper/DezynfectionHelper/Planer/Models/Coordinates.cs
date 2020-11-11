@@ -11,8 +11,8 @@ namespace DezynfectionHelper.PLaner.Models
 {
     public class Coordinates : Entity<int>
     {
-        public virtual int X { get; set; }
-        public virtual int Y { get; set; }
+        public virtual float X { get; set; }
+        public virtual float Y { get; set; }
     }
 
     public class CoordinatesMap : EntityMap<Coordinates, int>

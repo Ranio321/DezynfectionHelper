@@ -176,7 +176,7 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
                   currentItemId={currentItemId}
                 />
                 {rooms?.map((room) => (
-                  <Room room={room} />
+                  <Room key={room.name} room={room} />
                 ))}
                 {isDrawing && isDrawingSelected() && (
                   <CustomLine

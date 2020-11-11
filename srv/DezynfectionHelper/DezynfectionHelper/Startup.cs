@@ -28,7 +28,7 @@ namespace DezynfectionHelper
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddTransient<IConfiguration>(c => Configuration);
+            services.AddTransient(c => Configuration);
             services.AddNHibernate();
             services.AddRepositories();
 

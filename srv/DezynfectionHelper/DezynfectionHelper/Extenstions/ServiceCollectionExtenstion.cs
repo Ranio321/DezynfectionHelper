@@ -1,5 +1,6 @@
 ﻿using DezynfectionHelper.NHibernate;
 using DezynfectionHelper.NHibernate.Configurations;
+using DezynfectionHelper.NHibernate.Services;
 using DezynfectionHelper.Planer.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate;
@@ -15,13 +16,14 @@ namespace DezynfectionHelper.Extenstions
 
         public static void AddNHibernate(this IServiceCollection services)
         {
-            services.AddSingleton<IDBConfiguration, DBConfiguration>();
-            services.AddSingleton<ISessionFactory>(x => x.GetService<IDBConfiguration>().CreateSessionFactory());
+            services.AddTransient<IDBConfiguration, DBConfiguration>()
+                    .AddScoped<IUnitOfWork, UnitOfWork>()
+                    .AddScoped(x => x.GetService<IDBConfiguration>().CreateSession());
         }
 
         public static void AddRepositories(this IServiceCollection services)
         {
-            services.AddSingleton<IPlanerRepository, PlanerRepository>();
+            services.AddTransient<IPlanerRepository, PlanerRepository>();
         }
     }
 }

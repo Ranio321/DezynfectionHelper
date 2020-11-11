@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { planerService } from "./api/PlanerServices";
 import PlanCanvas from "./Components/Canvas/PlanCanvas";
 import OptionsSidebar from "./Components/OptionsSidebar/OptionsSidebar";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import { itemList } from "./Components/Sidebar/SidebarItems/Items";
 import { usePlaner } from "./Hooks/usePlaner";
+import { planerItemsToParams } from "./Mappers/planerItemsToParams";
 import "./Planer.scss";
 interface PlanerProps {}
 
@@ -21,6 +23,12 @@ export default function Planer(props: PlanerProps): JSX.Element {
       setCurrentItemId(undefined);
     }
   }
+  function onSave() {
+    let data = planerItemsToParams(planerItems);
+    let response = planerService.save(data);
+    return response;
+  }
+
   useEffect(() => {
     setCurrentItemId(undefined);
   }, [itemToAdd]);
@@ -91,6 +99,7 @@ export default function Planer(props: PlanerProps): JSX.Element {
               undo={services.undo}
               delete={services.deleteAll}
               newCanvas={services.newCanvas}
+              save={onSave}
             />
           </Col>
         </Row>
