@@ -9,7 +9,7 @@ interface SaveModalFormProps {
   onSave: () => any;
 }
 export default function SaveModalForm(props: SaveModalFormProps): JSX.Element {
-  const { show, onHide, onSave } = props;
+  const { show, onHide, onSave, name, setName } = props;
   return (
     <Modal
       show={show}
@@ -25,11 +25,13 @@ export default function SaveModalForm(props: SaveModalFormProps): JSX.Element {
             placeholder="Project name"
             aria-label="Project name"
             aria-describedby="basic-addon1"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </InputGroup>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={onSave} variant="success">
+        <Button onClick={onSave} variant="success" disabled={name.length < 1}>
           Save
         </Button>
         <Button onClick={onHide} variant="danger">

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import "./Option.scss";
 import SaveModal from "../Modal/SaveModal";
-import { modalText } from "../Modal/SaveModalUtils";
+import { modalTextItems } from "../Modal/SaveModalUtils";
 import SaveModalForm from "../Modal/SaveModalForm";
 interface IconProps {
   icon: IconProp;
@@ -36,7 +36,7 @@ export default function SaveOption(props: IconProps): JSX.Element {
         <SaveModal
           onHide={onModalHide}
           show={showModal}
-          text={modalText[modalTextIndex]}
+          text={modalTextItems[modalTextIndex]}
         />
       )}
       {showModalForm && (
@@ -60,7 +60,13 @@ export default function SaveOption(props: IconProps): JSX.Element {
           </Tooltip>
         }
       >
-        <div className="OptionsIconDiv" onClick={() => setShowModalForm(true)}>
+        <div
+          className="OptionsIconDiv"
+          onClick={() => {
+            setShowModalForm(true);
+            setName("");
+          }}
+        >
           <FontAwesomeIcon className="OptionsIcon" icon={icon} size="2x" />
         </div>
       </OverlayTrigger>

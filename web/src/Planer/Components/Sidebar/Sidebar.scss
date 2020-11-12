@@ -29,6 +29,7 @@
 #items{
     outline: none;
     overflow: auto;
+    overflow-x: hidden;
     scrollbar-width:thin;
     max-height: 50%;
     display:inline-block;

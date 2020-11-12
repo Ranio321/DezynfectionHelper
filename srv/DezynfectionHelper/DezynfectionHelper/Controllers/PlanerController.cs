@@ -32,15 +32,15 @@ namespace DezynfectionHelper.Controllers
         }
 
         [HttpGet]
-        public string Get([FromQuery] int id)
+        public async Task<PlanerItems> Get([FromQuery] int id)
         {
-            return "da";
+            return await repo.GetByIdAsync(id);
         }
 
         [HttpGet]
-        public string GetAll()
+        public async Task<List<PlanerItems>> GetAll()
         {
-            return "da";
+            return await repo.GetAllAsync();
         }
     }
 }

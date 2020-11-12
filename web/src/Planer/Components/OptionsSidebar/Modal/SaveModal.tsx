@@ -3,7 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 interface SaveModalProps {
   onHide: () => any;
   show: boolean;
-  text: string;
+  text: JSX.Element;
 }
 
 export default function SaveModal(props: SaveModalProps): JSX.Element {

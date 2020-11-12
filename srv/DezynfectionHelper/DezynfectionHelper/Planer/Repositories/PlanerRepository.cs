@@ -31,12 +31,14 @@ namespace DezynfectionHelper.Planer.Repositories
 
         public async Task<List<PlanerItems>> GetAllAsync()
         {
-            return new List<PlanerItems>();
+            return await session.Query<PlanerItems>().ToListAsync();
         }
 
         public async Task<PlanerItems> GetByIdAsync(int id)
         {
-            return new PlanerItems();
+            return await session.Query<PlanerItems>()
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
         }
     }
 

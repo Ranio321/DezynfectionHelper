@@ -1,4 +1,4 @@
-import { PlanerItemsParams } from "../api/PlanerServices";
+import { PlanerItemsParams } from "../../api/models";
 import { PlanerItems } from "../PlanerTypes";
 
 export function planerItemsToParams(
@@ -11,6 +11,7 @@ export function planerItemsToParams(
   let items: PlanerItemsParams = {
     objects: planerItems.items,
     room: room,
+    name: planerItems.name!,
   };
   return items;
 }

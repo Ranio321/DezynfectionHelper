@@ -1,21 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { planerService } from "./api/PlanerServices";
+import { useParams } from "react-router-dom";
+import { PlanerItemsDto } from "../api/models";
+import { planerService } from "../api/PlanerServices";
 import PlanCanvas from "./Components/Canvas/PlanCanvas";
 import OptionsSidebar from "./Components/OptionsSidebar/OptionsSidebar";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import { itemList } from "./Components/Sidebar/SidebarItems/Items";
+import { useDataLoader } from "./Hooks/useDataLoader";
 import { usePlaner } from "./Hooks/usePlaner";
 import { planerItemsToParams } from "./Mappers/planerItemsToParams";
 import "./Planer.scss";
+import { PlanerItems, Room } from "./PlanerTypes";
 interface PlanerProps {}
 
 export default function Planer(props: PlanerProps): JSX.Element {
+  const { id } = useParams<{ id: string }>();
+  const [initialItems, promise] = useDataLoader(() =>
+    planerService.get(parseInt(id))
+  );
   const [itemToAdd, setItemToAdd] = useState<string>("Pointer");
   const [currentItemId, setCurrentItemId] = useState<number | undefined>();
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
   const canvasRef = useRef<HTMLDivElement>(null);
-  const [planerItems, services] = usePlaner();
+  const [planerItems, services] = usePlaner(
+    planerItemsDtoToPlanerItems(initialItems)
+  );
 
   function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     if (e.key === "Escape") {
@@ -44,6 +54,7 @@ export default function Planer(props: PlanerProps): JSX.Element {
         setCanvasSize({ ...size });
       }
     }
+    console.log("here");
     handleResize();
     window.addEventListener("resize", handleResize);
   }, []);
@@ -106,4 +117,22 @@ export default function Planer(props: PlanerProps): JSX.Element {
       </Container>
     </div>
   );
+}
+
+function planerItemsDtoToPlanerItems(
+  planerItemsDto?: PlanerItemsDto
+): PlanerItems | undefined {
+  if (planerItemsDto) {
+    let obj: PlanerItemsDto = planerItemsDto;
+    const rooms: Room[] = [];
+    if (obj.room) {
+      rooms.push(obj.room);
+    }
+    let newObj: PlanerItems = {
+      name: obj.name,
+      items: obj.objects,
+      rooms: rooms,
+    };
+    return newObj;
+  }
 }

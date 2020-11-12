@@ -4,9 +4,9 @@ import checkForPolygon from "../Helpers/checkForPolygon";
 import { cloneObject } from "../Helpers/cloneObject";
 import { Item, PlanerItems, Room } from "../PlanerTypes";
 
-export function usePlaner() {
+export function usePlaner(init?: PlanerItems) {
   const [currentStep, setCurrentStep] = useState(0);
-  const [planerItems, setPlanerItems] = useState<PlanerItems[]>([
+  const [planerItems, setPlanerItems] = useState<PlanerItems[]>(() => [
     newPlanerItems,
   ]);
 
@@ -104,6 +104,13 @@ export function usePlaner() {
     newCanvas,
     changeItem,
   };
+
+  useEffect(() => {
+    if (init) {
+      setPlanerItems([init]);
+    }
+    console.log(init);
+  }, [init?.name]);
 
   return [planerItems[currentStep], services] as const;
 }

@@ -17,10 +17,6 @@ export interface Walls {
   walls: Item[];
 }
 
-export interface Wall {
-  wall: Item;
-}
-
 export interface DrawingLine {
   start: Point;
   end: Point;
@@ -42,10 +38,6 @@ export interface Room {
   name: string;
   vertices: Point[];
   area: number;
-}
-
-export interface Items {
-  item: Item;
 }
 
 export interface PlanerObject {
