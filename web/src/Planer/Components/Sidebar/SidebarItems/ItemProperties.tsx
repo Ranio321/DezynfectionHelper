@@ -23,10 +23,12 @@ export default function ItemProperties(
   }, [item?.height]);
 
   function onSubmit() {
-    let newItem: Item = cloneObject(item);
-    newItem.height = height;
-    if (item) {
-      props.changeItem(item?.id, newItem);
+    let newItem = cloneObject(item);
+    if (newItem) {
+      newItem.height = height;
+      if (item) {
+        props.changeItem(item?.id, newItem);
+      }
     }
   }
 

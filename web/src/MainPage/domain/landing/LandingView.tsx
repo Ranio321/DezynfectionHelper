@@ -8,7 +8,9 @@ export default function LandingView(props: LandingViewProps) {
   return (
     <>
       <TopNavbar />
-      <ProjectList />
+      <div className="projectList">
+        <ProjectList />
+      </div>
     </>
   );
 }

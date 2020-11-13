@@ -8,7 +8,7 @@ import { modalTextItems } from "../Modal/SaveModalUtils";
 import SaveModalForm from "../Modal/SaveModalForm";
 interface IconProps {
   icon: IconProp;
-  onClick?: () => any;
+  onClick?: (name: string) => any;
   tooltip: string;
   modal?: boolean;
 }
@@ -22,7 +22,10 @@ export default function SaveOption(props: IconProps): JSX.Element {
 
   function onSaveClick() {
     setShowModal(true);
-    let response = onClick?.call(null);
+    let response;
+    if (onClick) {
+      response = onClick(name);
+    }
     response.then(() => setModalTextIndex(1)).catch(() => setModalTextIndex(2));
   }
 

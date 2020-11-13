@@ -1,0 +1,16 @@
+.loading-chart-spinner {
+    left: 49%;
+    top: 45%;
+    z-index: 999;
+    position: absolute;
+    display: flex;
+  }
+  
+  .loading-chart-background {
+    -webkit-filter: blur(3px);
+    -moz-filter: blur(3px);
+    -ms-filter: blur(3px);
+    -o-filter: blur(3px);
+    filter: blur(3px);
+  }
+  

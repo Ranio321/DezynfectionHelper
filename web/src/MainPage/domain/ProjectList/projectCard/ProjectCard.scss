@@ -1,17 +1,31 @@
 .projectCard {
   background: rgba(97, 175, 254, 0.1);
   width: 1000px;
-  height: 50px;
+  height: 100px;
   margin-left: auto;
   margin-right: auto;
   border: 1px solid #000;
   border-color: #61affe;
   border-radius: 4px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.19);
+  box-shadow: 1px 0px 15px 1px rgba(0, 0, 0, 0.19);
   margin-top: 5px;
+  margin-bottom: 13 px;
+  position: relative;
 
   .item-title {
-    font-size: larger;
+    font-size: 23px;
     font-weight: bolder;
+    text-align: left;
+    padding-left: 20px;
+  }
+  .binIcon{
+    float: right;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    :hover{
+      color: rgb(231, 67, 67);
+      cursor: pointer;
+    }
   }
 }

@@ -7,7 +7,7 @@ interface OptionsSidebarProps {
   undo?: () => any;
   delete?: () => any;
   newCanvas?: () => any;
-  save?: () => any;
+  save?: (name: string) => any;
 }
 
 export default function OptionsSidebar(props: OptionsSidebarProps) {

@@ -7,6 +7,7 @@ import PlanCanvas from "./Components/Canvas/PlanCanvas";
 import OptionsSidebar from "./Components/OptionsSidebar/OptionsSidebar";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import { itemList } from "./Components/Sidebar/SidebarItems/Items";
+import { cloneObject } from "./Helpers/cloneObject";
 import { useDataLoader } from "./Hooks/useDataLoader";
 import { usePlaner } from "./Hooks/usePlaner";
 import { planerItemsToParams } from "./Mappers/planerItemsToParams";
@@ -33,8 +34,10 @@ export default function Planer(props: PlanerProps): JSX.Element {
       setCurrentItemId(undefined);
     }
   }
-  function onSave() {
-    let data = planerItemsToParams(planerItems);
+  function onSave(name: string) {
+    let params = cloneObject(planerItems);
+    params.name = name;
+    let data = planerItemsToParams(params);
     let response = planerService.save(data);
     return response;
   }
@@ -54,7 +57,6 @@ export default function Planer(props: PlanerProps): JSX.Element {
         setCanvasSize({ ...size });
       }
     }
-    console.log("here");
     handleResize();
     window.addEventListener("resize", handleResize);
   }, []);
