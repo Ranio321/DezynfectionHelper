@@ -17,9 +17,7 @@ interface PlanerProps {}
 
 export default function Planer(props: PlanerProps): JSX.Element {
   const { id } = useParams<{ id: string }>();
-  const [initialItems, promise] = useDataLoader(() =>
-    planerService.get(parseInt(id))
-  );
+  const [initialItems] = useDataLoader(() => planerService.get(parseInt(id)));
   const [itemToAdd, setItemToAdd] = useState<string>("Pointer");
   const [currentItemId, setCurrentItemId] = useState<number | undefined>();
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });

@@ -1,7 +1,7 @@
 .projectCard {
   background: rgba(97, 175, 254, 0.1);
-  width: 1000px;
-  height: 100px;
+  width: 98%;
+  height: 120px;
   margin-left: auto;
   margin-right: auto;
   border: 1px solid #000;
@@ -21,11 +21,27 @@
   .binIcon{
     float: right;
     position: absolute;
+    height: 100%;
     bottom: 15px;
     right: 15px;
     :hover{
       color: rgb(231, 67, 67);
       cursor: pointer;
     }
+  }
+  .button{
+    
+    border-radius: 4px;
+    border: 1px solid #000;
+    border-color: #fcb26e;
+    box-shadow: 1px 0px 15px 1px rgba(0, 0, 0, 0.19);
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 10%;
+    
+  }
+  .icons{
+    float: right;
   }
 }

@@ -42,5 +42,12 @@ namespace DezynfectionHelper.Controllers
         {
             return await repo.GetAllAsync();
         }
+
+        [HttpDelete]
+        public async Task Delete([FromQuery]int id)
+        {
+            await repo.DeleteAsync(id);
+            await uow.CommitAsync();
+        }
     }
 }

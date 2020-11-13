@@ -7,11 +7,10 @@ interface IconProps {
   icon: IconProp;
   onClick?: () => any;
   tooltip: string;
-  modal?: boolean;
 }
 
 export default function Option(props: IconProps): JSX.Element {
-  const { icon, tooltip, modal, onClick } = props;
+  const { icon, tooltip, onClick } = props;
 
   return (
     <>

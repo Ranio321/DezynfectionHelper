@@ -20,7 +20,9 @@ namespace DezynfectionHelper.Planer.Models
         {
             Id(x => x.Id);
             Map(x => x.Type);
+            Map(x => x.Height);
             References(x => x.Position)
+                .Cascade.AllDeleteOrphan()
                 .Cascade.All();
         }
     }

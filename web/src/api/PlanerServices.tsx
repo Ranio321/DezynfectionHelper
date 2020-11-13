@@ -3,6 +3,7 @@ import axios from "axios";
 import { PlanerItemsDto, PlanerItemsParams } from "./models";
 
 function save(data: PlanerItemsParams): Promise<PlanerItems> {
+  console.log(data);
   return axios
     .post<PlanerItems>("/Planer/Save", data)
     .then((data) => data.data);
@@ -18,6 +19,7 @@ function get(id: number): Promise<PlanerItemsDto> {
       },
     })
     .then((data) => {
+      console.log(data.data);
       return data.data;
     });
 }
@@ -28,8 +30,20 @@ function getAll(): Promise<PlanerItemsDto[]> {
     .then((data) => data.data);
 }
 
+function deleteById(id: number): Promise<any> {
+  return axios
+    .request({
+      url: "/Planer/delete?id=" + id,
+      method: "delete",
+    })
+    .then((data) => {
+      return data.data;
+    });
+}
+
 export const planerService = {
   save,
   get,
   getAll,
+  deleteById,
 };

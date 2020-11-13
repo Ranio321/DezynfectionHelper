@@ -21,6 +21,7 @@ namespace DezynfectionHelper.Planer.Models
             Map(x => x.Name);
             Map(x => x.Area);
             HasMany(x => x.Vertices)
+                .Cascade.AllDeleteOrphan()
                 .Cascade.All();
         }
     }

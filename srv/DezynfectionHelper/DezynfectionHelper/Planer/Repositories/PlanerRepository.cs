@@ -45,9 +45,11 @@ namespace DezynfectionHelper.Planer.Repositories
 
         public async Task DeleteAsync(int id)
         {
-            await session.Query<PlanerItems>()
-                .Where(x => x.Id == id)
-                .DeleteAsync();
+            var planerItem = await GetByIdAsync(id);
+            if (planerItem != null)
+            {
+                await session.DeleteAsync(planerItem);
+            }
         }
     }
 

@@ -23,8 +23,10 @@ namespace DezynfectionHelper.Planer.Models
         {
             Id(x => x.Id);
             References(x => x.Start)
+                .Cascade.AllDeleteOrphan()
                 .Cascade.All();
             References(x => x.End)
+                .Cascade.AllDeleteOrphan()
                 .Cascade.All();
             Map(x => x.Width);
             Map(x => x.Height);
