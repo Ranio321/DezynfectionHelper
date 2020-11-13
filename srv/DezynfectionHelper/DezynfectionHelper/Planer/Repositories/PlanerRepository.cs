@@ -1,5 +1,6 @@
 ﻿using DezynfectionHelper.Planer.Models;
 using DezynfectionHelper.Planer.Params;
+using FluentNHibernate.Conventions;
 using NHibernate;
 using NHibernate.Linq;
 using System;
@@ -13,19 +14,20 @@ namespace DezynfectionHelper.Planer.Repositories
     {
         private readonly ISession session;
 
-        public PlanerRepository(ISession sessionFactory)
+        public PlanerRepository(ISession session)
         {
-            this.session = sessionFactory;
+            this.session = session;
         }
 
         public async Task AddAsync(PlanerItemsParams param)
         {
             var planerItems = new PlanerItems()
             {
-                Name = "test",
+                Name = param.Name,
                 Objects = param.Objects,
                 Room = param.Room,
             };
+
             await session.SaveOrUpdateAsync(planerItems);
         }
 
@@ -39,6 +41,13 @@ namespace DezynfectionHelper.Planer.Repositories
             return await session.Query<PlanerItems>()
                 .Where(x => x.Id == id)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            await session.Query<PlanerItems>()
+                .Where(x => x.Id == id)
+                .DeleteAsync();
         }
     }
 

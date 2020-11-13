@@ -12,5 +12,6 @@ namespace DezynfectionHelper.Planer.Repositories
         Task AddAsync(PlanerItemsParams param);
         Task<List<PlanerItems>> GetAllAsync();
         Task<PlanerItems> GetByIdAsync(int id);
+        Task DeleteAsync(int id);
     }
 }
