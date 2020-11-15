@@ -1,16 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DezynfectionHelper.Extenstions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace DezynfectionHelper
@@ -31,6 +24,7 @@ namespace DezynfectionHelper
             services.AddTransient(c => Configuration);
             services.AddNHibernate();
             services.AddRepositories();
+            services.AddDezynfection();
 
             services.AddSwaggerGen(c =>
             {

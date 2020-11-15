@@ -2,7 +2,8 @@ import { PlanerItemsParams } from "../../api/models";
 import { PlanerItems } from "../PlanerTypes";
 
 export function planerItemsToParams(
-  planerItems: PlanerItems
+  planerItems: PlanerItems,
+  id?: number
 ): PlanerItemsParams {
   let room;
   if (planerItems?.rooms?.length! > 0) {
@@ -13,5 +14,8 @@ export function planerItemsToParams(
     room: room,
     name: planerItems.name!,
   };
+  if (id) {
+    items.id = id;
+  }
   return items;
 }

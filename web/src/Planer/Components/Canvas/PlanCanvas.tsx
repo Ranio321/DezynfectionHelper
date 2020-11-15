@@ -22,6 +22,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import LeftGridScale from "../Grid/LeftGridScale";
 import TopGridScale from "../Grid/TopGridScale";
 import Room from "../Items/Room";
+import Konva from "konva";
 interface PlanerProps {
   width: number;
   height: number;
@@ -151,6 +152,7 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
         <Col className="planer">
           <div id="planer">
             <Stage
+              filters={[Konva.Filters.Blur]}
               width={width - 20}
               height={height - 20}
               onMouseDown={onMouseDown}

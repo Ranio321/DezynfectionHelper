@@ -3,7 +3,6 @@ import axios from "axios";
 import { PlanerItemsDto, PlanerItemsParams } from "./models";
 
 function save(data: PlanerItemsParams): Promise<PlanerItems> {
-  console.log(data);
   return axios
     .post<PlanerItems>("/Planer/Save", data)
     .then((data) => data.data);
@@ -41,9 +40,20 @@ function deleteById(id: number): Promise<any> {
     });
 }
 
+function update(data: PlanerItemsParams) {
+  return axios
+    .request({
+      url: "/Planer/update",
+      method: "PUT",
+      data,
+    })
+    .then((data) => data.data);
+}
+
 export const planerService = {
   save,
   get,
   getAll,
   deleteById,
+  update,
 };

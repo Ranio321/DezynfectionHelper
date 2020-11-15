@@ -116,7 +116,6 @@ export function usePlaner(init?: PlanerItems) {
 }
 
 const newPlanerItems = {
-  name: "undefined",
   items: [],
   rooms: [],
 };

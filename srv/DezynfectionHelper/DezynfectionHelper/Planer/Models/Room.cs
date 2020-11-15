@@ -1,9 +1,5 @@
-﻿using DezynfectionHelper.NHibernate.Models;
-using DezynfectionHelper.PLaner.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using DezynfectionHelper.NHibernate.Models;
 
 namespace DezynfectionHelper.Planer.Models
 {

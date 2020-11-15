@@ -1,14 +1,11 @@
-﻿using FluentNHibernate.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using FluentNHibernate.Mapping;
 
 namespace DezynfectionHelper.Planer.Models
 {
     public class PlanerItems
     {
-        public virtual int Id { get; protected set; }
+        public virtual int Id { get;  set; }
         public virtual string Name { get; set; }
         public virtual IList<PlanerObject> Objects { get; set; }
         public virtual Room Room { get; set; }

@@ -1,19 +1,13 @@
-﻿using DezynfectionHelper.NHibernate;
+﻿using DezynfectionHelper.Dezynfection.Services;
 using DezynfectionHelper.NHibernate.Configurations;
 using DezynfectionHelper.NHibernate.Services;
 using DezynfectionHelper.Planer.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using NHibernate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DezynfectionHelper.Extenstions
 {
     public static class ServiceCollectionExtenstion
     {
-
         public static void AddNHibernate(this IServiceCollection services)
         {
             services.AddTransient<IDBConfiguration, DBConfiguration>()
@@ -24,6 +18,12 @@ namespace DezynfectionHelper.Extenstions
         public static void AddRepositories(this IServiceCollection services)
         {
             services.AddTransient<IPlanerRepository, PlanerRepository>();
+        }
+
+        public static void AddDezynfection(this IServiceCollection services)
+        {
+            services.AddTransient<IDezynfectionService, DezynfectionService>()
+                    .AddTransient<IDezynfectionCalculator, DezynfectionCalculator>();
         }
     }
 }

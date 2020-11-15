@@ -1,13 +1,6 @@
 ﻿using DezynfectionHelper.NHibernate.Models;
-using DezynfectionHelper.Planer.Models;
-using FluentNHibernate.Data;
-using FluentNHibernate.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace DezynfectionHelper.PLaner.Models
+namespace DezynfectionHelper.Planer.Models
 {
     public class Coordinates : Entity<int>
     {

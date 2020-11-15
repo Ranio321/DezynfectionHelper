@@ -1,8 +1,5 @@
-﻿using NHibernate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using NHibernate;
 using ISession = NHibernate.ISession;
 
 namespace DezynfectionHelper.NHibernate.Services

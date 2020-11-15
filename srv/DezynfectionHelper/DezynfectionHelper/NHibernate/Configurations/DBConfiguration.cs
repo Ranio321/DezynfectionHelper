@@ -3,12 +3,6 @@ using FluentNHibernate.Cfg.Db;
 using Microsoft.Extensions.Configuration;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
 namespace DezynfectionHelper.NHibernate.Configurations
 {

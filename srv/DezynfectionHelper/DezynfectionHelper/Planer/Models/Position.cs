@@ -1,16 +1,10 @@
-﻿using DezynfectionHelper.NHibernate.Models;
-using DezynfectionHelper.PLaner.Models;
-using FluentNHibernate.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FluentNHibernate.Mapping;
 
 namespace DezynfectionHelper.Planer.Models
 {
     public class Position
     {
-        public virtual int Id { get; set; }
+        public virtual int Id { get; protected set; }
         public virtual Coordinates Start { get; set; }
         public virtual Coordinates End { get; set; }
         public virtual int? Width { get; set; }

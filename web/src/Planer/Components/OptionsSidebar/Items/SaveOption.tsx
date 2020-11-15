@@ -11,10 +11,12 @@ interface IconProps {
   onClick?: (name: string) => any;
   tooltip: string;
   modal?: boolean;
+  changeName?: boolean;
+  update: () => any;
 }
 
 export default function SaveOption(props: IconProps): JSX.Element {
-  const { icon, tooltip, modal, onClick } = props;
+  const { icon, tooltip, modal, onClick, changeName, update } = props;
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalTextIndex, setModalTextIndex] = useState<number>(0);
   const [showModalForm, setShowModalForm] = useState<boolean>(false);
@@ -26,6 +28,11 @@ export default function SaveOption(props: IconProps): JSX.Element {
     if (onClick) {
       response = onClick(name);
     }
+    response.then(() => setModalTextIndex(1)).catch(() => setModalTextIndex(2));
+  }
+
+  function onUpdate() {
+    let response = update();
     response.then(() => setModalTextIndex(1)).catch(() => setModalTextIndex(2));
   }
 
@@ -66,8 +73,13 @@ export default function SaveOption(props: IconProps): JSX.Element {
         <div
           className="OptionsIconDiv"
           onClick={() => {
-            setShowModalForm(true);
-            setName("");
+            if (changeName) {
+              setShowModalForm(true);
+              setName("");
+            } else {
+              setShowModal(true);
+              onUpdate();
+            }
           }}
         >
           <FontAwesomeIcon className="OptionsIcon" icon={icon} size="2x" />

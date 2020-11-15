@@ -1,6 +1,7 @@
 import { Item, PlanerItems, Room } from "../Planer/PlanerTypes";
 
 export interface PlanerItemsParams {
+  id?: number;
   objects: Item[];
   room?: Room;
   name: string;

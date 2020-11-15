@@ -1,12 +1,12 @@
-﻿using DezynfectionHelper.Planer.Models;
-using DezynfectionHelper.Planer.Params;
-using FluentNHibernate.Conventions;
-using NHibernate;
-using NHibernate.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DezynfectionHelper.Exceptions;
+using DezynfectionHelper.NHibernate.Services;
+using DezynfectionHelper.Planer.Models;
+using NHibernate;
+using NHibernate.Linq;
 
 namespace DezynfectionHelper.Planer.Repositories
 {
@@ -19,16 +19,9 @@ namespace DezynfectionHelper.Planer.Repositories
             this.session = session;
         }
 
-        public async Task AddAsync(PlanerItemsParams param)
+        public async Task AddAsync(PlanerItems param)
         {
-            var planerItems = new PlanerItems()
-            {
-                Name = param.Name,
-                Objects = param.Objects,
-                Room = param.Room,
-            };
-
-            await session.SaveOrUpdateAsync(planerItems);
+            await session.SaveOrUpdateAsync(param);
         }
 
         public async Task<List<PlanerItems>> GetAllAsync()
@@ -38,9 +31,19 @@ namespace DezynfectionHelper.Planer.Repositories
 
         public async Task<PlanerItems> GetByIdAsync(int id)
         {
-            return await session.Query<PlanerItems>()
+            PlanerItems planerItems;
+            try
+            {
+                planerItems = await session.Query<PlanerItems>()
                 .Where(x => x.Id == id)
-                .FirstOrDefaultAsync();
+                .FirstAsync();
+            }
+            catch (Exception e)
+            {
+                throw new EntityNotFoundException(typeof(PlanerItems), id, e);
+            }
+
+            return planerItems;
         }
 
         public async Task DeleteAsync(int id)
@@ -50,7 +53,15 @@ namespace DezynfectionHelper.Planer.Repositories
             {
                 await session.DeleteAsync(planerItem);
             }
+            else
+            {
+                throw new EntityNotFoundException(typeof(PlanerItems), id);
+            }
+        }
+
+        public async Task UpdateAsync(PlanerItems items)
+        {
+            await session.MergeAsync(items);
         }
     }
-
 }

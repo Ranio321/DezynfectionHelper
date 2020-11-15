@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DezynfectionHelper.NHibernate.Services;
 using DezynfectionHelper.Planer.Models;
 using DezynfectionHelper.Planer.Params;
 using DezynfectionHelper.Planer.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using NHibernate;
 
 namespace DezynfectionHelper.Controllers
 {
@@ -27,7 +24,14 @@ namespace DezynfectionHelper.Controllers
         [HttpPost]
         public async Task Save([FromBody] PlanerItemsParams param)
         {
-            await repo.AddAsync(param);
+            var planerItems = new PlanerItems()
+            {
+                Name = param.Name,
+                Objects = param.Objects,
+                Room = param.Room,
+            };
+
+            await repo.AddAsync(planerItems);
             await uow.CommitAsync();
         }
 
@@ -47,6 +51,21 @@ namespace DezynfectionHelper.Controllers
         public async Task Delete([FromQuery]int id)
         {
             await repo.DeleteAsync(id);
+            await uow.CommitAsync();
+        }
+
+        [HttpPut]
+        public async Task Update([FromBody] PlanerItemsParams param)
+        {
+            var planerItems = new PlanerItems()
+            {
+                Name = param.Name,
+                Objects = param.Objects,
+                Room = param.Room,
+                Id = (int)param.Id,
+            };
+
+            await repo.UpdateAsync(planerItems);
             await uow.CommitAsync();
         }
     }

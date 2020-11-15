@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { PlanerItemsDto } from "../api/models";
 import { planerService } from "../api/PlanerServices";
+import { LoadingArea } from "../common/LoadingArea";
 import PlanCanvas from "./Components/Canvas/PlanCanvas";
 import OptionsSidebar from "./Components/OptionsSidebar/OptionsSidebar";
 import Sidebar from "./Components/Sidebar/Sidebar";
@@ -16,8 +17,11 @@ import { PlanerItems, Room } from "./PlanerTypes";
 interface PlanerProps {}
 
 export default function Planer(props: PlanerProps): JSX.Element {
+  const history = useHistory();
   const { id } = useParams<{ id: string }>();
-  const [initialItems] = useDataLoader(() => planerService.get(parseInt(id)));
+  const [initialItems, promise] = useDataLoader(() =>
+    planerService.get(parseInt(id))
+  );
   const [itemToAdd, setItemToAdd] = useState<string>("Pointer");
   const [currentItemId, setCurrentItemId] = useState<number | undefined>();
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
@@ -34,7 +38,9 @@ export default function Planer(props: PlanerProps): JSX.Element {
   }
   function onSave(name: string) {
     let params = cloneObject(planerItems);
-    params.name = name;
+    if (name.length > 0) {
+      params.name = name;
+    }
     let data = planerItemsToParams(params);
     let response = planerService.save(data);
     return response;
@@ -111,6 +117,12 @@ export default function Planer(props: PlanerProps): JSX.Element {
               delete={services.deleteAll}
               newCanvas={services.newCanvas}
               save={onSave}
+              changeName={planerItems.name === undefined}
+              update={() =>
+                planerService.update(
+                  planerItemsToParams(planerItems, parseInt(id))
+                )
+              }
             />
           </Col>
         </Row>
