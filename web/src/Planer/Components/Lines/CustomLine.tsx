@@ -25,7 +25,6 @@ export default function CustomLine(props: LineProps) {
   function onClick() {
     if (props.setCurrentItemId && props.shouldSetItem) {
       props.setCurrentItemId(props.uniqueId);
-      console.log(props.uniqueId);
     }
   }
 

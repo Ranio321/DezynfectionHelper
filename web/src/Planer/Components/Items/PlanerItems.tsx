@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { calculateDezynfectionRadius } from "../../Helpers/calculateDezynfectionRadius";
 import { itemsCatalogueItems } from "../../ItemsCatalogue/ItemsCatalogueList";
 import { Item } from "../../PlanerTypes";
 import { itemList } from "../Sidebar/SidebarItems/Items";
@@ -10,9 +11,16 @@ interface ItemsProps {
   setCurrentItemId: (id: number) => any;
   currentItemId?: number;
   itemToAdd: string;
+  onLampDragEnd: (id: number, item: Item) => any;
 }
 function PlanerItems(props: ItemsProps): JSX.Element {
-  const { items, setCurrentItemId, currentItemId, itemToAdd } = props;
+  const {
+    items,
+    setCurrentItemId,
+    currentItemId,
+    itemToAdd,
+    onLampDragEnd,
+  } = props;
   const [rectItems, setRectItmes] = useState<Item[]>();
   const [walls, setWalls] = useState<Item[]>();
 
@@ -63,7 +71,7 @@ function PlanerItems(props: ItemsProps): JSX.Element {
       })}
       {rectItems?.map((item) => {
         let itemParams = itemsCatalogueItems.find(
-          (obj) => obj.name === item.type
+          (obj) => obj.displayName === item.type
         );
         return (
           <Lamp
@@ -82,7 +90,13 @@ function PlanerItems(props: ItemsProps): JSX.Element {
             fill={itemParams?.fill}
             stroke={itemParams?.stroke}
             strokeWidth={itemParams?.strokeWidth}
-            text={itemParams?.name}
+            text={itemParams?.displayName}
+            onDragEnd={() => onLampDragEnd(item.id, item)}
+            showCircle={itemList.lamp === itemParams?.name}
+            cricleRadius={calculateDezynfectionRadius(
+              itemParams?.angle,
+              item.height
+            )}
           />
         );
       })}
@@ -95,6 +109,7 @@ export default React.memo(PlanerItems, (prevProps, nextProps) => {
   return (
     prevProps.items.length === nextProps.items.length &&
     prevProps.itemToAdd === nextProps.itemToAdd &&
-    prevProps.currentItemId === nextProps.currentItemId
+    prevProps.currentItemId === nextProps.currentItemId &&
+    JSON.stringify(prevProps.items) === JSON.stringify(nextProps.items)
   );
 });

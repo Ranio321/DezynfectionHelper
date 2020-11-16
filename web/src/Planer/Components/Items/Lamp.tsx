@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Group, Rect, Text } from "react-konva";
+import { Circle, Group, Rect, Text } from "react-konva";
 import { MousePosition, Point } from "../../PlanerTypes";
 interface LampProps {
   mousePosition: MousePosition;
@@ -15,6 +15,9 @@ interface LampProps {
   stroke?: string;
   strokeWidth?: number;
   text?: string;
+  onDragEnd?: () => any;
+  showCircle?: boolean;
+  cricleRadius?: number;
 }
 
 export default function Lamp(props: LampProps): JSX.Element {
@@ -25,15 +28,19 @@ export default function Lamp(props: LampProps): JSX.Element {
     showBlur,
     setCurrentItemId,
     onClickBlur,
-    currentItemId,
     shouldSetItem,
     fill,
     stroke,
     id,
     strokeWidth,
     text,
+    showCircle,
+    cricleRadius,
   } = props;
-  const [lampPosition, setLampPosition] = useState<Point>({ x: 0, y: 0 });
+  const [lampPosition, setLampPosition] = useState<Point>({
+    x: -1000,
+    y: -10000,
+  });
   const [shadowBlur, setShadowBlur] = useState(0);
   const [textWidth, setTextWidth] = useState(0);
 
@@ -51,11 +58,6 @@ export default function Lamp(props: LampProps): JSX.Element {
       setCurrentItemId(id);
     }
   }
-  useEffect(() => {
-    if (currentItemId !== id) {
-      setShadowBlur(0);
-    }
-  }, [currentItemId, id]);
 
   useEffect(() => {
     var canvas: any = document.createElement("canvas");
@@ -64,6 +66,7 @@ export default function Lamp(props: LampProps): JSX.Element {
     var metrics = context.measureText(text);
     setTextWidth(metrics.width);
   }, [text]);
+
   return (
     <>
       <Group
@@ -72,7 +75,19 @@ export default function Lamp(props: LampProps): JSX.Element {
         width={width}
         x={lampPosition.x}
         y={lampPosition.y}
+        draggable
+        onDragEnd={props.onDragEnd}
       >
+        {showCircle && (
+          <Circle
+            radius={cricleRadius ? cricleRadius : 0}
+            fill="green"
+            opacity={0.2}
+            listening={false}
+            x={width / 2}
+            y={height / 2}
+          />
+        )}
         <Rect
           key={props.id}
           fill={fill}
@@ -89,10 +104,11 @@ export default function Lamp(props: LampProps): JSX.Element {
           }}
           onClick={() => onClick()}
         />
+
         <Text
           text={text}
           fontSize={12}
-          x={textWidth <= width + 4 ? 0 : -textWidth / 2}
+          x={textWidth <= width + 3 ? 0 : -textWidth / 2 + 15}
           y={-15}
           width={textWidth}
           fill="black"

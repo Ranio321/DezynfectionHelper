@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { PlanerItemsDto } from "../api/models";
 import { planerService } from "../api/PlanerServices";
-import { LoadingArea } from "../common/LoadingArea";
 import PlanCanvas from "./Components/Canvas/PlanCanvas";
 import OptionsSidebar from "./Components/OptionsSidebar/OptionsSidebar";
 import Sidebar from "./Components/Sidebar/Sidebar";
@@ -17,11 +16,8 @@ import { PlanerItems, Room } from "./PlanerTypes";
 interface PlanerProps {}
 
 export default function Planer(props: PlanerProps): JSX.Element {
-  const history = useHistory();
   const { id } = useParams<{ id: string }>();
-  const [initialItems, promise] = useDataLoader(() =>
-    planerService.get(parseInt(id))
-  );
+  const [initialItems] = useDataLoader(() => planerService.get(parseInt(id)));
   const [itemToAdd, setItemToAdd] = useState<string>("Pointer");
   const [currentItemId, setCurrentItemId] = useState<number | undefined>();
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
@@ -34,6 +30,13 @@ export default function Planer(props: PlanerProps): JSX.Element {
     if (e.key === "Escape") {
       setItemToAdd(itemList.pointer);
       setCurrentItemId(undefined);
+    }
+    if (e.key === "Delete") {
+      if (currentItemId) {
+        services.deleteItem(currentItemId);
+        setItemToAdd(itemList.pointer);
+        setCurrentItemId(undefined);
+      }
     }
   }
   function onSave(name: string) {
@@ -79,17 +82,11 @@ export default function Planer(props: PlanerProps): JSX.Element {
     maxWidth: "83%",
     minWidth: "83%",
   };
-  const optionsStyle = {
-    maxWidth: "3%",
-  };
-  const sideBarStyle = {
-    maxWidth: "14%",
-  };
   return (
     <div onKeyDown={(e) => onKeyDown(e)}>
       <Container fluid style={cStyle}>
         <Row noGutters className="h-100">
-          <Col style={sideBarStyle}>
+          <Col style={{ maxWidth: "14%" }}>
             <Sidebar
               setItem={setItemToAdd}
               selectedItem={services.getItem(currentItemId)}
@@ -108,10 +105,11 @@ export default function Planer(props: PlanerProps): JSX.Element {
                 currentItemId={currentItemId}
                 addItem={services.addItem}
                 rooms={planerItems.rooms}
+                changeItem={services.changeItem}
               />
             </div>
           </Col>
-          <Col style={optionsStyle}>
+          <Col style={{ maxWidth: "3%" }}>
             <OptionsSidebar
               undo={services.undo}
               delete={services.deleteAll}

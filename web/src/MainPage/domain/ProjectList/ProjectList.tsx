@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { PlanerItemsDto } from "../../../api/models";
 import { planerService } from "../../../api/PlanerServices";
@@ -14,7 +14,6 @@ export default function ProjectList(props: ProjectListProps) {
   const [projects, promise, refresh] = useDataLoader<PlanerItemsDto[]>(() =>
     planerService.getAll()
   );
-  const empty: any[] = [];
 
   function onButtonClick(id: number) {
     history.push("/planer/" + id);

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { lampParams } from "../Components/Items/Constants/LampConstants";
 import { calcPolygonArea } from "../Helpers/calcPolygonArea";
 import checkForPolygon from "../Helpers/checkForPolygon";
 import { cloneObject } from "../Helpers/cloneObject";
@@ -12,7 +13,7 @@ export function usePlaner(init?: PlanerItems) {
 
   function addItem(item: Item) {
     let items: PlanerItems = cloneObject(planerItems[currentStep]);
-    item.height = 200;
+    item.height = lampParams.defaultHeight;
     items.items.push({ ...item });
     setPlanerItems([...planerItems, items]);
     addToHistory();
@@ -63,9 +64,7 @@ export function usePlaner(init?: PlanerItems) {
 
   function changeItem(id: number, item: Item) {
     let items: PlanerItems = cloneObject(planerItems[currentStep]);
-
     let index = items.items.findIndex((item) => item.id === id);
-
     items.items[index] = item;
     setPlanerItems([...planerItems, items]);
     addToHistory();
@@ -91,8 +90,16 @@ export function usePlaner(init?: PlanerItems) {
       });
     }
     items[items.length - 1].rooms = room;
-    setPlanerItems(items);
-  }, [currentStep]);
+    if (planerItems[currentStep].rooms?.length !== room.length) {
+      setPlanerItems(items);
+    }
+  }, [currentStep, planerItems]);
+
+  useEffect(() => {
+    if (init) {
+      setPlanerItems([init]);
+    }
+  }, [init?.name]); // eslint-disable-line
 
   const services = {
     addItem,
@@ -104,13 +111,6 @@ export function usePlaner(init?: PlanerItems) {
     newCanvas,
     changeItem,
   };
-
-  useEffect(() => {
-    if (init) {
-      setPlanerItems([init]);
-    }
-    console.log(init);
-  }, [init?.name]);
 
   return [planerItems[currentStep], services] as const;
 }

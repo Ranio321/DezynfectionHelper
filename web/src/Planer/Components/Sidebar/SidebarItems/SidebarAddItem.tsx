@@ -1,6 +1,8 @@
 import React from "react";
+import { OverlayTrigger } from "react-bootstrap";
+import { PopoverBox } from "../../../../common/PopoverBox";
 import { CatalogueItem } from "../../../PlanerTypes";
-import { items as wallItem } from "./Items";
+import { itemList, items as wallItem } from "./Items";
 import "./SidebarAddItem.scss";
 interface SidebarItemProps {
   items: CatalogueItem[];
@@ -24,16 +26,41 @@ export default function SidebarAddItem(props: SidebarItemProps): JSX.Element {
       </div>
       {items.map((item) => {
         return (
-          <div id="sidebarItem" key={item.name}>
-            <div className="card" onClick={() => setItem(item.name)}>
-              <img className="card-img-top" src={item.image} alt="" />
-              <div className="card-body">
-                <h5 className="card-title" style={{ color: "black" }}>
-                  {item.name}
-                </h5>
+          <>
+            <OverlayTrigger
+              placement="right"
+              delay={{ show: 100, hide: 100 }}
+              transition={false}
+              overlay={
+                <div>
+                  {item.name === itemList.lamp && (
+                    <PopoverBox title="Item information" width="200px">
+                      Flux: {item.flux} mW/m<sup>2</sup>
+                      <br />
+                      Light angle: {item.angle}
+                      <sup>o</sup>
+                    </PopoverBox>
+                  )}
+                </div>
+              }
+            >
+              <div id="sidebarItem" key={item.name}>
+                <div className="card" onClick={() => setItem(item.displayName)}>
+                  <img
+                    className="card-img-top"
+                    src={require("../../../ItemsCatalogue/images/" +
+                      item.image)}
+                    alt=""
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title" style={{ color: "black" }}>
+                      {item.name}
+                    </h5>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            </OverlayTrigger>
+          </>
         );
       })}
     </>

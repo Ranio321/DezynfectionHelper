@@ -22,7 +22,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import LeftGridScale from "../Grid/LeftGridScale";
 import TopGridScale from "../Grid/TopGridScale";
 import Room from "../Items/Room";
-import Konva from "konva";
+import { cloneObject } from "../../Helpers/cloneObject";
 interface PlanerProps {
   width: number;
   height: number;
@@ -32,6 +32,7 @@ interface PlanerProps {
   rooms?: RoomType[];
   currentItemId?: number;
   addItem: (item: Item) => any;
+  changeItem: (id: number, item: Item) => any;
 }
 
 export default function PlanCanvas(props: PlanerProps): JSX.Element {
@@ -83,7 +84,7 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
   }
 
   function onMouseMove(e: KonvaEventObject<MouseEvent>) {
-    let mousePosition = getMousePosition(e, layerRef);
+    let mousePosition = getMousePosition(layerRef);
     let position = { x: mousePosition.x, y: mousePosition.y };
     let newPoints: ClickPoints = {
       start: { x: drawingLine.start.x, y: drawingLine.start.y },
@@ -122,9 +123,12 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     }
     return item;
   }
-  const rowStyle = {
-    height: "20px",
-  };
+
+  function onObjectDragEnd(id: number, item: Item) {
+    let newItem = cloneObject(item);
+    newItem.position.start = getMousePosition(layerRef);
+    props.changeItem(id, newItem);
+  }
 
   const colStyle = {
     maxWidth: "20px",
@@ -140,7 +144,7 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
 
   return (
     <Container style={cStyle}>
-      <Row style={rowStyle} noGutters>
+      <Row style={{ height: "20px" }} noGutters>
         <Col>
           <TopGridScale width={width - 20} />
         </Col>
@@ -152,7 +156,6 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
         <Col className="planer">
           <div id="planer">
             <Stage
-              filters={[Konva.Filters.Blur]}
               width={width - 20}
               height={height - 20}
               onMouseDown={onMouseDown}
@@ -176,6 +179,7 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
                   setCurrentItemId={setCurrentItemId}
                   itemToAdd={itemToAdd}
                   currentItemId={currentItemId}
+                  onLampDragEnd={(id, item) => onObjectDragEnd(id, item)}
                 />
                 {rooms?.map((room) => (
                   <Room key={room.name} room={room} />

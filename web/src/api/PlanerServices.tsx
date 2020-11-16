@@ -18,7 +18,6 @@ function get(id: number): Promise<PlanerItemsDto> {
       },
     })
     .then((data) => {
-      console.log(data.data);
       return data.data;
     });
 }

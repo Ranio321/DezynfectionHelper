@@ -29,6 +29,7 @@ export interface Item {
 }
 
 export interface PlanerItems {
+  id?: number;
   name?: string;
   items: Item[];
   rooms?: Room[];
@@ -66,6 +67,9 @@ export interface CatalogueItem {
   width: number;
   height: number;
   fill?: string;
-  image?: string;
+  image: string;
   strokeWidth?: number;
+  flux?: number;
+  angle?: number;
+  displayName: string;
 }

@@ -1,6 +1,8 @@
 import React from "react";
+import { calculateDezynfectionRadius } from "../../Helpers/calculateDezynfectionRadius";
 import { itemsCatalogueItems } from "../../ItemsCatalogue/ItemsCatalogueList";
 import { MousePosition } from "../../PlanerTypes";
+import { lampParams } from "../Items/Constants/LampConstants";
 import Lamp from "../Items/Lamp";
 import { itemList } from "../Sidebar/SidebarItems/Items";
 import CirclePointer from "./CirclePointer";
@@ -25,7 +27,7 @@ export default function MousePointerItem(
 
     default:
       let item = itemsCatalogueItems.find((item) => {
-        return item.name === mouseItem;
+        return item.displayName === mouseItem;
       });
       pointer = (
         <Lamp
@@ -36,7 +38,12 @@ export default function MousePointerItem(
           stroke={item?.stroke}
           fill={item?.fill}
           strokeWidth={item?.strokeWidth}
-          text={item?.name}
+          text={item?.displayName}
+          showCircle
+          cricleRadius={calculateDezynfectionRadius(
+            item?.angle,
+            lampParams.defaultHeight
+          )}
         />
       );
       break;

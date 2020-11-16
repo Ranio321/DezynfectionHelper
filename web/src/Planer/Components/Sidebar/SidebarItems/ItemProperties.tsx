@@ -40,7 +40,8 @@ export default function ItemProperties(
           <Row>
             <div id="text"> X1</div>
             <input
-              id="input"
+              className="propertiesInput"
+              id="X1"
               value={Math.round(item?.position.start?.x!)}
               readOnly
             ></input>
@@ -48,7 +49,8 @@ export default function ItemProperties(
           <Row>
             <div id="text"> Y1</div>
             <input
-              id="input"
+              className="propertiesInput"
+              id="Y1"
               value={Math.round(item?.position.start?.y!)}
               readOnly
             ></input>
@@ -56,11 +58,21 @@ export default function ItemProperties(
 
           <Row>
             <div id="text"> X2</div>
-            <input id="input" value={item?.position.end?.x} readOnly></input>
+            <input
+              className="propertiesInput"
+              id="X2"
+              value={item?.position.end?.x}
+              readOnly
+            ></input>
           </Row>
           <Row>
             <div id="text"> Y2</div>
-            <input id="input" value={item?.position.end?.y} readOnly></input>
+            <input
+              className="propertiesInput"
+              id="Y2"
+              value={item?.position.end?.y}
+              readOnly
+            ></input>
           </Row>
           <Row>
             <div id="sidebarButton">Dynamic properties</div>
@@ -68,8 +80,9 @@ export default function ItemProperties(
           <Row>
             <div id="text"> Height</div>
             <input
-              id="input"
-              value={height}
+              className="propertiesInput"
+              id="Height"
+              value={height ? height : 0}
               onChange={(e) => setHeight(parseInt(e.target.value))}
             ></input>
             <div className="unit">Cm</div>
