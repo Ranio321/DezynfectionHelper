@@ -24,7 +24,7 @@ export interface DrawingLine {
 export interface Item {
   id: number;
   position: LampPosition;
-  height?: number;
+  height: number;
   type: string;
 }
 

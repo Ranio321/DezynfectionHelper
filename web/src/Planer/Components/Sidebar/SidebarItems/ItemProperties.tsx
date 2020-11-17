@@ -7,7 +7,7 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { cloneObject } from "../../../Helpers/cloneObject";
 interface ItemPropertiesProps {
-  item?: Item;
+  item: Item;
   onWallDelete: (id: number) => any;
   changeItem: (id: number, item: Item) => any;
 }
@@ -16,11 +16,11 @@ export default function ItemProperties(
   props: ItemPropertiesProps
 ): JSX.Element {
   const { item } = props;
-  const [height, setHeight] = useState<number>();
+  const [height, setHeight] = useState<number>(0);
 
   useEffect(() => {
-    setHeight(item?.height);
-  }, [item?.height]);
+    setHeight(item.height);
+  }, [item.height]);
 
   function onSubmit() {
     let newItem = cloneObject(item);

@@ -81,7 +81,7 @@ export default function Lamp(props: LampProps): JSX.Element {
         {showCircle && (
           <Circle
             radius={cricleRadius ? cricleRadius : 0}
-            fill="green"
+            fill="blue"
             opacity={0.2}
             listening={false}
             x={width / 2}

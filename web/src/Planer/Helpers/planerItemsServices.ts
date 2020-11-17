@@ -1,3 +1,4 @@
+import { lampParams } from "../Components/Items/Constants/LampConstants";
 import { itemList } from "../Components/Sidebar/SidebarItems/Items";
 import { ClickPoints, Item, Point } from "../PlanerTypes";
 import { snapToGrid } from "./snapToGrid";
@@ -21,6 +22,7 @@ function createWall(startPosition: Point, endPosition: Point): Item {
     position: newPoints,
     id: getUniqueId(),
     type: itemList.wall,
+    height: lampParams.defaultHeight
   };
 
   return item;
@@ -36,6 +38,7 @@ function createLamp(
     position: { start: position, width, height },
     id: getUniqueId(),
     type: type,
+    height: lampParams.defaultHeight
   };
 
   return item;

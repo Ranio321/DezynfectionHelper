@@ -48,12 +48,6 @@ export default function CustomLine(props: LineProps) {
     }
   }, [props.isSelected, stroke]);
 
-  // useEffect(() => {
-  //   if (props.snapToGrid &&  props.points.length > 3) {
-  //     setShapePoints(snapToGrid(props.points));
-  //   }
-  // }, [props.points]);
-
   return (
     <>
       <Line
