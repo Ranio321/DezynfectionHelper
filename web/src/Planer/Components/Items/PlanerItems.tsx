@@ -11,7 +11,7 @@ interface ItemsProps {
   setCurrentItemId: (id: number) => any;
   currentItemId?: number;
   itemToAdd: string;
-  onLampDragEnd: (id: number, item: Item) => any;
+  onObjectDragEnd: (id: number, item: Item) => any;
 }
 function PlanerItems(props: ItemsProps): JSX.Element {
   const {
@@ -19,7 +19,7 @@ function PlanerItems(props: ItemsProps): JSX.Element {
     setCurrentItemId,
     currentItemId,
     itemToAdd,
-    onLampDragEnd,
+    onObjectDragEnd,
   } = props;
   const [rectItems, setRectItmes] = useState<Item[]>();
   const [walls, setWalls] = useState<Item[]>();
@@ -91,7 +91,7 @@ function PlanerItems(props: ItemsProps): JSX.Element {
             stroke={itemParams?.stroke}
             strokeWidth={itemParams?.strokeWidth}
             text={itemParams?.displayName}
-            onDragEnd={() => onLampDragEnd(item.id, item)}
+            onDragEnd={() => onObjectDragEnd(item.id, item)}
             showCircle={itemList.lamp === itemParams?.name}
             cricleRadius={calculateDezynfectionRadius(
               itemParams?.angle,

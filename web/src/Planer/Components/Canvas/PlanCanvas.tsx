@@ -83,7 +83,7 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     setIsDrawing(false);
   }
 
-  function onMouseMove(e: KonvaEventObject<MouseEvent>) {
+  function onMouseMove() {
     let mousePosition = getMousePosition(layerRef);
     let position = { x: mousePosition.x, y: mousePosition.y };
     let newPoints: ClickPoints = {
@@ -130,12 +130,6 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     props.changeItem(id, newItem);
   }
 
-  const colStyle = {
-    maxWidth: "20px",
-    margin: "0px",
-    paddingRight: "0px",
-  };
-
   const cStyle = {
     padding: "0px",
     margin: "0px",
@@ -150,10 +144,10 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
         </Col>
       </Row>
       <Row noGutters>
-        <Col style={colStyle}>
+        <Col className="planerCol">
           <LeftGridScale height={height - 20} />
         </Col>
-        <Col className="planer">
+        <Col className="planerCol">
           <div id="planer">
             <Stage
               width={width - 20}
@@ -179,7 +173,7 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
                   setCurrentItemId={setCurrentItemId}
                   itemToAdd={itemToAdd}
                   currentItemId={currentItemId}
-                  onLampDragEnd={(id, item) => onObjectDragEnd(id, item)}
+                  onObjectDragEnd={(id, item) => onObjectDragEnd(id, item)}
                 />
                 {rooms?.map((room) => (
                   <Room key={room.name} room={room} />

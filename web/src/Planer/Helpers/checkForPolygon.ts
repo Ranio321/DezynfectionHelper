@@ -20,7 +20,7 @@ export default function checkForPolygon(items: Item[]) {
   return vertices.length > 0 ? vertices : false;
 }
 
-function intersect(firstLine: ClickPoints, secondLine: ClickPoints) {
+export function intersect(firstLine: ClickPoints, secondLine: ClickPoints) {
   const [x1, y1, x2, y2] = mapToCordinates(firstLine);
   const [x3, y3, x4, y4] = mapToCordinates(secondLine);
 
