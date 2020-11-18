@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { calculateDezynfectionRadius } from "../../Helpers/calculateDezynfectionRadius";
+import { inDezynfectionRange } from "../../Helpers/inDezynfectionRange";
 import { itemsCatalogueItems } from "../../ItemsCatalogue/ItemsCatalogueList";
 import { Item } from "../../PlanerTypes";
 import { itemList } from "../Sidebar/SidebarItems/Items";
@@ -11,7 +12,7 @@ interface ItemsProps {
   setCurrentItemId: (id: number) => any;
   currentItemId?: number;
   itemToAdd: string;
-  onObjectDragEnd: (id: number, item: Item) => any;
+  onLampDragEnd: (id: number, item: Item) => any;
 }
 function PlanerItems(props: ItemsProps): JSX.Element {
   const {
@@ -19,29 +20,34 @@ function PlanerItems(props: ItemsProps): JSX.Element {
     setCurrentItemId,
     currentItemId,
     itemToAdd,
-    onObjectDragEnd,
+    onLampDragEnd,
   } = props;
-  const [rectItems, setRectItmes] = useState<Item[]>();
-  const [walls, setWalls] = useState<Item[]>();
+  const [rectItems, setRectItmes] = useState<Item[]>([]);
+  const [walls, setWalls] = useState<Item[]>([]);
+  const [lamps, setLamps] = useState<Item[]>([]);
 
   useEffect(() => {
     let newWalls: Item[] = [];
-    let rectItems: Item[] = [];
+    let newRectItems: Item[] = [];
+    let newLamps: Item[] = [];
     items.forEach((item) => {
       if (item && item.type === itemList.wall) {
         newWalls.push(item);
-      }
-      if (
+      } else if (
         item &&
         item.type !== itemList.wall &&
         item.type !== itemList.pointer &&
         item.position.width &&
-        item.position.height
+        item.position.height &&
+        item.type.includes("Lamp")
       ) {
-        rectItems.push(item);
+        newLamps.push(item);
+      } else {
+        newRectItems.push(item);
       }
     });
-    setRectItmes([...rectItems]);
+    setLamps([...newLamps]);
+    setRectItmes([...newRectItems]);
     setWalls([...newWalls]);
   }, [items.length, items]);
 
@@ -69,7 +75,7 @@ function PlanerItems(props: ItemsProps): JSX.Element {
           />
         );
       })}
-      {rectItems?.map((item) => {
+      {lamps?.map((item) => {
         let itemParams = itemsCatalogueItems.find(
           (obj) => obj.displayName === item.type
         );
@@ -91,12 +97,42 @@ function PlanerItems(props: ItemsProps): JSX.Element {
             stroke={itemParams?.stroke}
             strokeWidth={itemParams?.strokeWidth}
             text={itemParams?.displayName}
-            onDragEnd={() => onObjectDragEnd(item.id, item)}
-            showCircle={itemList.lamp === itemParams?.name}
+            onDragEnd={() => onLampDragEnd(item.id, item)}
+            showCircle
             cricleRadius={calculateDezynfectionRadius(
               itemParams?.angle,
               item.height
             )}
+          />
+        );
+      })}
+      {rectItems?.map((item) => {
+        let itemParams = itemsCatalogueItems.find(
+          (obj) => obj.displayName === item.type
+        );
+        return (
+          <Lamp
+            key={item.id}
+            id={item.id}
+            mousePosition={item.position.start!}
+            width={itemParams?.width!}
+            height={itemParams?.height!}
+            showBlur={
+              itemToAdd === itemList.pointer && currentItemId !== item.id
+            }
+            currentItemId={currentItemId}
+            onClickBlur={itemToAdd === itemList.pointer}
+            setCurrentItemId={setCurrentItemId}
+            shouldSetItem={shouldHighlight()}
+            fill={
+              inDezynfectionRange(item, lamps, walls)
+                ? itemParams?.fill
+                : "lightGreen"
+            }
+            stroke={itemParams?.stroke}
+            strokeWidth={itemParams?.strokeWidth}
+            text={itemParams?.displayName}
+            onDragEnd={() => onLampDragEnd(item.id, item)}
           />
         );
       })}

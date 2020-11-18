@@ -27,7 +27,7 @@ export function inDezynfectionRange(
     }
   });
 
-  return inRange;
+  return !inRange;
 }
 
 function checkIfNoWallsInbetween(

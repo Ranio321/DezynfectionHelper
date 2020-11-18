@@ -173,7 +173,7 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
                   setCurrentItemId={setCurrentItemId}
                   itemToAdd={itemToAdd}
                   currentItemId={currentItemId}
-                  onObjectDragEnd={(id, item) => onObjectDragEnd(id, item)}
+                  onLampDragEnd={(id, item) => onObjectDragEnd(id, item)}
                 />
                 {rooms?.map((room) => (
                   <Room key={room.name} room={room} />
