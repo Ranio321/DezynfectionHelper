@@ -92,11 +92,13 @@ function getAllIntersectPoints(planerItems: Item[]) {
 function checkIfpointsCreatePolygon(intersectPoints: WallsIntersectPoint[]) {
   let prevId = 0;
   let end: any = [];
+  let roomFound;
   for (let x = 0; x < intersectPoints.length; x++) {
     if (intersectPoints[x].intersectPoints.length > 1) {
       prevId = intersectPoints[x].id;
       end = [];
-      let roomFound = p1(
+      roomFound = false;
+      roomFound = p1(
         prevId,
         prevId,
         intersectPoints[x],
@@ -109,9 +111,12 @@ function checkIfpointsCreatePolygon(intersectPoints: WallsIntersectPoint[]) {
     }
   }
   let vertices: Point[] = [];
+  if(roomFound){
+  
   end.forEach((item: any) => {
     vertices.push({ x: item["x"], y: item["y"] });
   });
+  }
   return vertices;
 }
 

@@ -1,4 +1,3 @@
-import { KonvaEventObject } from "konva/types/Node";
 import { Stage as StageType } from "konva/types/Stage";
 import React, { useRef, useState } from "react";
 import { Layer, Stage } from "react-konva";

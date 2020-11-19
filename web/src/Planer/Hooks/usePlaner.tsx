@@ -84,17 +84,17 @@ export function usePlaner(init?: PlanerItems) {
     let items: PlanerItems[] = cloneObject(planerItems);
     if (vertices) {
       var area = calcPolygonArea(vertices);
+      // if (area > 0) {
       room.push({
         area: area,
         name: "Main Room",
         vertices: vertices,
       });
     }
+    // }
     items[items.length - 1].rooms = room;
-    if (planerItems[currentStep].rooms?.length !== room.length) {
-      setPlanerItems(items);
-    }
-  }, [currentStep, planerItems]);
+    setPlanerItems(items);
+  }, [currentStep]);
 
   useEffect(() => {
     if (init) {

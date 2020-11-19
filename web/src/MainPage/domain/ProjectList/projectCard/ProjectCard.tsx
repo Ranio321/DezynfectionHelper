@@ -8,21 +8,38 @@ interface ProjectCardProps {
   projectId: number;
   onClick: (id: number) => any;
   onTrashClick: (id: number) => any;
+  dezynfectionContent: string;
+  error?: boolean;
 }
 
 export default function ProjectCard(props: ProjectCardProps) {
-  const { title, projectId, onClick, onTrashClick } = props;
+  const {
+    title,
+    projectId,
+    onClick,
+    onTrashClick,
+    dezynfectionContent,
+    error,
+  } = props;
+
+  const errorStyle = {
+    background: "rgba(249,62,62,.1)",
+    borderColor: "#f93e3e",
+  };
 
   return (
-    <div className="projectCard">
+    <div className="projectCard" style={error ? errorStyle : undefined}>
       <Container fluid style={{ height: "100%", minHeight: "100%" }}>
         <Row>
           <p className="item-title">{title}</p>
         </Row>
-        <Row>Some text</Row>
+        <Row>
+          <div id="textContent">{dezynfectionContent}</div>
+        </Row>
         <Row>
           <Col lg={1}>
             <Button
+              className="button"
               onClick={() => onClick(projectId)}
               variant="warning"
               style={{ paddingBottom: "4px" }}
