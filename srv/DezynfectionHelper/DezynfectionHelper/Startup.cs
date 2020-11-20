@@ -1,3 +1,4 @@
+using DezynfectionHelper.Dezynfection.SignalRHub;
 using DezynfectionHelper.Extenstions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +25,15 @@ namespace DezynfectionHelper
             services.AddNHibernate();
             services.AddRepositories();
             services.AddDezynfection();
+            services.AddSignalR();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .SetIsOriginAllowed((host) => true)
+                        .AllowAnyHeader());
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -33,6 +43,7 @@ namespace DezynfectionHelper
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("CorsPolicy");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -52,6 +63,7 @@ namespace DezynfectionHelper
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<DezynfectionHub>("/dezynfectionSimulator");
             });
         }
     }

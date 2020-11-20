@@ -17,7 +17,7 @@ export function timeNumberToReadableString(time: number): string {
     result += " and " + minutes + " minutes";
   }
 
-  if (minutes && !hours) {
+  if (!hours) {
     result = minutes + " minutes";
   }
 

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using DezynfectionHelper.Dezynfection.Params;
 using DezynfectionHelper.Dezynfection.Services;
-using DezynfectionHelper.Mappers;
 using DezynfectionHelper.Planer.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,20 +10,24 @@ namespace DezynfectionHelper.Controllers
     [ApiController]
     public class DezynfectionController : ControllerBase
     {
-        private readonly IDezynfectionService dezynfection;
-        private readonly IPlanerRepository repo;
-
-        public DezynfectionController(IDezynfectionService dezynfection, IPlanerRepository repo)
+        private readonly IDezynfectionService service;
+        public DezynfectionController(IDezynfectionService service)
         {
-            this.dezynfection = dezynfection;
-            this.repo = repo;
+            this.service = service;
         }
 
-        [HttpGet]
-        public async Task GetStats([FromQuery]int id)
+        [HttpPost]
+        [Route("Begin")]
+        public async Task BeginDezynfection([FromQuery]BeginDezynfectionParams param)
         {
-            var data = await repo.GetByIdAsync(id);
-            dezynfection.GetDezynfectionStats(data.ToDezynfectionRoom());
+            service.BeginDezynfection(param.Id, param.Time);
+        }
+
+        [HttpPost]
+        [Route("End")]
+        public async Task EndDezynfection([FromQuery]int id)
+        {
+            service.EndDezynfection(id);
         }
     }
 }

@@ -21,15 +21,9 @@ export default function ProjectList(props: ProjectListProps) {
     history.push("/planer/" + id);
   }
 
-  function onTrashClick(id: number) {
-    planerService
-      .deleteById(id)
-      .then(() => refresh())
-      .catch(() => {});
-  }
-
-  function generateDezynfectionMessage(object: PlanerItemsDto): string {
-    let message: string = "";
+  function generateDezynfectionMessage(
+    object: PlanerItemsDto
+  ): string | undefined {
     if (!object.room) {
       return "Dezynfection faild. First you have to create room.";
     }
@@ -37,21 +31,12 @@ export default function ProjectList(props: ProjectListProps) {
       return "Dezynfection faild. First you have to add dezynfection lamps";
     }
 
-    let time = calculateDezynfectionTime(object);
-    let timeAsString = timeNumberToReadableString(time);
-    message = "Optmial dezynfection time: " + timeAsString;
-    return message;
+    // let time = calculateDezynfectionTime(object);
+    // let timeAsString = timeNumberToReadableString(time);
+    // message = "Optmial dezynfection time: " + timeAsString;
+    // return message;
   }
 
-  function checkForError(object: PlanerItemsDto): boolean {
-    if (
-      !object.room ||
-      !object.objects.find((item) => item.type.includes("Lamp"))
-    ) {
-      return true;
-    }
-    return false;
-  }
   return (
     <LoadingArea height="100px" width="100px" promise={promise}>
       <EmptyViewForArray items={projects}>
@@ -64,9 +49,9 @@ export default function ProjectList(props: ProjectListProps) {
                 title={el.name}
                 projectId={el.id}
                 onClick={onButtonClick}
-                onTrashClick={onTrashClick}
-                dezynfectionContent={generateDezynfectionMessage(el)}
-                error={checkForError(el)}
+                refresh={refresh}
+                dezynfectionTime={calculateDezynfectionTime(el)}
+                error={generateDezynfectionMessage(el)}
               />
             );
           })}

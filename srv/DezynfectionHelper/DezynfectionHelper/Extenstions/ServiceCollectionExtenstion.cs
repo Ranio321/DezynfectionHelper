@@ -1,4 +1,5 @@
-﻿using DezynfectionHelper.Dezynfection.Services;
+﻿using DezynfectionHelper.Dezynfection.Scheduler;
+using DezynfectionHelper.Dezynfection.Services;
 using DezynfectionHelper.NHibernate.Configurations;
 using DezynfectionHelper.NHibernate.Services;
 using DezynfectionHelper.Planer.Repositories;
@@ -22,8 +23,8 @@ namespace DezynfectionHelper.Extenstions
 
         public static void AddDezynfection(this IServiceCollection services)
         {
-            services.AddTransient<IDezynfectionService, DezynfectionService>()
-                    .AddTransient<IDezynfectionCalculator, DezynfectionCalculator>();
+            services.AddSingleton<IDezynfectionScheduler, DezynfectionScheduler>()
+                    .AddTransient<IDezynfectionService ,DezynfectionService>();
         }
     }
 }

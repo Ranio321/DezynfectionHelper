@@ -13,3 +13,8 @@ export interface PlanerItemsDto extends PlanerItems {
   name: string;
   id: number;
 }
+
+export interface BeginDezynfecetionParams {
+  id: number;
+  time: number;
+}

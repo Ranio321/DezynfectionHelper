@@ -3,7 +3,7 @@
   //background: rgba(249,62,62,.1);
   //background: #1d253b;
   width: 98%;
-  height: 120px;
+  min-height: 16%;
   margin-left: auto;
   margin-right: auto;
   border: 1px solid #000;
@@ -40,7 +40,7 @@
     border-color: #fcb26e;
     box-shadow: 1px 0px 15px 1px rgba(0, 0, 0, 0.19);
     position: absolute;
-    bottom: 0px;
+    margin-bottom: 2px;
     left: 20px;
 
     
@@ -50,5 +50,11 @@
   }
   #textContent{
     padding-left: 20px;
+    float: left;
+  }
+
+  .progressBar{
+    width: 77%;
+    margin: auto;
   }
 }
