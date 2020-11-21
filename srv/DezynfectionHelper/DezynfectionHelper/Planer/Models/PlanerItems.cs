@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DezynfectionHelper.Users.Models;
 using FluentNHibernate.Mapping;
 
 namespace DezynfectionHelper.Planer.Models
@@ -9,6 +10,7 @@ namespace DezynfectionHelper.Planer.Models
         public virtual string Name { get; set; }
         public virtual IList<PlanerObject> Objects { get; set; }
         public virtual Room Room { get; set; }
+        public virtual UserAccount UserAccount { get; set; }
     }
 
     public class PlanerItemsMap : ClassMap<PlanerItems>
@@ -17,6 +19,7 @@ namespace DezynfectionHelper.Planer.Models
         {
             Id(x => x.Id);
             Map(x => x.Name);
+            References(x => x.UserAccount);
             References(x => x.Room)
                 .Cascade.AllDeleteOrphan()
                 .Cascade.All();

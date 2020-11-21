@@ -26,13 +26,11 @@ export default function ProjectCard(props: ProjectCardProps) {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    if (!isCompleted) {
-      let percentage = (elapsedTime / (dezynfectionTime * 60)) * 100;
-      setCompletedPercentage(percentage);
-      setTimeRemaining(Math.ceil(dezynfectionTime - elapsedTime / 60));
-      if (percentage >= 100) {
-        setIsCompleted(true);
-      }
+    let percentage = (elapsedTime / (dezynfectionTime * 60)) * 100;
+    setCompletedPercentage(percentage);
+    setTimeRemaining(Math.ceil(dezynfectionTime - elapsedTime / 60));
+    if (percentage >= 100) {
+      setIsCompleted(true);
     }
   }, [elapsedTime]);
 
@@ -69,6 +67,8 @@ export default function ProjectCard(props: ProjectCardProps) {
     dezynfectionServices
       .endDezynfection(projectId)
       .then(() => setIsActive(false));
+    setElapsedTime(0);
+    setIsCompleted(false);
   }
 
   function onTrashClick(id: number) {
@@ -100,7 +100,9 @@ export default function ProjectCard(props: ProjectCardProps) {
             variant="success"
             className="progressBar"
             now={!error ? completedPercentag : 0}
-            label={Math.floor(completedPercentag) + "%"}
+            label={
+              isCompleted ? "Completed" : Math.floor(completedPercentag) + "%"
+            }
           />
         </Row>
         <Row style={{ paddingTop: "1px" }}>
@@ -138,7 +140,7 @@ export default function ProjectCard(props: ProjectCardProps) {
                 disabled={error !== undefined || isActive}
               />
               <ProjectCardOption
-                tooltip="Cancel dezynfection"
+                tooltip="Cancel/restart dezynfection"
                 icon={faStop}
                 hoverColor="brown"
                 onClick={() => endDezynfection()}

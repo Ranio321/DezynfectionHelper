@@ -1,15 +1,54 @@
 import React from "react";
-import { Nav, Navbar } from "react-bootstrap";
+import { Button, Nav, Navbar } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { RestircedArea } from "../../../common/RestricedArea";
+import { useAuth } from "../../../Users/authorization";
 import "./TopNavBar.scss";
 interface TopNavBarProps {}
 
 export default function TopNavbar(props: TopNavBarProps) {
+  const { user, logout } = useAuth();
+  const history = useHistory();
+
+  function onSignIn() {
+    history.push({
+      pathname: "/home/login",
+    });
+  }
+
+  function onLogout() {
+    logout();
+    history.push({
+      pathname: "/home",
+    });
+  }
+
+  function onMyPorjectsClick() {
+    history.push({
+      //pathname: "/home/projects",
+      pathname: "/planer",
+    });
+  }
+
   return (
     <Navbar className="topNavBar" variant="dark">
       <Navbar.Brand>Dezynfection Helper</Navbar.Brand>
+
       <Nav className="mr-auto">
-        <Nav.Link>My projects</Nav.Link>
+        <RestircedArea redirectTo="/home">
+          <Nav.Link onClick={onMyPorjectsClick}>My projects</Nav.Link>
+        </RestircedArea>
       </Nav>
+
+      {!user ? (
+        <Button variant="info" className="loginButton" onClick={onSignIn}>
+          Sign in
+        </Button>
+      ) : (
+        <Button variant="info" className="loginButton" onClick={onLogout}>
+          Logout
+        </Button>
+      )}
     </Navbar>
   );
 }

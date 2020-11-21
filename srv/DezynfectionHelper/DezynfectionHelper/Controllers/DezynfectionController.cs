@@ -18,14 +18,14 @@ namespace DezynfectionHelper.Controllers
 
         [HttpPost]
         [Route("Begin")]
-        public async Task BeginDezynfection([FromQuery]BeginDezynfectionParams param)
+        public void BeginDezynfection([FromQuery]BeginDezynfectionParams param)
         {
             service.BeginDezynfection(param.Id, param.Time);
         }
 
         [HttpPost]
         [Route("End")]
-        public async Task EndDezynfection([FromQuery]int id)
+        public void EndDezynfection([FromQuery]int id)
         {
             service.EndDezynfection(id);
         }

@@ -26,7 +26,14 @@ namespace DezynfectionHelper.Planer.Repositories
 
         public async Task<List<PlanerItems>> GetAllAsync()
         {
-            return await session.Query<PlanerItems>().ToListAsync();
+            return await session.Query<PlanerItems>()
+                .Select(s => new PlanerItems()
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Objects = s.Objects,
+                    Room = s.Room,
+                }).ToListAsync();
         }
 
         public async Task<PlanerItems> GetByIdAsync(int id)
@@ -36,7 +43,8 @@ namespace DezynfectionHelper.Planer.Repositories
             {
                 planerItems = await session.Query<PlanerItems>()
                 .Where(x => x.Id == id)
-                .FirstAsync();
+                .FirstOrDefaultAsync();
+
             }
             catch (Exception e)
             {
@@ -51,7 +59,7 @@ namespace DezynfectionHelper.Planer.Repositories
             var planerItem = await GetByIdAsync(id);
             if (planerItem != null)
             {
-                await session.DeleteAsync(planerItem);
+                 await session.DeleteAsync(planerItem);
             }
             else
             {

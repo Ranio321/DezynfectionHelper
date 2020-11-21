@@ -21,7 +21,7 @@ export default function OptionsSidebar(props: OptionsSidebarProps) {
       <Option
         icon={icons.home}
         tooltip="Return to home screen"
-        onClick={() => history.push("/")}
+        onClick={() => history.push("/home/projects")}
       />
       <Option
         icon={icons.newFile}
