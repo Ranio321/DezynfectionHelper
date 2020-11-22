@@ -1,11 +1,7 @@
-﻿using DezynfectionHelper.Users.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
+using DezynfectionHelper.Users.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace DezynfectionHelper.Extenstions
 {

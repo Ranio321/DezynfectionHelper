@@ -1,10 +1,6 @@
 ﻿using DezynfectionHelper.Dezynfection.Scheduler;
 using DezynfectionHelper.Dezynfection.SignalRHub;
 using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DezynfectionHelper.Dezynfection.Symulators
 {
@@ -37,6 +33,5 @@ namespace DezynfectionHelper.Dezynfection.Symulators
                 await scheduler.CancelJob(roomId);
             }
         }
-
     }
 }

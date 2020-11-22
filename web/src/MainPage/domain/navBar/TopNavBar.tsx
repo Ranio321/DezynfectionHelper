@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Nav, Navbar } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { RestircedArea } from "../../../common/RestricedArea";
 import { useAuth } from "../../../Users/authorization";
 import "./TopNavBar.scss";
@@ -25,7 +25,12 @@ export default function TopNavbar(props: TopNavBarProps) {
 
   function onMyPorjectsClick() {
     history.push({
-      //pathname: "/home/projects",
+      pathname: "/home/projects",
+    });
+  }
+
+  function onPlanerClick() {
+    history.push({
       pathname: "/planer",
     });
   }
@@ -37,6 +42,9 @@ export default function TopNavbar(props: TopNavBarProps) {
       <Nav className="mr-auto">
         <RestircedArea redirectTo="/home">
           <Nav.Link onClick={onMyPorjectsClick}>My projects</Nav.Link>
+        </RestircedArea>
+        <RestircedArea redirectTo="/home">
+          <Nav.Link onClick={onPlanerClick}>Create plan</Nav.Link>
         </RestircedArea>
       </Nav>
 

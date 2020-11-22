@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices.ComTypes;
+﻿using System.Net;
 using System.Threading.Tasks;
 using DezynfectionHelper.Extenstions;
 using DezynfectionHelper.NHibernate.Services;
@@ -77,6 +73,7 @@ namespace DezynfectionHelper.Controllers
                 HttpContext.Response.StatusCode = 404;
                 return null;
            }
+
            return new UserAccountDto() { Id = account.Id, Nick = account.Nick };
         }
     }

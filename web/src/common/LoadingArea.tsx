@@ -16,16 +16,23 @@ export function LoadingArea({
   children,
 }: LoadingAreaProps) {
   const [isCompleted, setIsCompleted] = useState(false);
+  const [promiseFailed, setPromiseFailed] = useState(false);
 
   useEffect(() => {
     promise
       ?.then(() => setIsCompleted(true))
-      .catch(() => setIsCompleted(false));
+      .catch(() => {
+        setPromiseFailed(true);
+        setIsCompleted(true);
+      });
   }, [promise]);
 
+  console.log(isCompleted);
+  console.log(promiseFailed);
+  console.log(promise);
   return (
     <>
-      {!isCompleted ? (
+      {!isCompleted && !promiseFailed ? (
         <div style={{ width: width ? width : "100%", height }}>
           <Spinner
             className="loading-chart-spinner"

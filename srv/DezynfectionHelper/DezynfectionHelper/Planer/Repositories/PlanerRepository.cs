@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DezynfectionHelper.Exceptions;
-using DezynfectionHelper.NHibernate.Services;
 using DezynfectionHelper.Planer.Models;
 using NHibernate;
 using NHibernate.Linq;
@@ -44,7 +43,6 @@ namespace DezynfectionHelper.Planer.Repositories
                 planerItems = await session.Query<PlanerItems>()
                 .Where(x => x.Id == id)
                 .FirstOrDefaultAsync();
-
             }
             catch (Exception e)
             {

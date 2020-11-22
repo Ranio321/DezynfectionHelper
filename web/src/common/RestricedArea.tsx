@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { useAuth } from "../Users/authorization";
 interface RestircedAreaProps {
@@ -7,19 +7,20 @@ interface RestircedAreaProps {
 }
 
 export function RestircedArea(props: RestircedAreaProps) {
-  const { user } = useAuth();
+  const { user, promise } = useAuth();
   const { children, redirectTo } = props;
-  const history = useHistory();
+  const [promiseResolved, setPromiseResolved] = useState(false);
 
-  // useEffect(() => {
-  //   if (!user) {
-  //     history.push({
-  //       pathname: redirectTo,
-  //     });
-  //   }
-  // }, []);
+  console.log(promise);
+  useEffect(() => {
+    if (promise) {
+      promise
+        .then(() => setPromiseResolved(true))
+        .catch(() => setPromiseResolved(true));
+    }
+  }, [promise]);
 
-  console.log(user);
+  const redirect = <>{promiseResolved ? <Redirect to={redirectTo} /> : null}</>;
 
-  return <>{user ? children : <Redirect to={redirectTo} />}</>;
+  return <>{user ? children : redirect}</>;
 }

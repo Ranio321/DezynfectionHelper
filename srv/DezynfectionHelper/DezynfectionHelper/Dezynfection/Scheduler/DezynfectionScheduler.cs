@@ -1,13 +1,10 @@
-﻿using DezynfectionHelper.Dezynfection.Symulators;
+﻿using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using DezynfectionHelper.Exceptions;
 using FluentScheduler;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace DezynfectionHelper.Dezynfection.Scheduler
 {

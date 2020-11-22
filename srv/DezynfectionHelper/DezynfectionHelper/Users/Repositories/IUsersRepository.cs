@@ -1,8 +1,5 @@
-﻿using DezynfectionHelper.Users.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using DezynfectionHelper.Users.Models;
 
 namespace DezynfectionHelper.Users.Repositories
 {

@@ -1,7 +1,5 @@
-﻿using System.Threading.Tasks;
-using DezynfectionHelper.Dezynfection.Params;
+﻿using DezynfectionHelper.Dezynfection.Params;
 using DezynfectionHelper.Dezynfection.Services;
-using DezynfectionHelper.Planer.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DezynfectionHelper.Controllers

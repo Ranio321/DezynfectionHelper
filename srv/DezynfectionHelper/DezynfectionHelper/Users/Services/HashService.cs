@@ -7,7 +7,6 @@ namespace DezynfectionHelper.Users.Services
 {
     public class HashService : IHashService
     {
-
         public bool CompareHashes(string password, string hash)
         {
             var passwordInfo = hash.Split(".");
@@ -25,7 +24,6 @@ namespace DezynfectionHelper.Users.Services
                 var keyToCheck = alg.GetBytes(hashToCompareBytes.Length);
                 return keyToCheck.SequenceEqual(hashToCompareBytes);
             }
-
         }
 
         public string Hash(string password)
@@ -37,7 +35,6 @@ namespace DezynfectionHelper.Users.Services
             var salt = Convert.ToBase64String(rfc.Salt);
 
             return $"1000.{algorithmName}.{salt}.{hash}";
-
         }
     }
 }

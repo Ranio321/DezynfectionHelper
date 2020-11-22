@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DezynfectionHelper.Exceptions
 {
@@ -10,7 +7,6 @@ namespace DezynfectionHelper.Exceptions
         public JobAlreadyInProgress(string name)
             : base($"Job with name {name} is already in progress")
         {
-
         }
     }
 }

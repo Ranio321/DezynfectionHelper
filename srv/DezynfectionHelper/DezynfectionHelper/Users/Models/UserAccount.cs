@@ -1,8 +1,6 @@
-﻿using DezynfectionHelper.NHibernate.Models;
+﻿using System.Collections.Generic;
+using DezynfectionHelper.NHibernate.Models;
 using DezynfectionHelper.Planer.Models;
-using NHibernate.Loader;
-using NHibernate.Mapping;
-using System.Collections.Generic;
 
 namespace DezynfectionHelper.Users.Models
 {

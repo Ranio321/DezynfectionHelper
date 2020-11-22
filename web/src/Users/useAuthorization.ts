@@ -4,36 +4,40 @@ import { Authorization, User } from "./authorizationModels";
 
 export function useAuthorization() : Authorization
 {
-    const [user, setUser] = useState<User>()
+    const [user, setUser] = useState<User>();
+    const [servicePromise, setServicePromise] = useState<Promise<any>>();
 
     function login(param: LoginParams)
     {
-        return usersServices.login(param)
+        setServicePromise(usersServices.login(param)
         .then(data => setUser({
             id: data.id,
             nick: data.nick
         })
         )
         .catch(() => setUser(undefined))
+        );
     }
 
     function logout(){
-        console.log("dsad");
-        usersServices.logout()
+        
+        setServicePromise(usersServices.logout()
         .then(() => {
             setUser(undefined)
         })
-        .catch(() => console.log("Logout error"));
+        .catch(() => console.log("Logout error"))
+        )
     }
 
     useEffect(() => {
-        usersServices.getCurrentUser()
+        setServicePromise(usersServices.getCurrentUser()
         .then(data => setUser({
             id: data.id,
             nick: data.nick
         }))
-        .catch(() => {});
+        .catch(() => {})
+        );
 
     },[])
-    return { user, login, logout};
+    return { user, login, logout, promise: servicePromise};
 }
