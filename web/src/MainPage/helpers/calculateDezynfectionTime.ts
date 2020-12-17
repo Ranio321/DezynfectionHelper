@@ -15,7 +15,7 @@ function getDezynfectionTime(objects: PlanerItemsDto) : number
 {
     let lamps = objects.objects.filter(item => item.type.includes("Lamp"));
 
-    let time = 0 ;
+    let time: number[] = [] ;
 
         
     lamps.forEach(lamp => {
@@ -23,11 +23,11 @@ function getDezynfectionTime(objects: PlanerItemsDto) : number
         let radius = calculateDezynfectionRadius(lampParams?.angle, lamp.height);
         let area = Math.PI*Math.pow(radius/100,2);
         if (lampParams?.flux){
-             time = 25 / ((lampParams?.flux / 1000) / area);
+             time.push(25 / ((lampParams?.flux / 1000) / area));
         }
         
     })
 
-    return time;
+    return time.sort((a,b) => b - a)[0];
 
 }

@@ -40,7 +40,7 @@ export function LoginModal(props: LoginModalProps) {
               value={userLogin}
               onChange={(e) => setUserLogin(e.target.value)}
               className="form-control"
-              style={{ width: "50%", margin: "auto" }}
+              style={{ width: "50%", margin: "auto", borderRadius: "40px" }}
               placeholder="Enter login"
             />
           </div>
@@ -52,6 +52,7 @@ export function LoginModal(props: LoginModalProps) {
               type="password"
               className="form-control"
               placeholder="Enter password"
+              style={{ borderRadius: "40px" }}
             />
           </div>
 

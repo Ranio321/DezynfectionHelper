@@ -112,9 +112,12 @@ export default function ProjectCard(props: ProjectCardProps) {
             </div>
           </Col>
           <Col lg={{ span: 5, offset: 1 }}>
-            <div id="textContent">
-              Time remaining: <b>{timeNumberToReadableString(timeRemaining)}</b>
-            </div>
+            {!error && (
+              <div id="textContent">
+                Time remaining:{" "}
+                <b>{timeNumberToReadableString(timeRemaining)}</b>
+              </div>
+            )}
           </Col>
         </Row>
         <Row style={{ paddingTop: "3px" }}>

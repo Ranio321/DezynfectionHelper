@@ -1,6 +1,5 @@
-import Axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-import { Authorization, User } from "./authorizationModels";
+import React, { useContext } from "react";
+import { Authorization } from "./authorizationModels";
 
 export const AuthContext = React.createContext<Authorization>({
     login: () => null,
