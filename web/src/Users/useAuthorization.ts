@@ -25,7 +25,7 @@ export function useAuthorization() : Authorization
         .then(() => {
             setUser(undefined)
         })
-        .catch(() => console.log("Logout error"))
+        .catch(() => {})
         )
     }
 

@@ -55,6 +55,8 @@ namespace DezynfectionHelper
             }
 
             app.UseHttpsRedirection();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseRouting();
             app.AddAdminUser();
@@ -62,16 +64,20 @@ namespace DezynfectionHelper
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            if (env.IsDevelopment())
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "DH API V1");
-            });
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "DH API V1");
+                });
+            }
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<DezynfectionHub>("/dezynfectionSimulator");
+                endpoints.MapFallbackToFile("/index.html");
             });
         }
     }

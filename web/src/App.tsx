@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.scss";
 import LandingView from "./MainPage/domain/landing/LandingView";
 import Planer from "./Planer/Planer";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";

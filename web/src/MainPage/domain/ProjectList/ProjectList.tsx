@@ -6,7 +6,6 @@ import { EmptyViewForArray } from "../../../common/EmptyViewForArray";
 import { LoadingArea } from "../../../common/LoadingArea";
 import { useDataLoader } from "../../../Planer/Hooks/useDataLoader";
 import { calculateDezynfectionTime } from "../../helpers/calculateDezynfectionTime";
-import { timeNumberToReadableString } from "../../helpers/timeNumberToReadableString";
 import ProjectCard from "./projectCard/ProjectCard";
 import "./ProjectList.scss";
 interface ProjectListProps {}

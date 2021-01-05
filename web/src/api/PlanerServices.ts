@@ -4,14 +4,14 @@ import { PlanerItemsDto, PlanerItemsParams } from "./models";
 
 function save(data: PlanerItemsParams): Promise<PlanerItems> {
   return axios
-    .post<PlanerItems>("/Planer/Save", data)
+    .post<PlanerItems>("/api/Planer/Save", data)
     .then((data) => data.data);
 }
 
 function get(id: number): Promise<PlanerItemsDto> {
   return axios
     .request<PlanerItemsDto>({
-      url: "/Planer/Get",
+      url: "/api/Planer/Get",
       method: "get",
       params: {
         id: id,
@@ -24,14 +24,14 @@ function get(id: number): Promise<PlanerItemsDto> {
 
 function getAll(): Promise<PlanerItemsDto[]> {
   return axios
-    .get<PlanerItemsDto[]>("/Planer/GetAll")
+    .get<PlanerItemsDto[]>("/api/Planer/GetAll")
     .then((data) => data.data);
 }
 
 function deleteById(id: number): Promise<any> {
   return axios
     .request({
-      url: "/Planer/delete?id=" + id,
+      url: "/api/Planer/delete?id=" + id,
       method: "delete",
     })
     .then((data) => {
@@ -42,7 +42,7 @@ function deleteById(id: number): Promise<any> {
 function update(data: PlanerItemsParams) {
   return axios
     .request({
-      url: "/Planer/update",
+      url: "/api/Planer/update",
       method: "PUT",
       data,
     })

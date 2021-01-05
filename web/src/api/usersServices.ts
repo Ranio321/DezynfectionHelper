@@ -2,7 +2,7 @@ import Axios from "axios";
 
 function login(param: LoginParams): Promise<UserAccountDto> {
   return Axios.request({
-    url: "/users/login",
+    url: "/api/users/login",
     method: "POST",
     params: param,
   }).then((data) => data.data);
@@ -10,14 +10,14 @@ function login(param: LoginParams): Promise<UserAccountDto> {
 
 function logout() {
   return Axios.request({
-    url: "/users/logout",
+    url: "/api/users/logout",
     method: "GET",
   }).then((data) => data.data);
 }
 
 function getCurrentUser(): Promise<UserAccountDto> {
   return Axios.request({
-    url: "/users/currentUser",
+    url: "/api/users/currentUser",
     method: "GET",
   }).then((data) => data.data);
 }

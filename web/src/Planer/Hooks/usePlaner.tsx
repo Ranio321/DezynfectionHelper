@@ -17,7 +17,6 @@ export function usePlaner(init?: PlanerItems) {
     items.items.push({ ...item });
     setPlanerItems([...planerItems, items]);
     addToHistory();
-    console.log(items);
   }
 
   function deleteItem(id: number) {

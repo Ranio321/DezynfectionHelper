@@ -11,21 +11,9 @@ export function useInterval(
     const [handle, setHandle] = useState(-1);
     const [isActive, setIsActive] = useState(false);
     const [timeDelay] = useState(delay);
-    
-    // useEffect(() => {
-    //   const tick = () => callbackRef.current && callbackRef.current();
-  
-    //   if (delay) {
-    //     if (immediate) tick();
-  
-    //     setHandle(window.setInterval(tick, delay));
-    //      return () => window.clearInterval(handle);
-    //   }
-    // }, [delay, immediate, refresh]);
 
     function begin() {
         const tick = () => callbackRef.current && callbackRef.current();
-        console.log(timeDelay)
   
         if (delay) {
           if (immediate) tick();

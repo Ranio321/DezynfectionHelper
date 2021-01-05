@@ -26,10 +26,6 @@ export function LoadingArea({
         setIsCompleted(true);
       });
   }, [promise]);
-
-  console.log(isCompleted);
-  console.log(promiseFailed);
-  console.log(promise);
   return (
     <>
       {!isCompleted && !promiseFailed ? (

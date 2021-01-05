@@ -20,7 +20,6 @@ export function LoginModal(props: LoginModalProps) {
   }
 
   useEffect(() => {
-    console.log(user);
     if (user) {
       history.push({
         pathname: "projects",

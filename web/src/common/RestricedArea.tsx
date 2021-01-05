@@ -11,7 +11,6 @@ export function RestircedArea(props: RestircedAreaProps) {
   const { children, redirectTo } = props;
   const [promiseResolved, setPromiseResolved] = useState(false);
 
-  console.log(promise);
   useEffect(() => {
     if (promise) {
       promise

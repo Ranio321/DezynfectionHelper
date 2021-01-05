@@ -128,9 +128,6 @@ function p1(
   end: any
 ): any {
   if (item.intersectPoints.length > 1) {
-    // console.log("currentId "+ item.id)
-    // console.log("prevId "+ prevId);
-    // console.log("mainId "+ mainId);
 
     for (let y = 0; y < item.intersectPoints.length; y++) {
       let newItem = allPoints.find(

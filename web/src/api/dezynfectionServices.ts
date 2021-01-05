@@ -4,7 +4,7 @@ import axios from "axios";
 function beginDezynfection(params: BeginDezynfecetionParams) {
   return axios
     .request({
-      url: "/Dezynfection/Begin",
+      url: "/api/Dezynfection/Begin",
       method: "POST",
       params,
     })
@@ -15,7 +15,7 @@ function beginDezynfection(params: BeginDezynfecetionParams) {
 function endDezynfection(id: number) {
   return axios
     .request({
-      url: "/Dezynfection/End",
+      url: "/api/Dezynfection/End",
       method: "POST",
       params: {
         id: id,
