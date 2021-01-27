@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DezynfectionHelper.Planer.Models;
+using DisinfectionHelper.Planer.Models;
 
-namespace DezynfectionHelper.Planer.Repositories
+namespace DisinfectionHelper.Planer.Repositories
 {
     public interface IPlanerRepository
     {

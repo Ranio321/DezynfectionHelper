@@ -2,7 +2,7 @@ import { itemsCatalogueItems } from "../ItemsCatalogue/ItemsCatalogueList";
 import { ClickPoints, Item } from "../PlanerTypes";
 import { intersect } from "./checkForPolygon";
 
-export function inDezynfectionRange(
+export function inDisinfectionRange(
   object: Item,
   lamps: Item[],
   walls: Item[]

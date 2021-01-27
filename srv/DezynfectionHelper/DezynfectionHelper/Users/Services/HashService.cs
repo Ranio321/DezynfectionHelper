@@ -3,7 +3,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace DezynfectionHelper.Users.Services
+namespace DisinfectionHelper.Users.Services
 {
     public class HashService : IHashService
     {

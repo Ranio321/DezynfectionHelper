@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace DezynfectionHelper.Dezynfection.Scheduler
+namespace DisinfectionHelper.Disinfection.Scheduler
 {
-    public interface IDezynfectionScheduler
+    public interface IDisinfectionScheduler
     {
         Task AddJob(Action action, string name);
         Task CancelJob(string name);

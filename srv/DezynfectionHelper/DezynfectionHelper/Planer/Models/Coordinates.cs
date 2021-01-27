@@ -1,6 +1,6 @@
-﻿using DezynfectionHelper.NHibernate.Models;
+﻿using DisinfectionHelper.NHibernate.Models;
 
-namespace DezynfectionHelper.Planer.Models
+namespace DisinfectionHelper.Planer.Models
 {
     public class Coordinates : Entity<int>
     {

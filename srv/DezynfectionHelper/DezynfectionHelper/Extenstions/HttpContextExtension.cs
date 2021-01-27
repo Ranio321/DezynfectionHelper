@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
-using DezynfectionHelper.Users.Models;
+using DisinfectionHelper.Users.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 
-namespace DezynfectionHelper.Extenstions
+namespace DisinfectionHelper.Extenstions
 {
     public static class HttpContextExtension
     {

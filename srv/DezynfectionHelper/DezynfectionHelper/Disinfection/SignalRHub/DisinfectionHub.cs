@@ -1,13 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 
-namespace DezynfectionHelper.Dezynfection.SignalRHub
+namespace DisinfectionHelper.Disinfection.SignalRHub
 {
-    public class DezynfectionHub : Hub
+    public class DisinfectionHub : Hub
     {
         public Task Send(string message, int time, string name)
         {
-            return Clients.All?.SendAsync("DezynfectionTime", time, name);
+            return Clients.All?.SendAsync("DisinfectionTime", time, name);
         }
     }
 }

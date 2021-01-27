@@ -1,5 +1,5 @@
-using DezynfectionHelper.Dezynfection.SignalRHub;
-using DezynfectionHelper.Extenstions;
+using DisinfectionHelper.Disinfection.SignalRHub;
+using DisinfectionHelper.Extenstions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-namespace DezynfectionHelper
+namespace DisinfectionHelper
 {
     public class Startup
     {
@@ -28,7 +28,7 @@ namespace DezynfectionHelper
             services.AddTransient(c => Configuration);
             services.AddNHibernate();
             services.AddRepositories();
-            services.AddDezynfection();
+            services.AddDisinfection();
             services.AddSignalR();
             services.AddCors(options =>
             {
@@ -76,7 +76,7 @@ namespace DezynfectionHelper
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<DezynfectionHub>("/dezynfectionSimulator");
+                endpoints.MapHub<DisinfectionHub>("/disinfectionSimulator");
                 endpoints.MapFallbackToFile("/index.html");
             });
         }

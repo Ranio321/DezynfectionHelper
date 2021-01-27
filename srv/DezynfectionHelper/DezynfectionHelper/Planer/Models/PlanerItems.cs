@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using DezynfectionHelper.Users.Models;
+using DisinfectionHelper.Users.Models;
 using FluentNHibernate.Mapping;
 
-namespace DezynfectionHelper.Planer.Models
+namespace DisinfectionHelper.Planer.Models
 {
     public class PlanerItems
     {

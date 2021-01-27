@@ -2,13 +2,13 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DezynfectionHelper.Exceptions;
+using DisinfectionHelper.Exceptions;
 using FluentScheduler;
 using Microsoft.Extensions.Hosting;
 
-namespace DezynfectionHelper.Dezynfection.Scheduler
+namespace DisinfectionHelper.Disinfection.Scheduler
 {
-    public class DezynfectionScheduler : IHostedService, IDezynfectionScheduler
+    public class DisinfectionScheduler : IHostedService, IDisinfectionScheduler
     {
         public Task AddJob(Action action, string name)
         {

@@ -1,17 +1,17 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using DezynfectionHelper.Dezynfection.Scheduler;
-using DezynfectionHelper.Dezynfection.Services;
-using DezynfectionHelper.NHibernate.Configurations;
-using DezynfectionHelper.NHibernate.Services;
-using DezynfectionHelper.Planer.Repositories;
-using DezynfectionHelper.Users.Repositories;
-using DezynfectionHelper.Users.Services;
+using DisinfectionHelper.Disinfection.Scheduler;
+using DisinfectionHelper.Disinfection.Services;
+using DisinfectionHelper.NHibernate.Configurations;
+using DisinfectionHelper.NHibernate.Services;
+using DisinfectionHelper.Planer.Repositories;
+using DisinfectionHelper.Users.Repositories;
+using DisinfectionHelper.Users.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DezynfectionHelper.Extenstions
+namespace DisinfectionHelper.Extenstions
 {
     public static class ServiceCollectionExtenstion
     {
@@ -29,10 +29,10 @@ namespace DezynfectionHelper.Extenstions
                     .AddTransient<IHashService, HashService>();
         }
 
-        public static void AddDezynfection(this IServiceCollection services)
+        public static void AddDisinfection(this IServiceCollection services)
         {
-            services.AddSingleton<IDezynfectionScheduler, DezynfectionScheduler>()
-                    .AddTransient<IDezynfectionService, DezynfectionService>();
+            services.AddSingleton<IDisinfectionScheduler, DisinfectionScheduler>()
+                    .AddTransient<IDisinfectionService, DisinfectionService>();
         }
 
         public static void AddCookieAuthentication(this IServiceCollection services, CookieSecurePolicy cookieSecurePolicy)

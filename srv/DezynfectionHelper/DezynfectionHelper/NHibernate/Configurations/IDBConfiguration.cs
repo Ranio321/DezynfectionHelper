@@ -1,6 +1,6 @@
 ﻿using NHibernate;
 
-namespace DezynfectionHelper.NHibernate.Configurations
+namespace DisinfectionHelper.NHibernate.Configurations
 {
     public interface IDBConfiguration
     {

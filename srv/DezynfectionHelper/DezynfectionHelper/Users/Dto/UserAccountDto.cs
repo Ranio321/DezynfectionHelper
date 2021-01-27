@@ -1,4 +1,4 @@
-﻿namespace DezynfectionHelper.Users.Dto
+﻿namespace DisinfectionHelper.Users.Dto
 {
     public class UserAccountDto
     {

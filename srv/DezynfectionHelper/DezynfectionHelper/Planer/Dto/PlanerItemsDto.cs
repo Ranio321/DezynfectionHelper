@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using DezynfectionHelper.Planer.Models;
+using DisinfectionHelper.Planer.Models;
 
-namespace DezynfectionHelper.Planer.Dto
+namespace DisinfectionHelper.Planer.Dto
 {
     public class PlanerItemsDto
     {

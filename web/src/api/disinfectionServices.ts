@@ -1,10 +1,10 @@
 import { BeginDezynfecetionParams } from "./models";
 import axios from "axios";
 
-function beginDezynfection(params: BeginDezynfecetionParams) {
+function beginDisinfection(params: BeginDezynfecetionParams) {
   return axios
     .request({
-      url: "/api/Dezynfection/Begin",
+      url: "/api/Disinfection/Begin",
       method: "POST",
       params,
     })
@@ -12,10 +12,10 @@ function beginDezynfection(params: BeginDezynfecetionParams) {
     .catch(() => {});
 }
 
-function endDezynfection(id: number) {
+function endDisinfection(id: number) {
   return axios
     .request({
-      url: "/api/Dezynfection/End",
+      url: "/api/Disinfection/End",
       method: "POST",
       params: {
         id: id,
@@ -24,7 +24,7 @@ function endDezynfection(id: number) {
     .then((data) => data.data)
     .catch(() => {});
 }
-export const dezynfectionServices = {
-  beginDezynfection,
-  endDezynfection,
+export const disinfectionServices = {
+  beginDisinfection,
+  endDisinfection,
 };

@@ -1,6 +1,6 @@
 ﻿using FluentNHibernate.Mapping;
 
-namespace DezynfectionHelper.NHibernate.Models
+namespace DisinfectionHelper.NHibernate.Models
 {
     public class Entity<TId>
     {

@@ -2,7 +2,7 @@
 using NHibernate;
 using ISession = NHibernate.ISession;
 
-namespace DezynfectionHelper.NHibernate.Services
+namespace DisinfectionHelper.NHibernate.Services
 {
     public class UnitOfWork : IUnitOfWork
     {

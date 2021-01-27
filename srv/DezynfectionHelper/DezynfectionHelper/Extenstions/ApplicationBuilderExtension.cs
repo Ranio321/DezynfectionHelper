@@ -1,11 +1,11 @@
-﻿using DezynfectionHelper.NHibernate.Services;
-using DezynfectionHelper.Users.Models;
-using DezynfectionHelper.Users.Repositories;
-using DezynfectionHelper.Users.Services;
+﻿using DisinfectionHelper.NHibernate.Services;
+using DisinfectionHelper.Users.Models;
+using DisinfectionHelper.Users.Repositories;
+using DisinfectionHelper.Users.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DezynfectionHelper.Extenstions
+namespace DisinfectionHelper.Extenstions
 {
     public static class ApplicationBuilderExtension
     {

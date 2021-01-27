@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 
-namespace DezynfectionHelper.NHibernate.Configurations
+namespace DisinfectionHelper.NHibernate.Configurations
 {
     public class DBConfiguration : IDBConfiguration
     {

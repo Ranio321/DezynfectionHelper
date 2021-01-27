@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using DezynfectionHelper.NHibernate.Models;
+using DisinfectionHelper.NHibernate.Models;
 
-namespace DezynfectionHelper.Planer.Models
+namespace DisinfectionHelper.Planer.Models
 {
     public class Room : Entity<int>
     {

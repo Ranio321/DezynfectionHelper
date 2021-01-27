@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DezynfectionHelper.Exceptions;
-using DezynfectionHelper.Planer.Models;
+using DisinfectionHelper.Exceptions;
+using DisinfectionHelper.Planer.Models;
 using NHibernate;
 using NHibernate.Linq;
 
-namespace DezynfectionHelper.Planer.Repositories
+namespace DisinfectionHelper.Planer.Repositories
 {
     public class PlanerRepository : IPlanerRepository
     {

@@ -1,7 +1,7 @@
 import { faPlay, faStop, faTrash } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, ProgressBar, Row } from "react-bootstrap";
-import { dezynfectionServices } from "../../../../api/dezynfectionServices";
+import { disinfectionServices } from "../../../../api/disinfectionServices";
 import { planerService } from "../../../../api/PlanerServices";
 import { createSignalRConnection } from "../../../helpers/createSignalRConnection";
 import { timeNumberToReadableString } from "../../../helpers/timeNumberToReadableString";
@@ -11,34 +11,34 @@ interface ProjectCardProps {
   title?: string;
   projectId: number;
   onClick: (id: number) => any;
-  dezynfectionTime: number;
+  disinfectionTime: number;
   error?: string;
   refresh: () => any;
 }
 
 export default function ProjectCard(props: ProjectCardProps) {
-  const { title, projectId, onClick, dezynfectionTime, error, refresh } = props;
+  const { title, projectId, onClick, disinfectionTime, error, refresh } = props;
 
   const [completedPercentag, setCompletedPercentage] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
-  const [timeRemaining, setTimeRemaining] = useState(dezynfectionTime);
+  const [timeRemaining, setTimeRemaining] = useState(disinfectionTime);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    let percentage = (elapsedTime / (dezynfectionTime * 60)) * 100;
+    let percentage = (elapsedTime / (disinfectionTime * 60)) * 100;
     setCompletedPercentage(percentage);
-    setTimeRemaining(Math.ceil(dezynfectionTime - elapsedTime / 60));
+    setTimeRemaining(Math.ceil(disinfectionTime - elapsedTime / 60));
     if (percentage >= 100) {
       setIsCompleted(true);
     }
   }, [elapsedTime]);
 
-  function dezynfectionMessage(time: number) {
+  function disinfectionMessage(time: number) {
     let timeAsString = timeNumberToReadableString(time);
     let message = (
       <>
-        Optmial dezynfection time: <b>{timeAsString}</b>
+        Optmial disinfection time: <b>{timeAsString}</b>
       </>
     );
     return message;
@@ -55,17 +55,17 @@ export default function ProjectCard(props: ProjectCardProps) {
     connection.start();
   }
 
-  function beginDezynfection() {
-    dezynfectionServices.beginDezynfection({
+  function beginDisinfection() {
+    disinfectionServices.beginDisinfection({
       id: projectId,
-      time: dezynfectionTime * 60,
+      time: disinfectionTime * 60,
     });
     getCurrentProgress();
   }
 
-  function endDezynfection() {
-    dezynfectionServices
-      .endDezynfection(projectId)
+  function endDisinfection() {
+    disinfectionServices
+      .endDisinfection(projectId)
       .then(() => setIsActive(false));
     setElapsedTime(0);
     setIsCompleted(false);
@@ -76,8 +76,8 @@ export default function ProjectCard(props: ProjectCardProps) {
       .deleteById(id)
       .then(() => refresh())
       .catch(() => {});
-    dezynfectionServices
-      .endDezynfection(projectId)
+    disinfectionServices
+      .endDisinfection(projectId)
       .then(() => setIsActive(false));
   }
 
@@ -108,7 +108,7 @@ export default function ProjectCard(props: ProjectCardProps) {
         <Row style={{ paddingTop: "1px" }}>
           <Col lg={{ span: 5, offset: 1 }}>
             <div id="textContent">
-              {error ? error : dezynfectionMessage(dezynfectionTime)}
+              {error ? error : disinfectionMessage(disinfectionTime)}
             </div>
           </Col>
           <Col lg={{ span: 5, offset: 1 }}>
@@ -136,17 +136,17 @@ export default function ProjectCard(props: ProjectCardProps) {
           <Col lg={{ span: 4, offset: 7 }}>
             <div className="icons">
               <ProjectCardOption
-                tooltip="Begin dezynfection"
+                tooltip="Begin disinfection"
                 icon={faPlay}
                 hoverColor="Green"
-                onClick={() => beginDezynfection()}
+                onClick={() => beginDisinfection()}
                 disabled={error !== undefined || isActive}
               />
               <ProjectCardOption
-                tooltip="Cancel/restart dezynfection"
+                tooltip="Cancel/restart disinfection"
                 icon={faStop}
                 hoverColor="brown"
-                onClick={() => endDezynfection()}
+                onClick={() => endDisinfection()}
                 disabled={error !== undefined}
               />
               <ProjectCardOption

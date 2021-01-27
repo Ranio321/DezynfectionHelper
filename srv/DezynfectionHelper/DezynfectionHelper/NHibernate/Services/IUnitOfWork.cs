@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace DezynfectionHelper.NHibernate.Services
+namespace DisinfectionHelper.NHibernate.Services
 {
     public interface IUnitOfWork : IDisposable
     {

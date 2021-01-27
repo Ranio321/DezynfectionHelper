@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "DezynfectionHelper": {
+    "DisinfectionHelper": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

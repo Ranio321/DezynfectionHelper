@@ -37,7 +37,7 @@ export default function TopNavbar(props: TopNavBarProps) {
 
   return (
     <Navbar className="topNavBar" variant="dark">
-      <Navbar.Brand>Dezynfection Helper</Navbar.Brand>
+      <Navbar.Brand>Disinfection Helper</Navbar.Brand>
 
       <Nav className="mr-auto">
         <RestircedArea redirectTo="/home">

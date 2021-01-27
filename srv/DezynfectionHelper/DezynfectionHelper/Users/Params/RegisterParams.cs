@@ -1,4 +1,4 @@
-﻿namespace DezynfectionHelper.Users.Params
+﻿namespace DisinfectionHelper.Users.Params
 {
     public class RegisterParams
     {

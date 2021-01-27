@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Claims;
 
-namespace DezynfectionHelper.Extenstions
+namespace DisinfectionHelper.Extenstions
 {
     public static class ClaimPrinciplesExtension
     {

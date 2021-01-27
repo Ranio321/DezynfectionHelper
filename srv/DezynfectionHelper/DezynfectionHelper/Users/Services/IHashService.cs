@@ -1,4 +1,4 @@
-﻿namespace DezynfectionHelper.Users.Services
+﻿namespace DisinfectionHelper.Users.Services
 {
     public interface IHashService
     {

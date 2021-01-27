@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using DezynfectionHelper.Users.Models;
-using DezynfectionHelper.Users.Services;
+using DisinfectionHelper.Users.Models;
+using DisinfectionHelper.Users.Services;
 using NHibernate;
 using NHibernate.Linq;
 
-namespace DezynfectionHelper.Users.Repositories
+namespace DisinfectionHelper.Users.Repositories
 {
     public class UserRepository : IUsersRepository
     {

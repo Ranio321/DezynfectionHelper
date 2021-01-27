@@ -1,5 +1,5 @@
 import React from "react";
-import { calculateDezynfectionRadius } from "../../Helpers/calculateDezynfectionRadius";
+import { calculateDisinfectionRadius } from "../../Helpers/calculateDisinfectionRadius";
 import { itemsCatalogueItems } from "../../ItemsCatalogue/ItemsCatalogueList";
 import { MousePosition } from "../../PlanerTypes";
 import { lampParams } from "../Items/Constants/LampConstants";
@@ -40,7 +40,7 @@ export default function MousePointerItem(
           strokeWidth={item?.strokeWidth}
           text={item?.displayName}
           showCircle
-          cricleRadius={calculateDezynfectionRadius(
+          cricleRadius={calculateDisinfectionRadius(
             item?.angle,
             lampParams.defaultHeight
           )}

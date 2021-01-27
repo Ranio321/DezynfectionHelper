@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { calculateDezynfectionRadius } from "../../Helpers/calculateDezynfectionRadius";
-import { inDezynfectionRange } from "../../Helpers/inDezynfectionRange";
+import { calculateDisinfectionRadius } from "../../Helpers/calculateDisinfectionRadius";
+import { inDisinfectionRange } from "../../Helpers/inDisinfectionRange";
 import { itemsCatalogueItems } from "../../ItemsCatalogue/ItemsCatalogueList";
 import { Item } from "../../PlanerTypes";
 import { itemList } from "../Sidebar/SidebarItems/Items";
@@ -99,7 +99,7 @@ function PlanerItems(props: ItemsProps): JSX.Element {
             text={itemParams?.displayName}
             onDragEnd={() => onLampDragEnd(item.id, item)}
             showCircle
-            cricleRadius={calculateDezynfectionRadius(
+            cricleRadius={calculateDisinfectionRadius(
               itemParams?.angle,
               item.height
             )}
@@ -125,7 +125,7 @@ function PlanerItems(props: ItemsProps): JSX.Element {
             setCurrentItemId={setCurrentItemId}
             shouldSetItem={shouldHighlight()}
             fill={
-              inDezynfectionRange(item, lamps, walls)
+              inDisinfectionRange(item, lamps, walls)
                 ? itemParams?.fill
                 : "lightGreen"
             }

@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DezynfectionHelper.Extenstions;
-using DezynfectionHelper.NHibernate.Services;
-using DezynfectionHelper.Planer.Dto;
-using DezynfectionHelper.Planer.Models;
-using DezynfectionHelper.Planer.Params;
-using DezynfectionHelper.Planer.Repositories;
-using DezynfectionHelper.Users.Repositories;
+using DisinfectionHelper.Extenstions;
+using DisinfectionHelper.NHibernate.Services;
+using DisinfectionHelper.Planer.Dto;
+using DisinfectionHelper.Planer.Models;
+using DisinfectionHelper.Planer.Params;
+using DisinfectionHelper.Planer.Repositories;
+using DisinfectionHelper.Users.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DezynfectionHelper.Controllers
+namespace DisinfectionHelper.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

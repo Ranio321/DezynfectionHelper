@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
-using DezynfectionHelper.Users.Models;
+using DisinfectionHelper.Users.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
-namespace DezynfectionHelper.Extenstions
+namespace DisinfectionHelper.Extenstions
 {
     public static class UserAccountExtension
     {

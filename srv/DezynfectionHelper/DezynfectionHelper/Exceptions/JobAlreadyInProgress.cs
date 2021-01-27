@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DezynfectionHelper.Exceptions
+namespace DisinfectionHelper.Exceptions
 {
     public class JobAlreadyInProgress : Exception
     {

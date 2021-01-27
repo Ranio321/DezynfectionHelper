@@ -1,18 +1,18 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using DezynfectionHelper.Extenstions;
-using DezynfectionHelper.NHibernate.Services;
-using DezynfectionHelper.Users.Dto;
-using DezynfectionHelper.Users.Models;
-using DezynfectionHelper.Users.Params;
-using DezynfectionHelper.Users.Repositories;
-using DezynfectionHelper.Users.Services;
+using DisinfectionHelper.Extenstions;
+using DisinfectionHelper.NHibernate.Services;
+using DisinfectionHelper.Users.Dto;
+using DisinfectionHelper.Users.Models;
+using DisinfectionHelper.Users.Params;
+using DisinfectionHelper.Users.Repositories;
+using DisinfectionHelper.Users.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DezynfectionHelper.Controllers
+namespace DisinfectionHelper.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

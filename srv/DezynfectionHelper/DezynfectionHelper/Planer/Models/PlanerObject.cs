@@ -1,6 +1,6 @@
 ﻿using FluentNHibernate.Mapping;
 
-namespace DezynfectionHelper.Planer.Models
+namespace DisinfectionHelper.Planer.Models
 {
     public class PlanerObject
     {

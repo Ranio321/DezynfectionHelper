@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using DezynfectionHelper.Users.Models;
+using DisinfectionHelper.Users.Models;
 
-namespace DezynfectionHelper.Users.Repositories
+namespace DisinfectionHelper.Users.Repositories
 {
     public interface IUsersRepository
     {

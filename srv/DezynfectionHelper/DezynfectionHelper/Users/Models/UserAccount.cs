@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using DezynfectionHelper.NHibernate.Models;
-using DezynfectionHelper.Planer.Models;
+using DisinfectionHelper.NHibernate.Models;
+using DisinfectionHelper.Planer.Models;
 
-namespace DezynfectionHelper.Users.Models
+namespace DisinfectionHelper.Users.Models
 {
     public class UserAccount : Entity<int>
     {

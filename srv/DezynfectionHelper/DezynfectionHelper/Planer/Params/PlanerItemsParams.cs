@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using DezynfectionHelper.Planer.Models;
+using DisinfectionHelper.Planer.Models;
 
-namespace DezynfectionHelper.Planer.Params
+namespace DisinfectionHelper.Planer.Params
 {
     public class PlanerItemsParams
     {

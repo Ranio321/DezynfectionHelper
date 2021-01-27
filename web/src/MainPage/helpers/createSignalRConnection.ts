@@ -4,7 +4,7 @@ export function createSignalRConnection() : signalR.HubConnection{
     let connection = new signalR.HubConnectionBuilder()
                                 .withAutomaticReconnect()
                                 .configureLogging(signalR.LogLevel.None)
-                                .withUrl("/dezynfectionSimulator")
+                                .withUrl("/disinfectionSimulator")
                                 .build();
 
     

@@ -1,9 +1,9 @@
-using DezynfectionHelper.Dezynfection.Scheduler;
+using DisinfectionHelper.Disinfection.Scheduler;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace DezynfectionHelper
+namespace DisinfectionHelper
 {
     public class Program
     {
@@ -20,7 +20,7 @@ namespace DezynfectionHelper
                 })
                 .ConfigureServices(services =>
                 {
-                    services.AddHostedService<DezynfectionScheduler>();
+                    services.AddHostedService<DisinfectionScheduler>();
                 });
     }
 }
