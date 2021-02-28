@@ -1,4 +1,5 @@
-﻿using DisinfectionHelper.Disinfection.Scheduler;
+﻿using DezynfectionHelper.Disinfection.Symulators;
+using DisinfectionHelper.Disinfection.Scheduler;
 using DisinfectionHelper.Disinfection.SignalRHub;
 using DisinfectionHelper.Disinfection.Symulators;
 using Microsoft.AspNetCore.SignalR;
@@ -8,18 +9,17 @@ namespace DisinfectionHelper.Disinfection.Services
     public class DisinfectionService : IDisinfectionService
     {
         private readonly IDisinfectionScheduler scheduler;
-        private readonly IHubContext<DisinfectionHub> context;
+        private readonly IDisinfectionSymulator symulator;
 
-        public DisinfectionService(IDisinfectionScheduler scheduler, IHubContext<DisinfectionHub> context)
+        public DisinfectionService(IDisinfectionScheduler scheduler, IDisinfectionSymulator symulator)
         {
             this.scheduler = scheduler;
-            this.context = context;
+            this.symulator = symulator;
         }
 
         public void BeginDisinfection(int id, int time)
         {
-            var job = new DisinfectionSymulator(scheduler, time, id.ToString(), context);
-            scheduler.AddJob(() => job.BeginSymulation(), id.ToString());
+            symulator.BeginSymulation(time, id.ToString());
         }
 
         public void EndDisinfection(int id)

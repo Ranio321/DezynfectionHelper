@@ -30,6 +30,7 @@ namespace DisinfectionHelper
             services.AddRepositories();
             services.AddDisinfection();
             services.AddSignalR();
+            services.AddFormaters();
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder
@@ -72,6 +73,8 @@ namespace DisinfectionHelper
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "DH API V1");
                 });
             }
+
+            app.UseLoggingMiddleware();
 
             app.UseEndpoints(endpoints =>
             {

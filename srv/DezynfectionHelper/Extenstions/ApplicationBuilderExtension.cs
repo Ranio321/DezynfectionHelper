@@ -1,4 +1,5 @@
-﻿using DisinfectionHelper.NHibernate.Services;
+﻿using DezynfectionHelper.Logging;
+using DisinfectionHelper.NHibernate.Services;
 using DisinfectionHelper.Users.Models;
 using DisinfectionHelper.Users.Repositories;
 using DisinfectionHelper.Users.Services;
@@ -28,6 +29,11 @@ namespace DisinfectionHelper.Extenstions
                    await uow.CommitAsync();
                 }
             }
+        }
+
+        public static IApplicationBuilder UseLoggingMiddleware(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<LoggingMiddleware>();
         }
     }
 }

@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { useAuth } from "../Users/authorization";
 interface RestircedAreaProps {
   children: ReactNode;

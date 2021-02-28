@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Container, ProgressBar, Row } from "react-bootstrap";
 import { disinfectionServices } from "../../../../api/disinfectionServices";
 import { planerService } from "../../../../api/PlanerServices";
-import { createSignalRConnection } from "../../../helpers/createSignalRConnection";
+import { EventHubOperations } from "../../../eventHub/EventHub";
 import { timeNumberToReadableString } from "../../../helpers/timeNumberToReadableString";
 import "./ProjectCard.scss";
 import ProjectCardOption from "./ProjectCardOption";
@@ -14,16 +14,27 @@ interface ProjectCardProps {
   disinfectionTime: number;
   error?: string;
   refresh: () => any;
+  eventHub: EventHubOperations;
 }
 
 export default function ProjectCard(props: ProjectCardProps) {
-  const { title, projectId, onClick, disinfectionTime, error, refresh } = props;
+  const {
+    title,
+    projectId,
+    onClick,
+    disinfectionTime,
+    error,
+    refresh,
+    eventHub,
+  } = props;
 
   const [completedPercentag, setCompletedPercentage] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(disinfectionTime);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isActive, setIsActive] = useState(false);
+
+  eventHub.subscribe("elapsedTime", getCurrentProgress);
 
   useEffect(() => {
     let percentage = (elapsedTime / (disinfectionTime * 60)) * 100;
@@ -44,15 +55,11 @@ export default function ProjectCard(props: ProjectCardProps) {
     return message;
   }
 
-  function getCurrentProgress() {
-    let connection = createSignalRConnection();
-    connection.on("elapsedTime", (time, id, completed) => {
-      if (id == projectId) {
-        setIsActive(!completed);
-        setElapsedTime(time);
-      }
-    });
-    connection.start();
+  function getCurrentProgress(time: number, id: number, completed: boolean) {
+    if (id == projectId) {
+      setIsActive(!completed);
+      setElapsedTime(time);
+    }
   }
 
   function beginDisinfection() {
@@ -60,7 +67,6 @@ export default function ProjectCard(props: ProjectCardProps) {
       id: projectId,
       time: disinfectionTime * 60,
     });
-    getCurrentProgress();
   }
 
   function endDisinfection() {
@@ -81,7 +87,6 @@ export default function ProjectCard(props: ProjectCardProps) {
       .then(() => setIsActive(false));
   }
 
-  useEffect(getCurrentProgress, []);
   const errorStyle = {
     background: "rgba(249,62,62,.1)",
     borderColor: "#f93e3e",

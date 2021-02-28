@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Nav, Navbar } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { RestircedArea } from "../../../common/RestricedArea";
 import { useAuth } from "../../../Users/authorization";
 import "./TopNavBar.scss";

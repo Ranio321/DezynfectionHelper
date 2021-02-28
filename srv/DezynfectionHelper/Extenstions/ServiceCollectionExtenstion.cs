@@ -1,7 +1,10 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
+using DezynfectionHelper.Disinfection.Symulators;
+using DezynfectionHelper.Formatters;
 using DisinfectionHelper.Disinfection.Scheduler;
 using DisinfectionHelper.Disinfection.Services;
+using DisinfectionHelper.Disinfection.Symulators;
 using DisinfectionHelper.NHibernate.Configurations;
 using DisinfectionHelper.NHibernate.Services;
 using DisinfectionHelper.Planer.Repositories;
@@ -15,29 +18,35 @@ namespace DisinfectionHelper.Extenstions
 {
     public static class ServiceCollectionExtenstion
     {
-        public static void AddNHibernate(this IServiceCollection services)
+        public static IServiceCollection AddNHibernate(this IServiceCollection services)
         {
-            services.AddTransient<IDBConfiguration, DBConfiguration>()
+            return services.AddTransient<IDBConfiguration, DBConfiguration>()
                     .AddScoped<IUnitOfWork, UnitOfWork>()
                     .AddScoped(x => x.GetService<IDBConfiguration>().CreateSession());
         }
 
-        public static void AddRepositories(this IServiceCollection services)
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddTransient<IPlanerRepository, PlanerRepository>()
+            return services.AddTransient<IPlanerRepository, PlanerRepository>()
                     .AddTransient<IUsersRepository, UserRepository>()
                     .AddTransient<IHashService, HashService>();
         }
 
-        public static void AddDisinfection(this IServiceCollection services)
+        public static IServiceCollection AddDisinfection(this IServiceCollection services)
         {
-            services.AddSingleton<IDisinfectionScheduler, DisinfectionScheduler>()
-                    .AddTransient<IDisinfectionService, DisinfectionService>();
+            return services.AddSingleton<IDisinfectionScheduler, DisinfectionScheduler>()
+                    .AddTransient<IDisinfectionService, DisinfectionService>()
+                    .AddTransient<IDisinfectionSymulator, DisinfectionSymulator>();
+        }
+
+        public static IServiceCollection AddFormaters(this IServiceCollection services)
+        {
+            return services.AddTransient<IHttpContextFormater, HttpContextFormater>();
         }
 
         public static void AddCookieAuthentication(this IServiceCollection services, CookieSecurePolicy cookieSecurePolicy)
         {
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                .AddCookie(cfg =>
                {
                    cfg.Cookie.SecurePolicy = cookieSecurePolicy;

@@ -14,10 +14,12 @@ namespace DisinfectionHelper.Disinfection.Scheduler
         {
             if (JobManager.AllSchedules.Where(x => x.Name == name).FirstOrDefault() != null)
             {
-                throw new JobAlreadyInProgress(name);
+                //throw new JobAlreadyInProgress(name);
             }
-
-            JobManager.AddJob(action, s => s.WithName(name).ToRunNow().AndEvery(1).Seconds());
+            else
+            {
+                JobManager.AddJob(action, s => s.WithName(name).ToRunNow().AndEvery(1).Seconds());
+            }
             return Task.CompletedTask;
         }
 

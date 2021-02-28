@@ -5,6 +5,8 @@ import { planerService } from "../../../api/PlanerServices";
 import { EmptyViewForArray } from "../../../common/EmptyViewForArray";
 import { LoadingArea } from "../../../common/LoadingArea";
 import { useDataLoader } from "../../../Planer/Hooks/useDataLoader";
+import { urls } from "../../eventHub/urls";
+import { useEventHub } from "../../eventHub/useEventHub";
 import { calculateDisinfectionTime } from "../../helpers/calculateDisinfectionTime";
 import ProjectCard from "./projectCard/ProjectCard";
 import "./ProjectList.scss";
@@ -12,6 +14,7 @@ interface ProjectListProps {}
 
 export default function ProjectList(props: ProjectListProps) {
   const history = useHistory();
+  const eventHub = useEventHub(urls.disinfectionSimulator);
   const [projects, promise, refresh] = useDataLoader<PlanerItemsDto[]>(() =>
     planerService.getAll()
   );
@@ -29,11 +32,6 @@ export default function ProjectList(props: ProjectListProps) {
     if (!object.objects.find((item) => item.type.includes("Lamp"))) {
       return "Disinfection faild. First you have to add disinfection lamps";
     }
-
-    // let time = calculateDisinfectionTime(object);
-    // let timeAsString = timeNumberToReadableString(time);
-    // message = "Optmial disinfection time: " + timeAsString;
-    // return message;
   }
 
   return (
@@ -51,6 +49,7 @@ export default function ProjectList(props: ProjectListProps) {
                 refresh={refresh}
                 disinfectionTime={calculateDisinfectionTime(el)}
                 error={generateDisinfectionMessage(el)}
+                eventHub={eventHub}
               />
             );
           })}

@@ -1,11 +1,13 @@
 ﻿using DisinfectionHelper.Disinfection.Params;
 using DisinfectionHelper.Disinfection.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DisinfectionHelper.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DisinfectionController : ControllerBase
     {
         private readonly IDisinfectionService service;

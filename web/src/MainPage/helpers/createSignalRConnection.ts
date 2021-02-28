@@ -6,7 +6,6 @@ export function createSignalRConnection() : signalR.HubConnection{
                                 .configureLogging(signalR.LogLevel.None)
                                 .withUrl("/disinfectionSimulator")
                                 .build();
-
     
 
     return connection
