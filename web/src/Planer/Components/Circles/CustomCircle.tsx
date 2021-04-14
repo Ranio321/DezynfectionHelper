@@ -1,12 +1,13 @@
 import { CircleConfig } from "konva/types/shapes/Circle";
 import React from "react";
 import { Circle } from "react-konva";
-import { snapSize } from "../../Constants/SnapConstatns";
-import params from "../Grid/GridConstants";
+import { snapSize } from "../../constants/SnapConstatns";
+import params from "../grid/GridConstants";
 
 interface CircleProps extends CircleConfig {}
 
 export default function CustomCircle(props: CircleProps): JSX.Element {
+  const { fill } = props;
   function snapToGrid() {
     let x;
     let y;
@@ -22,7 +23,7 @@ export default function CustomCircle(props: CircleProps): JSX.Element {
       key="mouseCircle"
       {...snapToGrid()}
       radius={params.width / 7}
-      fill={props.fill}
+      fill={fill}
     />
   );
 }

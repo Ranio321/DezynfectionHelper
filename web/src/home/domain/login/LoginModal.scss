@@ -1,0 +1,29 @@
+.login-modal{
+    margin-top: 5px;
+    padding-top: 5px;
+    width: 25% !important;
+    height: 50vh;
+    border-radius: 10px;
+    border-color: black;
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 10px 2px ;
+    margin: auto;
+    text-align: center;
+}
+
+.login-page{
+    background-color: #1C8EF9;
+    width: 100%;
+    min-height: 94vh;
+    display: flex;
+    justify-content: center;
+}
+.input{
+    width: 50% !important;
+    margin: auto;
+    border-radius: 40px !important;
+}
+.submit-button{
+    width: 50% !important;
+    margin: auto !important;
+}

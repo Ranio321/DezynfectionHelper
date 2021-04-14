@@ -1,0 +1,49 @@
+.projectCard {
+  width: 98%;
+  padding: 10px;
+  margin: 7px auto 13px auto; 
+  border: 1px solid #000;
+  border-color: #61affe;
+  border-radius: 4px;
+  box-shadow: 1px 0px 15px 1px rgba(0, 0, 0, 0.19);
+  background: rgba(97, 175, 254, 0.1);
+
+  .item-title {
+    font-size: 23px;
+    width: 100%;
+    font-weight: bolder;
+    padding-left: 15px;
+    text-align: left;
+    margin-bottom: 5px;
+  }
+
+  .button{ 
+    border-radius: 4px;
+    box-shadow: 1px 0px 15px 1px rgba(0, 0, 0, 0.19);
+    position: relative;
+  }
+
+  .button-wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .icons{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right:3px ;
+  }
+  #text-content{
+    margin-left: 20px;
+  }
+
+  .progressBar{
+    width: 77%;
+    margin: auto;
+  }
+}

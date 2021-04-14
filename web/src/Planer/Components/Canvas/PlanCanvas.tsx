@@ -1,7 +1,7 @@
 import { Stage as StageType } from "konva/types/Stage";
 import React, { useRef, useState } from "react";
 import { Layer, Stage } from "react-konva";
-import { getMousePosition } from "../../Helpers/mousePosition";
+import { getMousePosition } from "../../utils/mousePosition";
 import {
   ClickPoints,
   DrawingLine,
@@ -9,19 +9,20 @@ import {
   Point,
   Room as RoomType,
 } from "../../PlanerTypes";
-import Grid from "../Grid/Grid";
-import CustomLine from "../Lines/CustomLine";
-import MousePointerItem from "../MousePointer/MousePointerItem";
-import { itemList } from "../Sidebar/SidebarItems/Items";
+import Grid from "../grid/Grid";
+import CustomLine from "../lines/CustomLine";
+import MousePointerItem from "../cursor/MousePointerItem";
+import { itemList } from "../sidebar/rightSidebar/SidebarItems/Items";
 import "./PlanCanvas.scss";
-import PlanerItems from "../Items/PlanerItems";
-import { itemFactory } from "../../Helpers/planerItemsServices";
-import { lampParams } from "../Items/Constants/LampConstants";
+import PlanerItems from "../items/PlanerItems";
+import { itemFactory } from "../../utils/planerItemsServices";
+import { lampParams } from "../items/Constants/LampConstants";
 import { Col, Container, Row } from "react-bootstrap";
-import LeftGridScale from "../Grid/LeftGridScale";
-import TopGridScale from "../Grid/TopGridScale";
-import Room from "../Items/Room";
-import { cloneObject } from "../../Helpers/cloneObject";
+import LeftGridScale from "../grid/LeftGridScale";
+import TopGridScale from "../grid/TopGridScale";
+import Room from "../items/Room";
+import { cloneObject } from "../../utils/cloneObject";
+import { KonvaEventObject } from "konva/types/Node";
 interface PlanerProps {
   width: number;
   height: number;
@@ -74,12 +75,14 @@ export default function PlanCanvas(props: PlanerProps): JSX.Element {
     setDrawingLine({ start: position, end: position });
   }
 
-  function onMouseUp() {
-    let item = createItem();
-    if (shouldAddItem() && item) {
-      addItem(item);
+  function onMouseUp(e: KonvaEventObject<MouseEvent>) {
+    if (e.evt.button === 0) {
+      let item = createItem();
+      if (shouldAddItem() && item) {
+        addItem(item);
+      }
+      setIsDrawing(false);
     }
-    setIsDrawing(false);
   }
 
   function onMouseMove() {

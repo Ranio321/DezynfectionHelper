@@ -2,17 +2,18 @@ import React, { useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { PlanerItemsDto } from "../api/models";
-import { planerService } from "../api/PlanerServices";
-import PlanCanvas from "./Components/Canvas/PlanCanvas";
-import OptionsSidebar from "./Components/OptionsSidebar/OptionsSidebar";
-import Sidebar from "./Components/Sidebar/Sidebar";
-import { itemList } from "./Components/Sidebar/SidebarItems/Items";
-import { cloneObject } from "./Helpers/cloneObject";
-import { useDataLoader } from "./Hooks/useDataLoader";
-import { usePlaner } from "./Hooks/usePlaner";
-import { planerItemsToParams } from "./Mappers/planerItemsToParams";
+import { planerService } from "../api/planerServices";
+import PlanCanvas from "./components/canvas/PlanCanvas";
+import OptionsSidebar from "./components/sidebar/leftSidebar/RightSidebar";
+import { itemList } from "./components/sidebar/rightSidebar/SidebarItems/Items";
+import { cloneObject } from "./utils/cloneObject";
+import { useDataLoader } from "./hooks/useDataLoader";
+import { usePlaner } from "./hooks/usePlaner";
+import useRightMouseClick from "./hooks/useRightMouseClick";
+import { planerItemsToParams } from "./mappers/planerItemsToParams";
 import "./Planer.scss";
 import { PlanerItems, Room } from "./PlanerTypes";
+import Sidebar from "./components/sidebar/rightSidebar/Sidebar";
 interface PlanerProps {}
 
 export default function Planer(props: PlanerProps): JSX.Element {
@@ -26,20 +27,23 @@ export default function Planer(props: PlanerProps): JSX.Element {
     planerItemsDtoToPlanerItems(initialItems)
   );
 
+  useRightMouseClick(() => {
+    setDefaultCursor();
+    deleteHightlight();
+  });
+
   function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     if (e.key === "Escape") {
-      setItemToAdd(itemList.pointer);
-      setCurrentItemId(undefined);
+      setDefaultCursor();
+      deleteHightlight();
     }
-    if (e.key === "Delete") {
-      if (currentItemId) {
-        services.deleteItem(currentItemId);
-        setItemToAdd(itemList.pointer);
-        setCurrentItemId(undefined);
-      }
+    if (e.key === "Delete" && currentItemId) {
+      services.deleteItem(currentItemId);
+      setDefaultCursor();
+      deleteHightlight();
     }
   }
-  function onSave(name: string) {
+  function onSave(name: string): Promise<PlanerItems> {
     let params = cloneObject(planerItems);
     if (name.length > 0) {
       params.name = name;
@@ -50,8 +54,8 @@ export default function Planer(props: PlanerProps): JSX.Element {
   }
 
   useEffect(() => {
-    setCurrentItemId(undefined);
-  }, [itemToAdd]);
+    deleteHightlight();
+  }, [itemToAdd, planerItems.items.length]);
 
   useEffect(() => {
     function handleResize() {
@@ -66,11 +70,16 @@ export default function Planer(props: PlanerProps): JSX.Element {
     }
     handleResize();
     window.addEventListener("resize", handleResize);
+    return window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
+  function setDefaultCursor() {
+    setItemToAdd(itemList.pointer);
+  }
+
+  function deleteHightlight() {
     setCurrentItemId(undefined);
-  }, [planerItems.items.length]);
+  }
 
   const cStyle = {
     height: window.innerHeight,
@@ -83,7 +92,7 @@ export default function Planer(props: PlanerProps): JSX.Element {
     minWidth: "83%",
   };
   return (
-    <div onKeyDown={(e) => onKeyDown(e)}>
+    <div className="planer" onKeyDown={onKeyDown}>
       <Container fluid style={cStyle}>
         <Row noGutters className="h-100">
           <Col style={{ maxWidth: "14%" }}>
@@ -111,12 +120,12 @@ export default function Planer(props: PlanerProps): JSX.Element {
           </Col>
           <Col style={{ maxWidth: "3%" }}>
             <OptionsSidebar
-              undo={services.undo}
-              delete={services.deleteAll}
-              newCanvas={services.newCanvas}
-              save={onSave}
+              onUndo={services.undo}
+              onDelete={services.deleteAll}
+              onNewCanvas={services.newCanvas}
+              onSave={onSave}
               changeName={planerItems.name === undefined}
-              update={() =>
+              onUpdate={() =>
                 planerService.update(
                   planerItemsToParams(planerItems, parseInt(id))
                 )

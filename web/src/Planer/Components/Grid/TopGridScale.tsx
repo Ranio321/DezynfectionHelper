@@ -21,7 +21,7 @@ export default function TopGridScale(props: GridScaleProps): JSX.Element {
   }
   return (
     <div className="topGridScale">
-      <div className="blankItem"></div>
+      <div className="blankItem" />
       {scale}
     </div>
   );

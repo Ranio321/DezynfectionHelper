@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
-import { useAuth } from "../Users/authorization";
+import { useAuth } from "../users/authorization";
 interface RestircedAreaProps {
   children: ReactNode;
   redirectTo: string;

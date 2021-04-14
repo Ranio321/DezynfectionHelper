@@ -1,4 +1,4 @@
-import { Item, PlanerItems, Room } from "../Planer/PlanerTypes";
+import { Item, PlanerItems, Room } from "../planer/PlanerTypes";
 
 export interface PlanerItemsParams {
   id?: number;

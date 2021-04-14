@@ -1,4 +1,5 @@
-﻿using DisinfectionHelper.Disinfection.Params;
+﻿using DezynfectionHelper.Disinfection.Params;
+using DisinfectionHelper.Disinfection.Params;
 using DisinfectionHelper.Disinfection.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ namespace DisinfectionHelper.Controllers
     public class DisinfectionController : ControllerBase
     {
         private readonly IDisinfectionService service;
+
         public DisinfectionController(IDisinfectionService service)
         {
             this.service = service;
@@ -18,16 +20,16 @@ namespace DisinfectionHelper.Controllers
 
         [HttpPost]
         [Route("Begin")]
-        public void BeginDisinfection([FromQuery]BeginDisinfectionParams param)
+        public void BeginDisinfection(BeginDisinfectionParams param)
         {
             service.BeginDisinfection(param.Id, param.Time);
         }
 
         [HttpPost]
         [Route("End")]
-        public void EndDisinfection([FromQuery]int id)
+        public void EndDisinfection(EndDisinfectionParams param)
         {
-            service.EndDisinfection(id);
+            service.EndDisinfection(param.Id);
         }
     }
 }

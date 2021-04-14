@@ -1,4 +1,4 @@
-import { PlanerItems } from "../Planer/PlanerTypes";
+import { PlanerItems } from "../planer/PlanerTypes";
 import axios from "axios";
 import { PlanerItemsDto, PlanerItemsParams } from "./models";
 
@@ -13,8 +13,8 @@ function get(id: number): Promise<PlanerItemsDto> {
     .request<PlanerItemsDto>({
       url: "/api/Planer/Get",
       method: "get",
-      params: {
-        id: id,
+      data: {
+        id
       },
     })
     .then((data) => {

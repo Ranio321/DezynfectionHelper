@@ -1,11 +1,11 @@
 import { Circle, Line } from "react-konva";
 import Konva from "konva";
-import React, { useEffect, useRef, useState } from "react";
-import params from "../Grid/GridConstants";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import params from "../grid/GridConstants";
 import { Line as LineType } from "konva/types/shapes/Line";
-import { snapToGrid } from "../../Helpers/snapToGrid";
+import { snapToGrid } from "../../utils/snapToGrid";
 
-interface LineProps extends Konva.LineConfig {
+export interface LineProps extends Konva.LineConfig {
   snapToGrid?: Boolean;
   setCurrentItemId?: (id: number) => any;
   onMouseOverColor?: string;
@@ -17,10 +17,20 @@ interface LineProps extends Konva.LineConfig {
   currentItemId?: number;
 }
 export default function CustomLine(props: LineProps) {
-  const { onMouseOverColor, stroke } = props;
+  const {
+    onMouseOverColor,
+    stroke,
+    points,
+    uniqueId,
+    isSelected,
+    shouldSetItem,
+  } = props;
+
+  const defaultStrokeWidth = useMemo(() => params.width / 8, []);
   const lineRef = useRef<LineType>(null);
   const [color, setColor] = useState(stroke);
-  const [strokeWidth, setStrokeWidth] = useState(params.width / 8);
+  const [strokeWidth, setStrokeWidth] = useState(defaultStrokeWidth);
+  const [pointsCoords] = useState(() => snapToGrid(points));
 
   function onClick() {
     if (props.setCurrentItemId && props.shouldSetItem) {
@@ -29,47 +39,48 @@ export default function CustomLine(props: LineProps) {
   }
 
   function onMouseOver() {
-    if (!props.isSelected && onMouseOverColor && props.shouldSetItem) {
-      setStrokeWidth(params.width / 6);
+    if (!isSelected && onMouseOverColor && shouldSetItem) {
+      setStrokeWidth((8 * defaultStrokeWidth) / 6);
       setColor(onMouseOverColor);
     }
   }
 
   function onMouseLeave() {
-    if (!props.isSelected) {
-      setStrokeWidth(params.width / 8);
+    if (!isSelected) {
+      setStrokeWidth(defaultStrokeWidth);
       setColor(stroke);
     }
   }
+
   useEffect(() => {
-    if (!props.isSelected) {
-      setStrokeWidth(params.width / 8);
+    if (!isSelected) {
+      setStrokeWidth(defaultStrokeWidth);
       setColor(stroke);
     }
-  }, [props.isSelected, stroke]);
+  }, [isSelected, stroke, defaultStrokeWidth]);
 
   return (
     <>
       <Line
-        key={props.uniqueId}
+        key={uniqueId}
         points={snapToGrid(props.points)}
         stroke={color}
         strokeWidth={strokeWidth}
         ref={lineRef}
-        onClick={() => onClick()}
-        onMouseOver={() => onMouseOver()}
-        onMouseLeave={() => onMouseLeave()}
+        onClick={onClick}
+        onMouseOver={onMouseOver}
+        onMouseLeave={onMouseLeave}
       />
       <Circle
         radius={5}
-        x={snapToGrid(props.points)[0]}
-        y={snapToGrid(props.points)[1]}
+        x={pointsCoords[0]}
+        y={pointsCoords[1]}
         stroke="gray"
       />
       <Circle
         radius={5}
-        x={snapToGrid(props.points)[2]}
-        y={snapToGrid(props.points)[3]}
+        x={pointsCoords[2]}
+        y={pointsCoords[3]}
         stroke="gray"
       />
     </>

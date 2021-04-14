@@ -2,7 +2,6 @@
 using DisinfectionHelper.Disinfection.Scheduler;
 using DisinfectionHelper.Disinfection.SignalRHub;
 using Microsoft.AspNetCore.SignalR;
-using Newtonsoft.Json.Bson;
 
 namespace DisinfectionHelper.Disinfection.Symulators
 {

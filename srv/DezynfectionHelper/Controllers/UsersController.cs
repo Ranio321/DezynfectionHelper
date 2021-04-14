@@ -30,7 +30,7 @@ namespace DisinfectionHelper.Controllers
         }
 
         [HttpPost]
-        public async Task<UserAccountDto> Login([FromQuery]LoginParams param)
+        public async Task<UserAccountDto> Login(LoginParams param)
         {
             var user = await users.ValidateAsync(param.Login, param.Password);
             if (user == null)
@@ -52,7 +52,7 @@ namespace DisinfectionHelper.Controllers
         }
 
         [HttpPost]
-        public async Task Register([FromQuery]RegisterParams param)
+        public async Task Register(RegisterParams param)
         {
             var account = new UserAccount()
             {

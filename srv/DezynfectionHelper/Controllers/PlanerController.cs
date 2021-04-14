@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DezynfectionHelper.Planer.Params;
 using DisinfectionHelper.Extenstions;
 using DisinfectionHelper.NHibernate.Services;
 using DisinfectionHelper.Planer.Dto;
@@ -29,7 +30,7 @@ namespace DisinfectionHelper.Controllers
         }
 
         [HttpPost]
-        public async Task Save([FromBody] PlanerItemsParams param)
+        public async Task Save(PlanerItemsParams param)
         {
             var planerItems = new PlanerItems()
             {
@@ -44,9 +45,9 @@ namespace DisinfectionHelper.Controllers
         }
 
         [HttpGet]
-        public async Task<PlanerItemsDto> Get([FromQuery] int id)
+        public async Task<PlanerItemsDto> Get(BasicPlanerParams param)
         {
-            var items = await repo.GetByIdAsync(id);
+            var items = await repo.GetByIdAsync(param.Id);
             var planerItemsDto = new PlanerItemsDto
             {
                 Id = items.Id,
@@ -65,14 +66,14 @@ namespace DisinfectionHelper.Controllers
         }
 
         [HttpDelete]
-        public async Task Delete([FromQuery]int id)
+        public async Task Delete(BasicPlanerParams param)
         {
-            await repo.DeleteAsync(id);
+            await repo.DeleteAsync(param.Id);
             await uow.CommitAsync();
         }
 
         [HttpPut]
-        public async Task Update([FromBody] PlanerItemsParams param)
+        public async Task Update(PlanerItemsParams param)
         {
             var planerItems = new PlanerItems()
             {

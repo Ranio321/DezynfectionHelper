@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using DezynfectionHelper.Disinfection.Symulators;
-using DezynfectionHelper.Formatters;
 using DisinfectionHelper.Disinfection.Scheduler;
 using DisinfectionHelper.Disinfection.Services;
 using DisinfectionHelper.Disinfection.Symulators;
@@ -37,11 +36,6 @@ namespace DisinfectionHelper.Extenstions
             return services.AddSingleton<IDisinfectionScheduler, DisinfectionScheduler>()
                     .AddTransient<IDisinfectionService, DisinfectionService>()
                     .AddTransient<IDisinfectionSymulator, DisinfectionSymulator>();
-        }
-
-        public static IServiceCollection AddFormaters(this IServiceCollection services)
-        {
-            return services.AddTransient<IHttpContextFormater, HttpContextFormater>();
         }
 
         public static void AddCookieAuthentication(this IServiceCollection services, CookieSecurePolicy cookieSecurePolicy)

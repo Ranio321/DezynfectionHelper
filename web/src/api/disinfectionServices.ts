@@ -1,25 +1,23 @@
 import { BeginDezynfecetionParams } from "./models";
 import axios from "axios";
 
-function beginDisinfection(params: BeginDezynfecetionParams) {
+function beginDisinfection(data: BeginDezynfecetionParams) {
   return axios
     .request({
       url: "/api/Disinfection/Begin",
       method: "POST",
-      params,
+      data
     })
     .then((data) => data.data)
     .catch(() => {});
 }
 
-function endDisinfection(id: number) {
+function endDisinfection(data: {id:number}) {
   return axios
     .request({
       url: "/api/Disinfection/End",
       method: "POST",
-      params: {
-        id: id,
-      },
+      data
     })
     .then((data) => data.data)
     .catch(() => {});

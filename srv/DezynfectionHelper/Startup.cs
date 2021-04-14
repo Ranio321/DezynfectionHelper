@@ -30,7 +30,6 @@ namespace DisinfectionHelper
             services.AddRepositories();
             services.AddDisinfection();
             services.AddSignalR();
-            services.AddFormaters();
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { lampParams } from "../Components/Items/Constants/LampConstants";
-import { calcPolygonArea } from "../Helpers/calcPolygonArea";
-import checkForPolygon from "../Helpers/checkForPolygon";
-import { cloneObject } from "../Helpers/cloneObject";
+import { lampParams } from "../components/items/Constants/LampConstants";
+import { calcPolygonArea } from "../utils/calcPolygonArea";
+import checkForPolygon from "../utils/checkForPolygon";
+import { cloneObject } from "../utils/cloneObject";
 import { Item, PlanerItems, Room } from "../PlanerTypes";
 
 export function usePlaner(init?: PlanerItems) {
@@ -28,6 +28,7 @@ export function usePlaner(init?: PlanerItems) {
     setPlanerItems([...planerItems, items]);
     addToHistory();
   }
+
   function deleteAll() {
     setPlanerItems([...planerItems, newPlanerItems]);
     addToHistory();
@@ -83,17 +84,15 @@ export function usePlaner(init?: PlanerItems) {
     let items: PlanerItems[] = cloneObject(planerItems);
     if (vertices) {
       var area = calcPolygonArea(vertices);
-      // if (area > 0) {
       room.push({
         area: area,
         name: "Main Room",
         vertices: vertices,
       });
     }
-    // }
     items[items.length - 1].rooms = room;
     setPlanerItems(items);
-  }, [currentStep]);
+  }, [currentStep]); // eslint-disable-line
 
   useEffect(() => {
     if (init) {

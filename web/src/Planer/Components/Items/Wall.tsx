@@ -1,6 +1,6 @@
 import React from "react";
 import { ClickPoints } from "../../PlanerTypes";
-import CustomLine from "../Lines/CustomLine";
+import CustomLine from "../lines/CustomLine";
 interface WallsProps {
   position: ClickPoints;
   id: number;
@@ -13,35 +13,19 @@ interface WallsProps {
   shouldSetItem?: boolean;
 }
 export default function Wall(props: WallsProps) {
-  const {
-    position,
-    id,
-    type,
-    snapToGrid,
-    stroke,
-    setCurrentItemId,
-    onMouseOverColor,
-    currentItemId,
-    shouldSetItem,
-  } = props;
+  const { position, id, ...rest } = props;
 
   return (
     <CustomLine
       uniqueId={id}
-      type={type}
       points={[
         position.start.x,
         position.start.y,
         position.end.x,
         position.end.y,
       ]}
-      stroke={stroke}
-      snapToGrid={snapToGrid}
-      onMouseOverColor={onMouseOverColor}
-      setCurrentItemId={setCurrentItemId}
-      shouldSetItem={shouldSetItem}
-      currentItemId={currentItemId}
-      isSelected={currentItemId === id}
+      {...rest}
+      isSelected={rest.currentItemId === id}
     />
   );
 }

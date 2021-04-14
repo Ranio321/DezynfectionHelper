@@ -1,18 +1,15 @@
+using System;
 using DezynfectionHelper.Extenstions;
 using DezynfectionHelper.Logging;
 using DisinfectionHelper.Disinfection.Scheduler;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using NLog.Web;
-using System;
 
 namespace DisinfectionHelper
 {
     public class Program
     {
-
         public static void Main(string[] args)
         {
             var logger = LoggerConfiguration.ConfigureLogger().GetCurrentClassLogger();

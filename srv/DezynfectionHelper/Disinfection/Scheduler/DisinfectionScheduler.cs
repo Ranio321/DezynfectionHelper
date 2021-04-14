@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DisinfectionHelper.Exceptions;
 using FluentScheduler;
 using Microsoft.Extensions.Hosting;
 
@@ -14,12 +13,13 @@ namespace DisinfectionHelper.Disinfection.Scheduler
         {
             if (JobManager.AllSchedules.Where(x => x.Name == name).FirstOrDefault() != null)
             {
-                //throw new JobAlreadyInProgress(name);
+               // throw new JobAlreadyInProgress(name);
             }
             else
             {
                 JobManager.AddJob(action, s => s.WithName(name).ToRunNow().AndEvery(1).Seconds());
             }
+
             return Task.CompletedTask;
         }
 

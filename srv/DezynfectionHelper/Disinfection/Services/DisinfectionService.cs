@@ -1,8 +1,5 @@
 ﻿using DezynfectionHelper.Disinfection.Symulators;
 using DisinfectionHelper.Disinfection.Scheduler;
-using DisinfectionHelper.Disinfection.SignalRHub;
-using DisinfectionHelper.Disinfection.Symulators;
-using Microsoft.AspNetCore.SignalR;
 
 namespace DisinfectionHelper.Disinfection.Services
 {

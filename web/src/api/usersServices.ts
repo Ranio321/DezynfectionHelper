@@ -1,10 +1,10 @@
 import Axios from "axios";
 
-function login(param: LoginParams): Promise<UserAccountDto> {
+function login(data: LoginParams): Promise<UserAccountDto> {
   return Axios.request({
     url: "/api/users/login",
     method: "POST",
-    params: param,
+    data
   }).then((data) => data.data);
 }
 

@@ -1,2 +1,2 @@
-import params from '../Components/Grid/GridConstants'
+import params from '../components/grid/GridConstants'
 export const snapSize = params.height/4 ;

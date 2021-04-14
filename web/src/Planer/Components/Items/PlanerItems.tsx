@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { calculateDisinfectionRadius } from "../../Helpers/calculateDisinfectionRadius";
-import { inDisinfectionRange } from "../../Helpers/inDisinfectionRange";
-import { itemsCatalogueItems } from "../../ItemsCatalogue/ItemsCatalogueList";
+import { calculateDisinfectionRadius } from "../../utils/calculateDisinfectionRadius";
+import { inDisinfectionRange } from "../../utils/inDisinfectionRange";
+import { itemsCatalogueItems } from "../../catalogue/ItemsCatalogueList";
 import { Item } from "../../PlanerTypes";
-import { itemList } from "../Sidebar/SidebarItems/Items";
+import { itemList } from "../sidebar/rightSidebar/SidebarItems/Items";
 import Lamp from "./Lamp";
 import Wall from "./Wall";
 interface ItemsProps {

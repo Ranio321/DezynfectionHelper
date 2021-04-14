@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Line, Text } from "react-konva";
-import { Centroid, getPolygonCentroid } from "../../Helpers/getPolygonCentroid";
+import { Centroid, getPolygonCentroid } from "../../utils/getPolygonCentroid";
 import { Room as RoomType } from "../../PlanerTypes";
 interface RoomProps {
   room: RoomType;
