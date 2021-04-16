@@ -8,7 +8,7 @@
 
 # General info
 
-The webapp used make 2d room projects and carry out simulation of disinfection process. You can create your own room you want to disinfect. There are several UV lamps you can choose from. As soon as the create is room app caculates time needed to perform successful disinfection process.
+The webapp used make 2d room projects and carry out simulation of disinfection process. You can create your own room you want to disinfect. There are several UV lamps you can choose from. As soon as the room is created app caculates time needed to perform successful disinfection process.
 </br>
 </br>
 
@@ -46,7 +46,7 @@ $ npm install
 $ npm start
 ```
 
-In order to make backend work you have to install PostgreSQL on your local mahcine. One also have to add connection string in appsettings.json file or add it in some other way like with help of environment variables.
+In order to make backend work you have to install PostgreSQL on your local mahcine. One also have to add connection string in appsettings.json file or add it in some other way like with a help of environment variables.
 
 </br>
 
