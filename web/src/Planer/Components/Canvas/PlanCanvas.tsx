@@ -12,7 +12,7 @@ import {
 import Grid from "../grid/Grid";
 import CustomLine from "../lines/CustomLine";
 import MousePointerItem from "../cursor/MousePointerItem";
-import { itemList } from "../sidebar/rightSidebar/SidebarItems/Items";
+import { itemList } from "../sidebar/leftSidebar/SidebarItems/Items";
 import "./PlanCanvas.scss";
 import PlanerItems from "../items/PlanerItems";
 import { itemFactory } from "../../utils/planerItemsServices";

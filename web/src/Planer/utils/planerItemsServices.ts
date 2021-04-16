@@ -1,5 +1,5 @@
 import { lampParams } from "../components/items/Constants/LampConstants";
-import { itemList } from "../components/sidebar/rightSidebar/SidebarItems/Items";
+import { itemList } from "../components/sidebar/leftSidebar/SidebarItems/Items";
 import { ClickPoints, Item, Point } from "../PlanerTypes";
 import { snapToGrid } from "./snapToGrid";
 

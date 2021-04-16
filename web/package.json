@@ -27,6 +27,7 @@
     "react-login-modal": "^1.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
+    "react-tooltip": "^4.2.17",
     "typescript": "^3.9.9"
   },
   "scripts": {

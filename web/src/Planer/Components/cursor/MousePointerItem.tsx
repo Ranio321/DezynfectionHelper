@@ -4,7 +4,7 @@ import { itemsCatalogueItems } from "../../catalogue/ItemsCatalogueList";
 import { MousePosition } from "../../PlanerTypes";
 import { lampParams } from "../items/Constants/LampConstants";
 import Lamp from "../items/Lamp";
-import { itemList } from "../sidebar/rightSidebar/SidebarItems/Items";
+import { itemList } from "../sidebar/leftSidebar/SidebarItems/Items";
 import CirclePointer from "./CirclePointer";
 interface MousePointerItemProps {
   mousePosition: MousePosition;

@@ -1,7 +1,7 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import ReactTooltip from "react-tooltip";
 import "./ProjectCardOption.scss";
 interface ProjectCardOptionProps {
   icon: IconProp;
@@ -25,25 +25,23 @@ export default function ProjectCardOption(
 
   return (
     <>
-      <OverlayTrigger
-        placement="left"
-        delay={{ show: 100, hide: 5 }}
-        overlay={
-          <Tooltip style={{ margin: "0px" }} id="button-tooltip">
-            {tooltip}
-          </Tooltip>
-        }
+      <div
+        className="card-options"
+        onClick={!disabled ? onClick : undefined}
+        data-tip
+        data-for={tooltip}
       >
-        <div className="card-options" onClick={!disabled ? onClick : undefined}>
-          <FontAwesomeIcon
-            icon={icon}
-            size="2x"
-            style={{ color: color, opacity: disabled ? "0.5" : "1" }}
-            onMouseEnter={() => !disabled && setColor(hoverColor)}
-            onMouseLeave={() => setColor("black")}
-          />
-        </div>
-      </OverlayTrigger>
+        <FontAwesomeIcon
+          icon={icon}
+          size="2x"
+          style={{ color: color, opacity: disabled ? "0.5" : "1" }}
+          onMouseEnter={() => !disabled && setColor(hoverColor)}
+          onMouseLeave={() => setColor("black")}
+        />
+      </div>
+      <ReactTooltip delayShow={100} id={tooltip} place="left" effect="solid">
+        {tooltip}
+      </ReactTooltip>
     </>
   );
 }

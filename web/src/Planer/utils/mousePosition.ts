@@ -1,4 +1,4 @@
-export function getMousePosition(layerRef: any) {
+export function getMousePosition(layerRef:any) {
   var transform = layerRef.current.getAbsoluteTransform().copy();
   transform.invert();
   

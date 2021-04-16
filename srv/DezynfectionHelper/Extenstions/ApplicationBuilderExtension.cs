@@ -17,7 +17,7 @@ namespace DisinfectionHelper.Extenstions
                 var repo = scope.ServiceProvider.GetService<IUsersRepository>();
                 var uow = scope.ServiceProvider.GetService<IUnitOfWork>();
                 var hashService = scope.ServiceProvider.GetService<IHashService>();
-                var rootAccout = await repo.Get("root");
+                var rootAccout = await repo.GetAsync("root");
 
                 if (rootAccout == null)
                 {

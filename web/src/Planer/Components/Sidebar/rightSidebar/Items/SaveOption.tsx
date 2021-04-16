@@ -1,11 +1,11 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import "./Option.scss";
 import SaveModal from "../Modal/SaveModal";
 import { modalTextItems } from "../Modal/SaveModalUtils";
 import SaveModalForm from "../Modal/SaveModalForm";
+import ReactTooltip from "react-tooltip";
 interface IconProps {
   icon: IconProp;
   onClick?: (name: string) => any;
@@ -40,6 +40,16 @@ export default function SaveOption(props: IconProps): JSX.Element {
     setShowModal(false);
     setModalTextIndex(0);
   }
+
+  function onIconClick() {
+    if (changeName) {
+      setShowModalForm(true);
+      setName("");
+    } else {
+      setShowModal(true);
+      onUpdate();
+    }
+  }
   return (
     <>
       {modal && (
@@ -60,31 +70,24 @@ export default function SaveOption(props: IconProps): JSX.Element {
           }}
           setName={setName}
         />
-      )}
-      <OverlayTrigger
-        placement="left"
-        delay={{ show: 100, hide: 100 }}
-        overlay={
-          <Tooltip style={{ margin: 0 }} id="button-tooltip">
-            {tooltip}
-          </Tooltip>
-        }
+      )}{" "}
+      <div
+        className="OptionsIconDiv"
+        onClick={onIconClick}
+        data-tip
+        data-for={tooltip}
       >
-        <div
-          className="OptionsIconDiv"
-          onClick={() => {
-            if (changeName) {
-              setShowModalForm(true);
-              setName("");
-            } else {
-              setShowModal(true);
-              onUpdate();
-            }
-          }}
-        >
-          <FontAwesomeIcon className="OptionsIcon" icon={icon} size="2x" />
-        </div>
-      </OverlayTrigger>
+        <FontAwesomeIcon className="OptionsIcon" icon={icon} size="2x" />
+      </div>
+      <ReactTooltip
+        id={tooltip}
+        place="left"
+        effect="solid"
+        offset={{ bottom: 2 }}
+        delayShow={100}
+      >
+        {tooltip}
+      </ReactTooltip>
     </>
   );
 }

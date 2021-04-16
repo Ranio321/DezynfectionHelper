@@ -24,7 +24,7 @@ namespace DisinfectionHelper.Users.Repositories
                 .Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<UserAccount> Get(string name)
+        public async Task<UserAccount> GetAsync(string name)
         {
             return await session.Query<UserAccount>()
                .Where(x => x.Nick == name).FirstOrDefaultAsync();

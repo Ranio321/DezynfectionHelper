@@ -12,6 +12,8 @@ namespace DisinfectionHelper
 {
     public class Startup
     {
+        private const string DefaultCorsPolicy = "AllowAllHosts";
+
         private readonly IWebHostEnvironment env;
 
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
@@ -25,14 +27,13 @@ namespace DisinfectionHelper
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddTransient(c => Configuration);
             services.AddNHibernate();
             services.AddRepositories();
             services.AddDisinfection();
             services.AddSignalR();
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy", builder => builder
+                options.AddPolicy(DefaultCorsPolicy, builder => builder
                         .AllowAnyMethod()
                         .AllowCredentials()
                         .SetIsOriginAllowed((host) => true)
@@ -48,7 +49,7 @@ namespace DisinfectionHelper
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors("CorsPolicy");
+            app.UseCors(DefaultCorsPolicy);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

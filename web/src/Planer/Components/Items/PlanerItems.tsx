@@ -3,7 +3,7 @@ import { calculateDisinfectionRadius } from "../../utils/calculateDisinfectionRa
 import { inDisinfectionRange } from "../../utils/inDisinfectionRange";
 import { itemsCatalogueItems } from "../../catalogue/ItemsCatalogueList";
 import { Item } from "../../PlanerTypes";
-import { itemList } from "../sidebar/rightSidebar/SidebarItems/Items";
+import { itemList } from "../sidebar/leftSidebar/SidebarItems/Items";
 import Lamp from "./Lamp";
 import Wall from "./Wall";
 interface ItemsProps {

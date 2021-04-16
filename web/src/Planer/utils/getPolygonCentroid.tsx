@@ -3,7 +3,12 @@ export interface Centroid {
   y: number;
 }
 
-export function getPolygonCentroid(points: any): Centroid {
+export interface Points {
+  x: number;
+  y: number;
+}
+
+export function getPolygonCentroid(points: Points[]): Centroid {
   var centroid: Centroid = { x: 0, y: 0 };
   for (var i = 0; i < points.length; i++) {
     var point = points[i];

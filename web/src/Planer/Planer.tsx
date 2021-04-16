@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 import { PlanerItemsDto } from "../api/models";
 import { planerService } from "../api/planerServices";
 import PlanCanvas from "./components/canvas/PlanCanvas";
-import OptionsSidebar from "./components/sidebar/leftSidebar/RightSidebar";
-import { itemList } from "./components/sidebar/rightSidebar/SidebarItems/Items";
+import OptionsSidebar from "./components/sidebar/rightSidebar/RightSidebar";
+import { itemList } from "./components/sidebar/leftSidebar/SidebarItems/Items";
 import { cloneObject } from "./utils/cloneObject";
 import { useDataLoader } from "./hooks/useDataLoader";
 import { usePlaner } from "./hooks/usePlaner";
@@ -13,7 +13,7 @@ import useRightMouseClick from "./hooks/useRightMouseClick";
 import { planerItemsToParams } from "./mappers/planerItemsToParams";
 import "./Planer.scss";
 import { PlanerItems, Room } from "./PlanerTypes";
-import Sidebar from "./components/sidebar/rightSidebar/Sidebar";
+import Sidebar from "./components/sidebar/leftSidebar/Sidebar";
 interface PlanerProps {}
 
 export default function Planer(props: PlanerProps): JSX.Element {
@@ -70,7 +70,7 @@ export default function Planer(props: PlanerProps): JSX.Element {
     }
     handleResize();
     window.addEventListener("resize", handleResize);
-    return window.removeEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   function setDefaultCursor() {

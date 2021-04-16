@@ -13,7 +13,7 @@ function get(id: number): Promise<PlanerItemsDto> {
     .request<PlanerItemsDto>({
       url: "/api/Planer/Get",
       method: "get",
-      data: {
+      params: {
         id
       },
     })
@@ -31,8 +31,11 @@ function getAll(): Promise<PlanerItemsDto[]> {
 function deleteById(id: number): Promise<any> {
   return axios
     .request({
-      url: "/api/Planer/delete?id=" + id,
+      url: "/api/Planer/delete",
       method: "delete",
+      data:{
+        id
+      }
     })
     .then((data) => {
       return data.data;

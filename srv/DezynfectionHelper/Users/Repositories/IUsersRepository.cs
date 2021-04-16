@@ -8,6 +8,6 @@ namespace DisinfectionHelper.Users.Repositories
         Task<UserAccount> GetByIdAsync(int id);
         Task<UserAccount> ValidateAsync(string login, string password);
         Task AddAsync(UserAccount account);
-        Task<UserAccount> Get(string name);
+        Task<UserAccount> GetAsync(string name);
     }
 }

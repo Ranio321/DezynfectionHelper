@@ -45,9 +45,9 @@ namespace DisinfectionHelper.Controllers
         }
 
         [HttpGet]
-        public async Task<PlanerItemsDto> Get(BasicPlanerParams param)
+        public async Task<PlanerItemsDto> Get(int id)
         {
-            var items = await repo.GetByIdAsync(param.Id);
+            var items = await repo.GetByIdAsync(id);
             var planerItemsDto = new PlanerItemsDto
             {
                 Id = items.Id,
