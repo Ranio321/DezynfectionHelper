@@ -70,7 +70,7 @@ Project has been created with:
   - PostgreSQL
   - NLog
   - FluentScheduler
-  - FluentNhibernate
+  - FluentNHibernate
   - SignalR
     </br>
     </br>
