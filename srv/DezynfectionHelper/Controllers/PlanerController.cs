@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DisinfectionHelper.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class PlanerController : ControllerBase
@@ -27,6 +27,27 @@ namespace DisinfectionHelper.Controllers
             this.repo = repo;
             this.uow = uow;
             this.usersRepo = usersRepo;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<PlanerItemsDto> Get(int id)
+        {
+            var items = await repo.GetByIdAsync(id);
+            var planerItemsDto = new PlanerItemsDto
+            {
+                Id = items.Id,
+                Name = items.Name,
+                Objects = items.Objects,
+                Room = items.Room,
+            };
+
+            return planerItemsDto;
+        }
+
+        [HttpGet("all")]
+        public async Task<List<PlanerItems>> GetAll()
+        {
+            return await repo.GetAllAsync();
         }
 
         [HttpPost]
@@ -44,35 +65,14 @@ namespace DisinfectionHelper.Controllers
             await uow.CommitAsync();
         }
 
-        [HttpGet]
-        public async Task<PlanerItemsDto> Get(int id)
+        [HttpDelete("{id}")]
+        public async Task Delete(int id)
         {
-            var items = await repo.GetByIdAsync(id);
-            var planerItemsDto = new PlanerItemsDto
-            {
-                Id = items.Id,
-                Name = items.Name,
-                Objects = items.Objects,
-                Room = items.Room,
-            };
-
-            return planerItemsDto;
-        }
-
-        [HttpGet]
-        public async Task<List<PlanerItems>> GetAll()
-        {
-            return await repo.GetAllAsync();
-        }
-
-        [HttpDelete]
-        public async Task Delete(BasicPlanerParams param)
-        {
-            await repo.DeleteAsync(param.Id);
+            await repo.DeleteAsync(id);
             await uow.CommitAsync();
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         public async Task Update(PlanerItemsParams param)
         {
             var planerItems = new PlanerItems()

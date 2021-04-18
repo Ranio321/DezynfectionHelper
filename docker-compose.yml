@@ -1,0 +1,40 @@
+version: "3.1"
+services:
+  srv:
+    build: srv/DezynfectionHelper
+    ports:
+      - "44319:44319"
+    networks:
+      - postgres-network
+    environment:
+      - Database:ConnectionString=User ID=postgres;Password=pass;Host=postgres;Port=5432;Database=Dezynfection;
+    depends_on:
+      - "postgres"
+  postgres:
+    image: postgres
+    secrets:
+      - db-password
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+      - POSTGRES_DB=Dezynfection
+    networks:
+      - postgres-network
+  web:
+      build: web
+      ports:
+        - "3000:3000"
+      networks: 
+        - postgres-network
+volumes:
+  db-data:
+secrets:
+  db-password:
+    file: db/password.txt
+networks:
+  postgres-network:
+    driver: bridge

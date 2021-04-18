@@ -38,15 +38,14 @@ namespace DisinfectionHelper.Planer.Repositories
         public async Task<PlanerItems> GetByIdAsync(int id)
         {
             PlanerItems planerItems;
-            try
-            {
-                planerItems = await session.Query<PlanerItems>()
+
+            planerItems = await session.Query<PlanerItems>()
                 .Where(x => x.Id == id)
                 .FirstOrDefaultAsync();
-            }
-            catch (Exception e)
+
+            if (planerItems == null)
             {
-                throw new EntityNotFoundException(typeof(PlanerItems), id, e);
+                throw new EntityNotFoundException(typeof(PlanerItems), id);
             }
 
             return planerItems;
